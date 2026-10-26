@@ -6,10 +6,10 @@ import java.util.Random;
 
 public class Environment {
     private EnvironmentCondition environmentCondition;
-    protected Environment() {
+    public Environment() {
         environmentCondition = EnvironmentCondition.NORMAL;
     }
-    protected void changeState(){
+    public void changeState(){
         Random random= new Random();
         int number = random.nextInt(100);
         if (number <= 84) {
@@ -25,10 +25,10 @@ public class Environment {
             environmentCondition = EnvironmentCondition.COMMUNICATION_DISRUPTION;
         }
     }
-    protected EnvironmentCondition getState(){
+    public EnvironmentCondition getState(){
         return environmentCondition;
     }
-    protected String getStateString(){
+    public String getStateString(){
         return environmentCondition.toString();
     }
 }
