@@ -1,0 +1,11 @@
+package Helper;
+
+public enum Capability {
+    SCIENTIFIC_RESEARCH,
+    EQUIPMENT_REPAIR,
+    MEDICAL_CARE,
+    SURFACE_EXPLORATION,
+    AERIAL_RECON,
+    COMMUNICATION,
+    FIRE_RESPONSE
+}
