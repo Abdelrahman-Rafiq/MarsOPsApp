@@ -1,3 +1,6 @@
+package Mission;
+import Helper.ResourceType;
+
 public abstract class Mission {
     protected final Colony colony;
     protected static int totalMissions = 0;
@@ -5,18 +8,18 @@ public abstract class Mission {
     private String description;
     private String status;
     private String location;
-    protected Resource[] resources;
+    protected ResourceType[] resources;
     protected int timeTaken;
     protected String failureReason;
 
-    public Mission(Colony colony, String description, String location, Resource[] resources) {
+    public Mission(Colony colony, String description, String location, ResourceType[] resources) {
         if(colony == null || resources == null ||  description == null || description.isEmpty() || location.isEmpty() || location == null){
             throw new IllegalArgumentException("null arguments aren't allowed!");
         }
         this.description = description;
         this.location = location;
         this.colony = colony;
-        this.resources = resources;
+        this.resources = resources.clone();
         this.missionId = totalMissions;
         totalMissions++;
         this.timeTaken = 0;
