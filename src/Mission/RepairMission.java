@@ -1,4 +1,6 @@
 package Mission;
+import Helper.ResourceType;
+
 import java.util.Arrays;
 
 public class RepairMission extends Mission{
@@ -10,7 +12,7 @@ public class RepairMission extends Mission{
 
     private RepairMission(Colony colony, String description, String location,
                           Facility targetFacility, Equipment targetEquipment,
-                          Engineer engineer, RepairRobot repairRobot, Resource[] resources) {
+                          Engineer engineer, RepairRobot repairRobot, ResourceType[] resources) {
         super(colony, description, location,resources);
         if(engineer == null || repairRobot == null){
             throw new IllegalArgumentException("null arguments aren't allowed!");

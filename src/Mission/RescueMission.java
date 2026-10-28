@@ -1,4 +1,6 @@
 package Mission;
+
+import Helper.ResourceType;
 import java.util.Arrays;
 
 public class RescueMission extends Mission{
@@ -8,7 +10,7 @@ public class RescueMission extends Mission{
     private CommunicationStation communicationStation;
 
     public RescueMission(Colony colony, String description, String location, Agent personnel,
-                         Vehicle vehicle, Resource[] resources, CommunicationStation communicationStation) {
+                         Vehicle vehicle, ResourceType[] resources, CommunicationStation communicationStation) {
         super(colony, description, location,resources);
         if(personnel == null || vehicle == null ||  communicationStation == null){
             throw new IllegalArgumentException("null arguments aren't allowed!");

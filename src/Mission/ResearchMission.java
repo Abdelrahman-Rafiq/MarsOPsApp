@@ -1,5 +1,8 @@
 package Mission;
+
 import java.util.Arrays;
+import Helper.Equipment;
+import Helper.ResourceType;
 
 public class ResearchMission extends Mission{
     private static final int requiredTimeUnits =10;
@@ -11,7 +14,7 @@ public class ResearchMission extends Mission{
 
     public ResearchMission(Colony colony, String description, String location,
                            Scientist scientist, Laboratory laboratory, String experimentName,
-                           Equipment equipment, Resource[] resources) {
+                           Equipment equipment, ResourceType[] resources) {
         super(colony, description, location,resources);
         if(scientist == null || laboratory == null ||  equipment == null || experimentName == null || experimentName.isEmpty()){
             throw new IllegalArgumentException("null/empty arguments aren't allowed!");

@@ -1,9 +1,7 @@
 package Emergency;
 
-
 import Helper.Capability;
 import Helper.EmergencyState;
-import Temp.*;
 
 abstract public class Emergency {
     protected final String emergencyId;

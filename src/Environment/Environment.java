@@ -1,7 +1,6 @@
 package Environment;
 
 import Helper.EnvironmentCondition;
-
 import java.util.Random;
 
 public class Environment {
