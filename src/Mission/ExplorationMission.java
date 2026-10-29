@@ -1,4 +1,6 @@
 package Mission;
+import Helper.Equipment;
+
 import java.util.Arrays;
 
 public class ExplorationMission extends Mission{
@@ -7,7 +9,7 @@ public class ExplorationMission extends Mission{
     private Engineer engineer;
     private Vehicle vehicle;
     private double requiredBatteryLevel;
-    private  Equipment equipment;
+    private Equipment equipment;
 
 
     public ExplorationMission(Colony colony, String description, String location,

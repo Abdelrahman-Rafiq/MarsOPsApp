@@ -84,7 +84,7 @@ public abstract class Mission {
     protected void advanceTime(int timeUnits, int requiredTimeUnits){
 
         this.timeTaken += timeUnits;
-        this.colony.deductResource(this.resources,timeUnits/requiredTimeUnits);
+        this.colony.deductResource(this.resources,(int)(timeUnits/requiredTimeUnits));
         if(this.timeTaken == requiredTimeUnits){
             this.endMission("COMPLETED");
         }

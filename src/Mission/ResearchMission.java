@@ -1,6 +1,8 @@
 package Mission;
 
 import java.util.Arrays;
+
+import Facility.Laboratory;
 import Helper.Equipment;
 import Helper.ResourceType;
 

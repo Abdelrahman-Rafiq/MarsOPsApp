@@ -5,29 +5,36 @@ import java.util.Random;
 
 public class Environment {
     private EnvironmentCondition environmentCondition;
+
     public Environment() {
         environmentCondition = EnvironmentCondition.NORMAL;
     }
-    public void changeState(){
-        Random random= new Random();
+
+    public void changeState() {
+        Random random = new Random();
         int number = random.nextInt(100);
         if (number <= 84) {
             //occurrence percent of normal condition in a day is 84% 0 ->84
             environmentCondition = EnvironmentCondition.NORMAL;
-        }
-        else if (number <= 91) {
+        } else if (number <= 91) {
             //occurrence percent of Dust Storm in a day is 7% 85 ->91
             environmentCondition = EnvironmentCondition.DUST_STORM;
-        }
-        else{
+        } else {
             //occurrence percent of COMMUNICATION_DISRUPTION in a day is 7% 92 ->99
             environmentCondition = EnvironmentCondition.COMMUNICATION_DISRUPTION;
         }
     }
-    public EnvironmentCondition getState(){
+
+    public EnvironmentCondition getState() {
         return environmentCondition;
     }
-    public String getStateString(){
+
+    public String getStateString() {
         return environmentCondition.toString();
+    }
+
+    @Override
+    public String toString() {
+        return String.format("Environment{Condition=%s}", environmentCondition);
     }
 }

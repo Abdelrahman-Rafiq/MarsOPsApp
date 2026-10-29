@@ -18,4 +18,8 @@ public class LifeSupportSystem {
     public void setFunctional(boolean functional) { 
         isFunctional = functional; 
     }
+    @Override
+    public String toString() {
+        return String.format("Filtration Rate: %d | Status: %-7s",filtrationRate,(isFunctional ? "ONLINE" : "OFFLINE"));
+    }
 }

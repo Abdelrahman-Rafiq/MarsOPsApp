@@ -1,5 +1,7 @@
 package Facility;
 
+
+import Helper.Capability;
 import Helper.Equipment;
 import Helper.ResourceType;
 import java.util.ArrayList;
@@ -11,17 +13,21 @@ import java.util.HashMap;
 public abstract class Facility
 {
   private final String location;
+  private int currentOccupancy;
   private final int capacity;
   private boolean isOperational;
-  private List<Equipment> equipments;
+  private final List<Equipment> equipments;
   protected Map<ResourceType,Integer> resources;
   protected final int maxResources;
-  protected static final int oxygenUsage=5;
+  protected static final int POWER_COST = 10;
+  protected static final int OXYGEN_COST = 5;
 
-  public Facility(String name, int capacity, int maxResources, Equipment[] equipment)
+
+  public Facility(String name, int capacity, int currentOccupancy, int maxResources, Equipment[] equipment)
   {
       this.location = name;
       this.capacity = capacity;
+      this.currentOccupancy = Math.max(0, Math.min(currentOccupancy, capacity));
       this.isOperational = true;
       this.maxResources = maxResources;
       this.resources = new HashMap<>();
@@ -38,11 +44,29 @@ public abstract class Facility
   public int getCapacity() {
       return capacity;
   }
+  public int getCurrentOccupancy() {
+    return currentOccupancy;
+  }
+  public boolean  addOccupiers() {
+    if(currentOccupancy==getCapacity())
+        return false;
+    currentOccupancy++;
+    return true;
+  }
+  public boolean  removeOccupiers() {
+    if(currentOccupancy==0)
+        return false;
+    currentOccupancy--;
+    return true;
+  }
   public List<Equipment> getEquipments() {
       return equipments;
   }
-  public void addEquipment(Equipment equipment) {
-        this.equipments.add(equipment);
+  public int getEquipmentIndex(Capability capability) {
+      for(int i=0;i<equipments.size();i++)
+          if(equipments.get(i).getProvidedCapability().equals(capability))
+              return i;
+        return -1;
   }
   public int getMaxResources() {
       return maxResources;
@@ -50,9 +74,9 @@ public abstract class Facility
   public boolean isOperational() {
       return isOperational;
   }
-  public void setOperationalStatus(boolean Status)
+  public void setOperationalStatus(boolean status)
   {
-          this.isOperational = Status;
+          this.isOperational = status;
   }
 
   public boolean addResource(ResourceType name, int amount)
@@ -79,6 +103,10 @@ public abstract class Facility
   public int getResourceAmount(ResourceType type) {
     return resources.getOrDefault(type, 0);
   }
+    protected boolean hasEnoughResource(ResourceType type, int requiredAmount) {
+        return getResourceAmount(type) >= requiredAmount;
+    }
+  public abstract boolean useResources();
   @Override
   public String toString() {
       StringBuilder resBuilder = new StringBuilder();
@@ -87,13 +115,15 @@ public abstract class Facility
             resBuilder.append(type.name()).append(": ").append(resources.getOrDefault(type, 0));
       }
       String eqStr = equipments.isEmpty() ? "None" : equipments.toString();
-      return String.format("[%s] %-18s | Status: %-7s | Cap: %2d | MaxRes: %4d | Resources: [%s] | Equipment: %s",
+      return String.format("[%s] %-18s | Status: %-7s | MaxRes: %4d | Resources: [%s] | Equipment: %s | Capacity: %2d/%2d",
               getClass().getSimpleName(),
               location,
               (isOperational ? "ONLINE" : "OFFLINE"),
-              capacity,
               maxResources,
               resBuilder,
-              eqStr);
+              eqStr,
+              currentOccupancy,
+              capacity);
   }
+
 }

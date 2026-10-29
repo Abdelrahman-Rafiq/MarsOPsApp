@@ -7,5 +7,7 @@ public enum Capability {
     SURFACE_EXPLORATION,
     AERIAL_RECON,
     COMMUNICATION,
-    FIRE_RESPONSE
+    FIRE_RESPONSE,
+    RESCUE,
+    LOGISTICS,
 }

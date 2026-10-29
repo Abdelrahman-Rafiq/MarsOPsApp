@@ -1,5 +1,6 @@
 package Mission;
 
+import Facility.CommunicationStation;
 import Helper.ResourceType;
 import java.util.Arrays;
 

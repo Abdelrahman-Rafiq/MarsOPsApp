@@ -4,34 +4,38 @@ import Helper.Equipment;
 import Helper.ResourceType;
 
 public class Habitat extends Facility
-{ 
-   private int currentOccupancy;
-   private final LifeSupportSystem lifeSupport;
-    public Habitat(String location, int currentOccupancy, int capacity, int maxResources, Equipment[] equipment) {
-        super(location, capacity, maxResources, equipment);
-        this.currentOccupancy = Math.max(0, Math.min(currentOccupancy, capacity));
-        this.lifeSupport = new LifeSupportSystem(89);
+{
+    private int id;
+    private String location;
+    private final LifeSupportSystem lifeSupport;
+    private static int nextID = 1;
+    private static final int FOOD_COST = 1;
+    private static final int WATER_COST = 2;
+
+    public Habitat(int currentOccupancy, int capacity, int maxResources) {
+        super("Habitat"+(nextID++), capacity, currentOccupancy, maxResources, new Equipment[]{Equipment.createRepairToolkit(),Equipment.createAntennaArray(),Equipment.createSurgicalKit(),Equipment.createMedicalScanner()});
+        this.lifeSupport = new LifeSupportSystem(90);
     }
-    public int getCurrentOccupancy() {
-        return currentOccupancy;
-    }
-    public boolean  addOccupiers() {
-        if(currentOccupancy==getCapacity())
-            return false;
-        currentOccupancy++;
-        return true;
-    }
-    public boolean  removeOccupiers() {
-        if(currentOccupancy==0)
-            return false;
-        currentOccupancy--;
-        return true;
-    }
-    public boolean updateOxygen() {
-        if(isOperational()){
-            deductResource(ResourceType.OXYGEN, oxygenUsage*currentOccupancy);
-            if(lifeSupport.isFunctional())
+
+    @Override
+    public boolean useResources() {
+        if (isOperational()) {
+            int requiredPower = POWER_COST;
+            int requiredOxygen = OXYGEN_COST * getCurrentOccupancy();
+
+            if (!hasEnoughResource(ResourceType.BATTERY_POWER, requiredPower) ||
+                    !hasEnoughResource(ResourceType.OXYGEN, requiredOxygen)) {
+                setOperationalStatus(false);
+                return false;
+            }
+
+            deductResource(ResourceType.BATTERY_POWER, requiredPower);
+            deductResource(ResourceType.OXYGEN, requiredOxygen);
+
+            if (lifeSupport.isFunctional()) {
                 addResource(ResourceType.OXYGEN, lifeSupport.getFiltrationRate());
+            }
+
             return true;
         }
         return false;
@@ -41,10 +45,8 @@ public class Habitat extends Facility
     }
     @Override
     public String toString() {
-        return String.format("%s | Occupancy: %d/%d | %s",
+        return String.format("%s | Life Support System: {%s}",
                 super.toString(),
-                currentOccupancy,
-                getCapacity(),
-                lifeSupport);
+                lifeSupport.toString());
     }
 }
