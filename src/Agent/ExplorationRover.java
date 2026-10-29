@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class ExplorationRover extends RoboticUnit {
+public class ExplorationRover extends Vehicle {
     private static int nextId = 1;
     private final List<Equipment> carriedEquipment;
 

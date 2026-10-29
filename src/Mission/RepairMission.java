@@ -4,8 +4,10 @@ import Agent.Engineer;
 import Agent.RepairRobot;
 import Facility.*;
 import Helper.Equipment;
+import Helper.MissionState;
 import Helper.ResourceType;
 import java.util.Arrays;
+
 
 public class RepairMission extends Mission{
     private static final int requiredTimeUnits = 5;
@@ -16,8 +18,8 @@ public class RepairMission extends Mission{
 
     private RepairMission(Colony colony, String description, String location,
                           Facility targetFacility, Equipment targetEquipment,
-                          Engineer engineer, RepairRobot repairRobot, ResourceType[] resources) {
-        super(colony, description, location,resources);
+                          Engineer engineer, RepairRobot repairRobot, ResourceType[] resources,  Equipment requiredEquipment) {
+        super(colony, description, location,resources,requiredEquipment);
         if(engineer == null || repairRobot == null){
             throw new IllegalArgumentException("null arguments aren't allowed!");
         }
@@ -28,24 +30,27 @@ public class RepairMission extends Mission{
     }
 
     public RepairMission(Colony colony, String description, String location,Facility target,
-                          Engineer engineer,RepairRobot repairRobot, Resource[] resources) {
-        this(colony,description,location,target,null,engineer,repairRobot,resources);
+                          Engineer engineer,RepairRobot repairRobot, ResourceType[] resources , Equipment requiredEquipment) {
+        this(colony,description,location,target,null,engineer,repairRobot,resources,requiredEquipment);
     }
     public RepairMission(Colony colony, String description, String location,Equipment target,
-                         Engineer engineer,RepairRobot repairRobot, Resource[] resources) {
-        this(colony,description,location,null,target,engineer,repairRobot,resources);
+                         Engineer engineer,RepairRobot repairRobot, ResourceType[] resources,  Equipment requiredEquipment) {
+        this(colony,description,location,null,target,engineer,repairRobot,resources,requiredEquipment);
     }
 
     @Override
     public String toString() {
-        return "RepairMission{" +
-                ", missionId=" + missionId +
-                "engineer=" + engineer +
-                ", repairRobot=" + repairRobot +
-                ", resources=" + Arrays.toString(resources) +
-                ", targetFacility=" + targetFacility +
-                ", targetEquipment=" + targetEquipment +
+        return "RepairMission{"+
+                "missionId=" + missionId +
                 ", colony=" + colony +
+                ", current status = "+ this.getStatus()+
+                ", description= "+ this.getDescription()+
+                ", location= "+ this.getLocation()+
+                ", engineer=" + engineer +
+                ", repairRobot=" + repairRobot +
+                ", equipment=" + equipment +
+                ", Target=" + ((targetFacility != null)? targetFacility : targetEquipment)+
+                ", resources=" + Arrays.toString(resources) +
                 '}';
     }
 
@@ -74,7 +79,7 @@ public class RepairMission extends Mission{
         if(this.targetEquipment != null && !this.targetEquipment.isDamaged()){
             failureReason = "The target Equipment is NOT damaged.";
         }
-        if(this.targetFacility != null && !this.targetFacility.isDamaged()){
+        if(this.targetFacility != null && this.targetFacility.isOperational()){
             failureReason = "The target Facility is NOT damaged.";
         }
         return true;
@@ -88,7 +93,7 @@ public class RepairMission extends Mission{
         }
         this.assign(this.engineer);
         this.assign(this.repairRobot);
-        this.setStatus("IN_PROGRESS");
+        this.setStatus(MissionState.IN_PROGRESS);
         this.timeTaken = 0;
         return true;
     }
@@ -100,16 +105,16 @@ public class RepairMission extends Mission{
     }
 
     @Override
-    protected void endMission(String nextState) {
+    protected void endMission(MissionState nextState) {
         super.endMission(nextState);
         this.unassign(this.engineer);
         this.unassign(this.repairRobot);
         if(this.targetFacility != null){
-            this.targetFacility.setAvailability(true);
+            this.targetFacility.setOperationalStatus(true);
         }
         else{
-            this.targetEquipment.setAvailability(true);
+            this.targetEquipment.fixIt();
         }
-        this.setStatus("IN_PROGRESS");
+        this.setStatus(MissionState.IN_PROGRESS);
     }
 }

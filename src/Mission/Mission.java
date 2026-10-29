@@ -1,27 +1,32 @@
 package Mission;
+import Helper.Capability;
+import Helper.Equipment;
 import Helper.ResourceType;
+import Agent.Agent;
+import Helper.MissionState;
 
 public abstract class Mission {
     protected final Colony colony;
     protected static int totalMissions = 0;
-    protected int missionId;
+    protected String missionId;
     private String description;
-    private String status;
+    private MissionState status;
     private String location;
     protected ResourceType[] resources;
     protected int timeTaken;
     protected String failureReason;
+    protected Equipment equipment;
 
-    public Mission(Colony colony, String description, String location, ResourceType[] resources) {
-        if(colony == null || resources == null ||  description == null || description.isEmpty() || location.isEmpty() || location == null){
+    public Mission(Colony colony, String description, String location, ResourceType[] resources,Equipment equipment) {
+        if(colony == null || resources == null ||  description == null || description.isEmpty() || location.isEmpty() || location == null || equipment == null){
             throw new IllegalArgumentException("null arguments aren't allowed!");
         }
         this.description = description;
         this.location = location;
         this.colony = colony;
         this.resources = resources.clone();
-        this.missionId = totalMissions;
-        totalMissions++;
+        this.missionId = "Mission:"+totalMissions++;
+        this.equipment =equipment;
         this.timeTaken = 0;
     }
 
@@ -33,12 +38,12 @@ public abstract class Mission {
         this.description = description;
     }
 
-    public String getStatus() {
+    public MissionState getStatus() {
         return status;
     }
 
     // status
-    public void setStatus(String status) {
+    public void setStatus(MissionState status) {
         this.status = status;
     }
 
@@ -53,25 +58,30 @@ public abstract class Mission {
 
     protected abstract boolean submitMission();
 
+    public Capability getRequiredCapability(){
+        return this.equipment.getProvidedCapability();
+    }
+
     public boolean startMission(){
         if(!this.submitMission()){
-            this.setStatus("FAILED");
+            this.setStatus(MissionState.FAILED);
             return false;
         }
         this.colony.setActiveMission(this);
-        this.setStatus("ASSIGNED");
+        this.setStatus(MissionState.ASSIGNED);
         return true;
     }
-    protected void endMission(String nextState){
+
+    protected void endMission(MissionState nextState){
         this.setStatus(nextState);
         this.colony.removeActiveMission();
     }
 
     protected void assign(Agent agent){
-        agent.setStatus("Busy");
+        agent.setOnMission(true);
     }
     protected void unassign(Agent agent) {
-        agent.setStatus("Available");
+        agent.setOnMission(false);
     }
 
     protected int calculateRealTakenTime(int timeUnits,int requiredTimeUnits){
@@ -86,7 +96,7 @@ public abstract class Mission {
         this.timeTaken += timeUnits;
         this.colony.deductResource(this.resources,(int)(timeUnits/requiredTimeUnits));
         if(this.timeTaken == requiredTimeUnits){
-            this.endMission("COMPLETED");
+            this.endMission(MissionState.COMPLETED);
         }
 
 

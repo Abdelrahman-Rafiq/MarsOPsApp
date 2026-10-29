@@ -4,7 +4,7 @@ import Helper.EnvironmentCondition;
 import java.util.Random;
 
 public class Environment {
-    private EnvironmentCondition environmentCondition;
+    private static EnvironmentCondition environmentCondition;
 
     public Environment() {
         environmentCondition = EnvironmentCondition.NORMAL;
@@ -25,7 +25,7 @@ public class Environment {
         }
     }
 
-    public EnvironmentCondition getState() {
+    public static EnvironmentCondition getState() {
         return environmentCondition;
     }
 

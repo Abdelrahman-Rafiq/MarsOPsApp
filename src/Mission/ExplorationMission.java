@@ -1,8 +1,10 @@
 package Mission;
 import Agent.Engineer;
-import Helper.Equipment;
+import Helper.*;
 
 import java.util.Arrays;
+import Environment.Environment;
+import Agent.Vehicle;
 
 public class ExplorationMission extends Mission{
 
@@ -10,16 +12,15 @@ public class ExplorationMission extends Mission{
     private Engineer engineer;
     private Vehicle vehicle;
     private double requiredBatteryLevel;
-    private Equipment equipment;
 
 
     public ExplorationMission(Colony colony, String description, String location,
                               Engineer engineer, Vehicle vehicle,
                               double requiredBatteryLevel, Equipment equipment,
-                              Resource[] resources) {
-        super(colony,description, location,resources);
+                              ResourceType[] resources) {
+        super(colony,description, location,resources,equipment);
 
-        if(engineer == null || vehicle == null ||  equipment == null){
+        if(engineer == null || vehicle == null ){
             throw new IllegalArgumentException("null arguments aren't allowed!");
         }
         if(requiredBatteryLevel <= 0 ){
@@ -28,7 +29,6 @@ public class ExplorationMission extends Mission{
         this.engineer =engineer;
         this.vehicle = vehicle;
         this.requiredBatteryLevel = requiredBatteryLevel;
-        this.equipment = equipment ;
 
     }
 
@@ -57,16 +57,13 @@ public class ExplorationMission extends Mission{
             return false;
         }
 
-        if(Environment.getStatus().equals("Dust Storm")){
+
+        if(Environment.getState() == EnvironmentCondition.COMMUNICATION_DISRUPTION){
             failureReason = "Dust Storm prevents the Exploration Mission";
         }
 
         if( !this.engineer.canPerform(this)){
             failureReason = "Agent can't perform this mission.";
-            return false;
-        }
-        if(!this.engineer.canUse(this.equipment)){
-            failureReason = "Agent doesn't have the skill to use the mission's equipment.";
             return false;
         }
 
@@ -101,25 +98,24 @@ public class ExplorationMission extends Mission{
         this.assign(this.engineer);
         this.assign(this.vehicle);
         this.equipment.setAvailability(false);
-        this.setStatus("IN_PROGRESS");
+        this.setStatus(MissionState.IN_PROGRESS);
         this.timeTaken = 0;
         return true;
     }
 
-
     public void advanceTime(int timeUnits){
-        if(Environment.getStatus().equals("Dust Storm")){
-            this.endMission("FAILED");
+        if(Environment.getState() == EnvironmentCondition.DUST_STORM){
+            this.endMission(MissionState.FAILED);
             failureReason = "Dust Storm prevents the Exploration Mission";
         }
         int realTakenTime = super.calculateRealTakenTime(timeUnits,requiredTimeUnits);
         super.advanceTime(realTakenTime, requiredTimeUnits);
-        this.vehicle.deductBattery(this.requiredBatteryLevel * ((double)realTakenTime/requiredTimeUnits));
+        this.vehicle.discharge((int)(this.requiredBatteryLevel * ((double)realTakenTime/requiredTimeUnits)));
     }
 
 
     @Override
-    protected void endMission(String nextState) {
+    protected void endMission(MissionState nextState) {
         super.endMission(nextState);
         this.unassign(this.engineer);
         this.unassign(this.vehicle);

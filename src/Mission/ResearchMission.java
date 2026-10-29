@@ -4,7 +4,9 @@ import java.util.Arrays;
 
 import Agent.Scientist;
 import Facility.Laboratory;
+import Helper.Capability;
 import Helper.Equipment;
+import Helper.MissionState;
 import Helper.ResourceType;
 
 public class ResearchMission extends Mission{
@@ -12,32 +14,33 @@ public class ResearchMission extends Mission{
     private Scientist scientist;
     private Laboratory laboratory;
     private String experimentName;
-    private Equipment equipment;
 
 
     public ResearchMission(Colony colony, String description, String location,
                            Scientist scientist, Laboratory laboratory, String experimentName,
                            Equipment equipment, ResourceType[] resources) {
-        super(colony, description, location,resources);
-        if(scientist == null || laboratory == null ||  equipment == null || experimentName == null || experimentName.isEmpty()){
+        super(colony, description, location,resources,equipment);
+        if(scientist == null || laboratory == null || experimentName == null || experimentName.isEmpty()){
             throw new IllegalArgumentException("null/empty arguments aren't allowed!");
         }
         this.experimentName = experimentName;
         this.scientist = scientist;
         this.laboratory = laboratory;
-        this.equipment= equipment;
     }
 
     @Override
     public String toString() {
         return "ResearchMission{" +
-                ", missionId=" + missionId +
-                "scientist=" + scientist +
+                "missionId=" + missionId +
+                ", colony=" + colony +
+                ", current status = "+ this.getStatus()+
+                ", description= "+ this.getDescription()+
+                ", location= "+ this.getLocation()+
+                ", scientist=" + scientist +
                 ", laboratory=" + laboratory +
-                ", experimentName='" + experimentName + '\'' +
+                ", experiment name=" + experimentName +
                 ", equipment=" + equipment +
                 ", resources=" + Arrays.toString(resources) +
-                ", colony=" + colony +
                 '}';
     }
 
@@ -52,11 +55,8 @@ public class ResearchMission extends Mission{
             failureReason = "Agent can't perform this mission.";
             return false;
         }
-        if(!this.scientist.canUse(this.equipment)){
-            failureReason = "Agent doesn't have the skill to use the mission's equipment.";
-            return false;
-        }
-        if(!this.laboratory.isAvailable()){
+
+        if(!this.laboratory.isOperational()){
             failureReason = "Laboratory is NOT available right now.";
             return false;
         }
@@ -86,16 +86,15 @@ public class ResearchMission extends Mission{
         }
         this.assign(this.scientist);
         this.equipment.setAvailability(false);
-        this.setStatus("IN_PROGRESS");
+        this.setStatus(MissionState.IN_PROGRESS);
         this.timeTaken = 0;
         return true;
 
     }
 
 
-
     @Override
-    protected void endMission(String nextState) {
+    protected void endMission(MissionState nextState) {
         super.endMission(nextState);
         this.unassign(this.scientist);
         this.equipment.setAvailability(true);
