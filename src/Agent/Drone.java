@@ -2,7 +2,7 @@ package Agent;
 
 import Helper.Capability;
 
-public class Drone extends RoboticUnit {
+public class Drone extends Vehicle {
     private static int nextId = 1;
 
     public Drone(String name, String location) {

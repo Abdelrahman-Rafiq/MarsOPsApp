@@ -1,8 +1,12 @@
 package Mission;
 
 import Facility.CommunicationStation;
-import Helper.ResourceType;
+import Helper.*;
+import Agent.Vehicle;
+import java.lang.classfile.constantpool.ConstantPool;
 import java.util.Arrays;
+import Agent.Agent;
+import Environment.Environment;
 
 public class RescueMission extends Mission{
     private static final int requiredTimeUnits = 8;
@@ -10,10 +14,11 @@ public class RescueMission extends Mission{
     private Vehicle vehicle;
     private CommunicationStation communicationStation;
 
+
     public RescueMission(Colony colony, String description, String location, Agent personnel,
-                         Vehicle vehicle, ResourceType[] resources, CommunicationStation communicationStation) {
-        super(colony, description, location,resources);
-        if(personnel == null || vehicle == null ||  communicationStation == null){
+                         Vehicle vehicle, ResourceType[] resources, CommunicationStation communicationStation, Equipment equipment) {
+        super(colony, description, location,resources,equipment);
+        if(personnel == null || vehicle == null ||  communicationStation == null ){
             throw new IllegalArgumentException("null arguments aren't allowed!");
         }
         this.personnel = personnel;
@@ -24,12 +29,16 @@ public class RescueMission extends Mission{
     @Override
     public String toString() {
         return "RescueMission{" +
-                ", missionId=" + missionId +
-                "personnel=" + personnel +
-                ", communicationStation=" + communicationStation +
-                ", vehicle=" + vehicle +
-                ", resources=" + Arrays.toString(resources) +
+                "missionId=" + missionId +
                 ", colony=" + colony +
+                ", current status = "+ this.getStatus()+
+                ", description= "+ this.getDescription()+
+                ", location= "+ this.getLocation()+
+                ", personnel=" + personnel +
+                ", vehicle=" + vehicle +
+                ", equipment=" + equipment +
+                ", communication station=" + communicationStation+
+                ", resources=" + Arrays.toString(resources) +
                 '}';
     }
 
@@ -40,7 +49,7 @@ public class RescueMission extends Mission{
             return false;
         }
 
-        if(Environment.getStatus().equals("Communication Disruption") ){
+        if(Environment.getState()== EnvironmentCondition.COMMUNICATION_DISRUPTION ){
             failureReason = "Communication Disruption prevents Rescue Missions.";
         }
         if(!this.personnel.canPerform(this)){
@@ -59,7 +68,7 @@ public class RescueMission extends Mission{
             return false;
         }
 
-        if(!this.communicationStation.isAvailable())
+        if(!this.communicationStation.isOperational())
         {
             failureReason = "Communication Station is NOT available right now.";
             return false;
@@ -75,15 +84,16 @@ public class RescueMission extends Mission{
         }
         this.assign(this.personnel);
         this.assign(this.vehicle);
-        this.setStatus("IN_PROGRESS");
+        this.setStatus(MissionState.IN_PROGRESS);
         this.timeTaken = 0;
         return true;
     }
 
 
+
     public void advanceTime(int timeUnits){
-        if(Environment.getStatus().equals("Communication Disruption") ){
-            this.endMission("FAILED");
+        if(Environment.getState()== EnvironmentCondition.COMMUNICATION_DISRUPTION ){
+            this.endMission(MissionState.FAILED);
             failureReason = "Communication Disruption prevents Rescue Missions.";
         }
         int realTakenTime = super.calculateRealTakenTime(timeUnits,requiredTimeUnits);
@@ -91,11 +101,10 @@ public class RescueMission extends Mission{
     }
 
     @Override
-    protected void endMission(String nextState) {
+    protected void endMission(MissionState nextState) {
         super.endMission(nextState);
         this.unassign(this.personnel);
         this.unassign(this.vehicle);
-        this.communicationStation.setAvailability(true);
 
     }
 }
