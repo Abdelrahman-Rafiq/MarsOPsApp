@@ -2,6 +2,7 @@ package Mission;
 
 import java.util.Arrays;
 
+import Agent.Scientist;
 import Facility.Laboratory;
 import Helper.Equipment;
 import Helper.ResourceType;

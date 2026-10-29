@@ -9,5 +9,4 @@ public enum Capability {
     COMMUNICATION,
     FIRE_RESPONSE,
     RESCUE,
-    LOGISTICS,
 }
