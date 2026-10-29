@@ -1,22 +1,13 @@
 package Agent;
 
 import Helper.Capability;
-import Mission.Mission;
-
 
 public class MedicalOfficer extends CrewMember {
+    private static int nextId = 1;
 
-    public MedicalOfficer(String name, String id, String location) {
-        super(name, id, location);
-        addCapability(Capability.RESCUE);
+    public MedicalOfficer(String name, String location) {
+        super(name, "MedicalOfficer" + nextId++, location);
         addCapability(Capability.MEDICAL_CARE);
-    }
-
-    @Override
-    public boolean canPerform(Mission mission) {
-        if (mission == null || !this.availability || this.healthStatus <= 0) {
-            return false;
-        }
-        return hasCapability(mission.getRequiredCapability());
+        addCapability(Capability.RESCUE);
     }
 }

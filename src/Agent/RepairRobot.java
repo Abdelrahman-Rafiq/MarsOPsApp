@@ -1,21 +1,13 @@
 package Agent;
 
 import Helper.Capability;
-import Mission.Mission;
-
 
 public class RepairRobot extends RoboticUnit {
+    private static int nextId = 1;
 
-    public RepairRobot(String name, String id, String location) {
-        super(name, id, location);
+    public RepairRobot(String name, String location) {
+        super(name, "RepairRobot" + nextId++, location);
         addCapability(Capability.EQUIPMENT_REPAIR);
-    }
-
-    @Override
-    public boolean canPerform(Mission mission) {
-        if (mission == null || !this.availability || this.healthStatus <= 0 || getBatteryLevel() <= 0) {
-            return false;
-        }
-        return hasCapability(mission.getRequiredCapability());
+        addCapability(Capability.FIRE_RESPONSE);
     }
 }
