@@ -291,24 +291,21 @@ public class Colony {
 
             // 2. Facilities upkeep and agent recovery
             for (Facility facility : facilities) {
-                if (facility != null && facility.isOperational()) {
+                if (facility != null && facility.isOperational())
                     facility.useResources();
-                }
-                if (facility instanceof Habitat) {
-                    for (Agent a : agents) {
+                for (Agent a : agents)
+                    if (a != null && a.isHuman() && a.getLocation().equals(facility.getLocation()))
+                        facility.deductResource(ResourceType.OXYGEN, 2);
+                if (facility instanceof Habitat)
+                    for (Agent a : agents)
                         if (a != null && a.isHuman() && a.getLocation().equals(facility.getLocation())) {
                             ((CrewMember) a).eat((Habitat) facility, 5);
                             ((CrewMember) a).drink((Habitat) facility, 5);
                         }
-                    }
-                }
-                if (facility instanceof PowerStation) {
-                    for (Agent a : agents) {
-                        if (a != null && a.isRobot() && a.getLocation().equals(facility.getLocation())) {
+                if (facility instanceof PowerStation)
+                    for (Agent a : agents)
+                        if (a != null && a.isRobot() && a.getLocation().equals(facility.getLocation()))
                             ((RoboticUnit) a).charge((PowerStation) facility, 5);
-                        }
-                    }
-                }
             }
         }
     }
