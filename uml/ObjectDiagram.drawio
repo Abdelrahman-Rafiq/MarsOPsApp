@@ -1,0 +1,60 @@
+<mxfile host="app.diagrams.net" version="24.0.0">
+  <diagram id="ObjectDiagram" name="ObjectDiagram">
+    <mxGraphModel dx="1422" dy="800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1800" pageHeight="1400" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <mxCell id="title" value="&lt;b&gt;&lt;font style=&quot;font-size: 18px;&quot;&gt;MARS-OPS SYSTEM — OBJECT DIAGRAM (SNAPSHOT AT TIME = 2)&lt;/font&gt;&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e293b;fontColor=#ffffff;strokeColor=#0f172a;" vertex="1" parent="1">
+          <mxGeometry x="40" y="20" width="1600" height="40" as="geometry" />
+        </mxCell>
+        <!-- colony object -->
+        <mxCell id="colony_obj" value="&lt;u&gt;&lt;b&gt;marsColony : Colony&lt;/b&gt;&lt;/u&gt;&lt;hr size=&quot;1&quot;/&gt;currentTime = 2&lt;br/&gt;activeMission = expMission1&lt;br/&gt;totalOperationalOxygen = 450&lt;br/&gt;totalOperationalBattery = 510&lt;br/&gt;totalOperationalSpareParts = 80" style="rounded=1;whiteSpace=wrap;html=1;verticalAlign=top;align=left;spacingLeft=8;spacingTop=6;fillColor=#dbeafe;strokeColor=#1e40af;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="640" y="85" width="280" height="130" as="geometry" />
+        </mxCell>
+        <!-- env object -->
+        <mxCell id="env_obj" value="&lt;u&gt;&lt;b&gt;marsEnv : Environment&lt;/b&gt;&lt;/u&gt;&lt;hr size=&quot;1&quot;/&gt;environmentCondition = NORMAL&lt;br/&gt;dustStormProbability = 7%" style="rounded=1;whiteSpace=wrap;html=1;verticalAlign=top;align=left;spacingLeft=8;spacingTop=6;fillColor=#ffffff;strokeColor=#334155;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="1080" y="85" width="240" height="90" as="geometry" />
+        </mxCell>
+        <!-- mission object -->
+        <mxCell id="miss_obj" value="&lt;u&gt;&lt;b&gt;expMission1 : ExplorationMission&lt;/b&gt;&lt;/u&gt;&lt;hr size=&quot;1&quot;/&gt;missionId = &quot;Mission-1&quot;&lt;br/&gt;description = &quot;Explore Gale Crater for water ice&quot;&lt;br/&gt;location = &quot;Gale Crater&quot;&lt;br/&gt;status = IN_PROGRESS&lt;br/&gt;requiredDuration = 7&lt;br/&gt;timeElapsed = 2&lt;br/&gt;requiredBatteryLevel = 25.0&lt;br/&gt;failureReason = &quot;&quot;" style="rounded=1;whiteSpace=wrap;html=1;verticalAlign=top;align=left;spacingLeft=8;spacingTop=6;fillColor=#ffffff;strokeColor=#334155;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="610" y="270" width="340" height="170" as="geometry" />
+        </mxCell>
+        <!-- scientist object -->
+        <mxCell id="watney_obj" value="&lt;u&gt;&lt;b&gt;watney : Scientist&lt;/b&gt;&lt;/u&gt;&lt;hr size=&quot;1&quot;/&gt;id = &quot;Scientist1&quot;&lt;br/&gt;name = &quot;Dr. Mark Watney&quot;&lt;br/&gt;location = &quot;Gale Crater&quot;&lt;br/&gt;healthStatus = 100&lt;br/&gt;fatigueLevel = 10&lt;br/&gt;onMission = true&lt;br/&gt;availability = false&lt;br/&gt;capabilities = [SCIENTIFIC_RESEARCH, ...]" style="rounded=1;whiteSpace=wrap;html=1;verticalAlign=top;align=left;spacingLeft=8;spacingTop=6;fillColor=#ffffff;strokeColor=#334155;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="60" y="520" width="280" height="170" as="geometry" />
+        </mxCell>
+        <!-- rover object -->
+        <mxCell id="rover_obj" value="&lt;u&gt;&lt;b&gt;curiosity : ExplorationRover&lt;/b&gt;&lt;/u&gt;&lt;hr size=&quot;1&quot;/&gt;id = &quot;Rover1&quot;&lt;br/&gt;name = &quot;Curiosity-2&quot;&lt;br/&gt;location = &quot;Gale Crater&quot;&lt;br/&gt;healthStatus = 100&lt;br/&gt;batteryLevel = 90&lt;br/&gt;onMission = true&lt;br/&gt;availability = false&lt;br/&gt;capabilities = [SURFACE_EXPLORATION, ...]" style="rounded=1;whiteSpace=wrap;html=1;verticalAlign=top;align=left;spacingLeft=8;spacingTop=6;fillColor=#ffffff;strokeColor=#334155;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="380" y="520" width="280" height="170" as="geometry" />
+        </mxCell>
+        <!-- spectrometer object -->
+        <mxCell id="spec_obj" value="&lt;u&gt;&lt;b&gt;spectrometer : Equipment&lt;/b&gt;&lt;/u&gt;&lt;hr size=&quot;1&quot;/&gt;name = &quot;Mass Spectrometer&quot;&lt;br/&gt;providedCapability = SCIENTIFIC_RESEARCH&lt;br/&gt;damaged = false&lt;br/&gt;available = false&lt;br/&gt;usageNumber = 1" style="rounded=1;whiteSpace=wrap;html=1;verticalAlign=top;align=left;spacingLeft=8;spacingTop=6;fillColor=#ffffff;strokeColor=#334155;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="380" y="740" width="280" height="130" as="geometry" />
+        </mxCell>
+        <!-- habitat object -->
+        <mxCell id="hab_obj" value="&lt;u&gt;&lt;b&gt;habitat1 : Habitat&lt;/b&gt;&lt;/u&gt;&lt;hr size=&quot;1&quot;/&gt;location = &quot;Habitat1&quot;&lt;br/&gt;capacity = 4&lt;br/&gt;currentOccupancy = 0&lt;br/&gt;isOperational = true&lt;br/&gt;maxResources = 300&lt;br/&gt;resources[OXYGEN] = 150&lt;br/&gt;resources[BATTERY] = 80&lt;br/&gt;resources[WATER] = 50" style="rounded=1;whiteSpace=wrap;html=1;verticalAlign=top;align=left;spacingLeft=8;spacingTop=6;fillColor=#ffffff;strokeColor=#334155;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="740" y="520" width="240" height="170" as="geometry" />
+        </mxCell>
+        <!-- lss object -->
+        <mxCell id="lss_obj" value="&lt;u&gt;&lt;b&gt;lss1 : LifeSupportSystem&lt;/b&gt;&lt;/u&gt;&lt;hr size=&quot;1&quot;/&gt;filtrationRate = 90&lt;br/&gt;isFunctional = true&lt;br/&gt;ownedBy = habitat1" style="rounded=1;whiteSpace=wrap;html=1;verticalAlign=top;align=left;spacingLeft=8;spacingTop=6;fillColor=#ffffff;strokeColor=#334155;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="740" y="740" width="240" height="90" as="geometry" />
+        </mxCell>
+        <!-- storage object -->
+        <mxCell id="storage_obj" value="&lt;u&gt;&lt;b&gt;storage1 : StorageFacilities&lt;/b&gt;&lt;/u&gt;&lt;hr size=&quot;1&quot;/&gt;location = &quot;Storage Facility1&quot;&lt;br/&gt;isOperational = true&lt;br/&gt;resources[OXYGEN] = 200&lt;br/&gt;resources[SPARE_PARTS] = 80&lt;br/&gt;resources[WATER] = 150&lt;br/&gt;resources[BATTERY] = 200" style="rounded=1;whiteSpace=wrap;html=1;verticalAlign=top;align=left;spacingLeft=8;spacingTop=6;fillColor=#ffffff;strokeColor=#334155;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="1050" y="520" width="250" height="150" as="geometry" />
+        </mxCell>
+        <!-- Links -->
+        <mxCell id="l_env" value="environment" style="endArrow=none;html=1;strokeWidth=1.8;strokeColor=#334155;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" edge="1" source="colony_obj" target="env_obj" parent="1" />
+        <mxCell id="l_miss" value="activeMission" style="endArrow=none;html=1;strokeWidth=1.8;strokeColor=#334155;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" source="colony_obj" target="miss_obj" parent="1" />
+        <mxCell id="l_watney" value="assigned crewMember" style="endArrow=none;html=1;strokeWidth=1.8;strokeColor=#334155;exitX=0.2;exitY=1;entryX=0.5;entryY=0;" edge="1" source="miss_obj" target="watney_obj" parent="1" />
+        <mxCell id="l_rover" value="assigned vehicle" style="endArrow=none;html=1;strokeWidth=1.8;strokeColor=#334155;exitX=0.4;exitY=1;entryX=0.5;entryY=0;" edge="1" source="miss_obj" target="rover_obj" parent="1" />
+        <mxCell id="l_spec" value="carriedEquipment" style="endArrow=none;html=1;strokeWidth=1.8;strokeColor=#334155;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" source="rover_obj" target="spec_obj" parent="1" />
+        <mxCell id="l_hab" value="facilities[0]" style="endArrow=none;html=1;strokeWidth=1.8;strokeColor=#334155;exitX=0.8;exitY=1;entryX=0.5;entryY=0;" edge="1" source="colony_obj" target="hab_obj" parent="1" />
+        <mxCell id="l_lss" value="lifeSupport (owned)" style="endArrow=none;html=1;strokeWidth=1.8;strokeColor=#334155;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" source="hab_obj" target="lss_obj" parent="1" />
+        <mxCell id="l_storage" value="facilities[4]" style="endArrow=none;html=1;strokeWidth=1.8;strokeColor=#334155;exitX=1;exitY=1;entryX=0.5;entryY=0;" edge="1" source="colony_obj" target="storage_obj" parent="1" />
+        <mxCell id="l_colony_watney" value="agents[0]" style="endArrow=none;html=1;strokeWidth=1.8;strokeColor=#334155;exitX=0;exitY=1;entryX=0.5;entryY=0;" edge="1" source="colony_obj" target="watney_obj" parent="1" />
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

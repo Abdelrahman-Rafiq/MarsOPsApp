@@ -133,8 +133,8 @@ public class Colony {
     // Rule 2 & 3: Multi-source, all-or-nothing consumption
     // Rule 6: Resource allocation policy: draw from StorageFacilities first, then other operational facilities
     public boolean deductResource(ResourceType type, int amount) {
-        if (type == null || amount < 0) return false;
-        if (getTotalResource(type) <= amount) {
+        if (type == null || amount <= 0) return false;
+        if (getTotalResource(type) < amount) {
             return false; // All-or-nothing: do not deduct partial!
         }
 
@@ -200,8 +200,21 @@ public class Colony {
         this.activeMission = mission;
     }
 
+    public void addMissionToHistory(Mission mission) {
+        if (mission != null && !missionHistory.contains(mission)) {
+            missionHistory.add(mission);
+        }
+    }
+
+    public List<Mission> getMissionHistory() {
+        return Collections.unmodifiableList(missionHistory);
+    }
+
     public void removeActiveMission() {
-        this.activeMission = null;
+        if (this.activeMission != null) {
+            addMissionToHistory(this.activeMission);
+            this.activeMission = null;
+        }
     }
 
     public boolean submitMission(Mission mission) {
@@ -213,14 +226,14 @@ public class Colony {
         if (this.activeMission != null) {
             mission.setStatus(MissionState.FAILED);
             mission.setFailureReason("Another mission is active in the colony right now.");
-            missionHistory.add(mission);
+            addMissionToHistory(mission);
             return false;
         }
 
         // Perform mission-specific validation
         if (!mission.submitMission()) {
             mission.setStatus(MissionState.FAILED);
-            missionHistory.add(mission);
+            addMissionToHistory(mission);
             return false;
         }
 
@@ -234,11 +247,15 @@ public class Colony {
         if (this.activeMission == null || this.activeMission.getStatus() != MissionState.ASSIGNED) {
             return false;
         }
-        return this.activeMission.startMission();
+        boolean started = this.activeMission.startMission();
+        if (!started) {
+            this.activeMission.setStatus(MissionState.FAILED);
+            removeActiveMission();
+        }
+        return started;
     }
 
     // Simulation & Time Management (Section 10)
-    // "like advance time put it in colony and just colony, don't overcomplicate stuff"
     public void advanceTime(int timeUnits) {
         if (timeUnits <= 0) return;
 
@@ -250,12 +267,10 @@ public class Colony {
                 // Dynamic Environmental disruption check
                 if (activeMission instanceof ExplorationMission && Environment.getState() == EnvironmentCondition.DUST_STORM) {
                     activeMission.fail("Active rover exploration mission failed due to Martian dust storm.");
-                    missionHistory.add(activeMission);
-                    this.activeMission = null;
+                    removeActiveMission();
                 } else if (activeMission instanceof RescueMission && Environment.getState() == EnvironmentCondition.COMMUNICATION_DISRUPTION) {
                     activeMission.fail("Active rescue mission failed due to severe communication disruption.");
-                    missionHistory.add(activeMission);
-                    this.activeMission = null;
+                    removeActiveMission();
                 } else {
                     activeMission.progress(1);
 
@@ -269,25 +284,31 @@ public class Colony {
                     }
                     if (activeMission.isCompleted()) {
                         activeMission.complete();
-                        missionHistory.add(activeMission);
-                        this.activeMission = null;
+                        removeActiveMission();
                     }
                 }
             }
+
+            // 2. Facilities upkeep and agent recovery
             for (Facility facility : facilities) {
                 if (facility != null && facility.isOperational()) {
                     facility.useResources();
                 }
-                if(facility instanceof Habitat)
-                    for (Agent a: agents)
-                        if(a!=null &&a.isHuman() &&a.getLocation().equals(facility.getLocation())) {
-                            ((CrewMember)a).eat(((Habitat) facility),5);
-                            ((CrewMember)a).drink(((Habitat)facility),5);
+                if (facility instanceof Habitat) {
+                    for (Agent a : agents) {
+                        if (a != null && a.isHuman() && a.getLocation().equals(facility.getLocation())) {
+                            ((CrewMember) a).eat((Habitat) facility, 5);
+                            ((CrewMember) a).drink((Habitat) facility, 5);
                         }
-                if(facility instanceof PowerStation)
-                    for (Agent a: agents)
-                        if(a!=null &&a.isRobot() &&a.getLocation().equals(facility.getLocation()))
-                            ((RoboticUnit)a).charge(((PowerStation) facility),5);
+                    }
+                }
+                if (facility instanceof PowerStation) {
+                    for (Agent a : agents) {
+                        if (a != null && a.isRobot() && a.getLocation().equals(facility.getLocation())) {
+                            ((RoboticUnit) a).charge((PowerStation) facility, 5);
+                        }
+                    }
+                }
             }
         }
     }
@@ -325,22 +346,25 @@ public class Colony {
         sb.append(String.format("PERSONNEL & ROBOTS (%d registered):\n", agents.size()));
         for (Agent a : agents) {
             sb.append("  ").append(a.toString()).append("\n");
-
         }
         sb.append("----------------------------------------------------------------------------------------\n");
         sb.append(String.format("Emergency History (%d Emergencies):\n", emergencyHistory.size()));
-        if(!emergencyHistory.isEmpty())
-            for(Emergency emergency : emergencyHistory) {
-                if(emergency != null)
+        if (!emergencyHistory.isEmpty()) {
+            for (Emergency emergency : emergencyHistory) {
+                if (emergency != null) {
                     sb.append("  ").append(emergency.toString()).append("\n");
+                }
             }
+        }
         sb.append("----------------------------------------------------------------------------------------\n");
-        sb.append(String.format("Mission History (%d Mission):\n", missionHistory.size()));
-        if(!missionHistory.isEmpty())
-            for(Mission m : missionHistory) {
-                if(m!=null)
+        sb.append(String.format("Mission History (%d Missions):\n", missionHistory.size()));
+        if (!missionHistory.isEmpty()) {
+            for (Mission m : missionHistory) {
+                if (m != null) {
                     sb.append("  ").append(m.toString()).append("\n");
+                }
             }
+        }
         sb.append("========================================================================================\n");
         return sb.toString();
     }

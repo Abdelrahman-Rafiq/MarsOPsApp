@@ -1,0 +1,96 @@
+<mxfile host="app.diagrams.net" version="24.0.0">
+  <diagram id="StateMachineDiagram" name="StateMachineDiagram">
+    <mxGraphModel dx="1422" dy="800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1800" pageHeight="1400" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <mxCell id="title" value="&lt;b&gt;&lt;font style=&quot;font-size: 18px;&quot;&gt;MARS-OPS SYSTEM — MISSION LIFECYCLE STATE MACHINE DIAGRAM&lt;/font&gt;&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e293b;fontColor=#ffffff;strokeColor=#0f172a;" vertex="1" parent="1">
+          <mxGeometry x="40" y="20" width="1500" height="40" as="geometry" />
+        </mxCell>
+
+        <!-- Initial Pseudostate -->
+        <mxCell id="init" value="" style="ellipse;fillColor=#0f172a;strokeColor=none;" vertex="1" parent="1">
+          <mxGeometry x="80" y="200" width="30" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="lbl_init" value="Mission Created" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="40" y="235" width="110" height="20" as="geometry" />
+        </mxCell>
+
+        <!-- ASSIGNED State -->
+        <mxCell id="s_assigned" value="&lt;b&gt;ASSIGNED&lt;/b&gt;&lt;hr size=&quot;1&quot;/&gt;entry / colony.setActive(this)&lt;br/&gt;do / wait for execution trigger" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dbeafe;strokeColor=#2563eb;strokeWidth=2;verticalAlign=top;align=left;spacingLeft=8;spacingTop=4;" vertex="1" parent="1">
+          <mxGeometry x="380" y="170" width="220" height="90" as="geometry" />
+        </mxCell>
+
+        <!-- IN_PROGRESS State -->
+        <mxCell id="s_inprogress" value="&lt;b&gt;IN_PROGRESS&lt;/b&gt;&lt;hr size=&quot;1&quot;/&gt;entry / status = IN_PROGRESS&lt;br/&gt;do / colony.advanceTime progresses duration&lt;br/&gt;exit / unassign agents, release equipment" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dbeafe;strokeColor=#2563eb;strokeWidth=2;verticalAlign=top;align=left;spacingLeft=8;spacingTop=4;" vertex="1" parent="1">
+          <mxGeometry x="780" y="160" width="280" height="110" as="geometry" />
+        </mxCell>
+
+        <!-- COMPLETED State -->
+        <mxCell id="s_completed" value="&lt;b&gt;COMPLETED&lt;/b&gt;&lt;hr size=&quot;1&quot;/&gt;entry / unassign agents&lt;br/&gt;entry / release equipment &amp;amp; target" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dcfce7;strokeColor=#16a34a;strokeWidth=2;verticalAlign=top;align=left;spacingLeft=8;spacingTop=4;" vertex="1" parent="1">
+          <mxGeometry x="1240" y="170" width="230" height="90" as="geometry" />
+        </mxCell>
+
+        <!-- Final State for COMPLETED -->
+        <mxCell id="final_comp" value="" style="ellipse;shape=doubleEllipse;fillColor=#0f172a;strokeColor=#0f172a;" vertex="1" parent="1">
+          <mxGeometry x="1340" y="320" width="30" height="30" as="geometry" />
+        </mxCell>
+
+        <!-- FAILED State -->
+        <mxCell id="s_failed" value="&lt;b&gt;FAILED&lt;/b&gt;&lt;hr size=&quot;1&quot;/&gt;entry / status = FAILED&lt;br/&gt;entry / colony.removeActiveMission()&lt;br/&gt;entry / unassign agents &amp;amp; release equip&lt;br/&gt;note: non-retriable, immutable" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fee2e2;strokeColor=#dc2626;strokeWidth=2;verticalAlign=top;align=left;spacingLeft=8;spacingTop=4;" vertex="1" parent="1">
+          <mxGeometry x="780" y="520" width="280" height="120" as="geometry" />
+        </mxCell>
+
+        <!-- Final State for FAILED -->
+        <mxCell id="final_fail" value="" style="ellipse;shape=doubleEllipse;fillColor=#0f172a;strokeColor=#0f172a;" vertex="1" parent="1">
+          <mxGeometry x="905" y="700" width="30" height="30" as="geometry" />
+        </mxCell>
+
+        <!-- Normal Transitions -->
+        <!-- init -> ASSIGNED -->
+        <mxCell id="t1" value="colony.submitMission(m)&lt;br/&gt;[Requirements Met: agents capable &amp;amp;&amp;amp;&lt;br/&gt;resources available &amp;amp;&amp;amp; no other active mission]" style="endArrow=block;html=1;strokeWidth=2;strokeColor=#334155;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" edge="1" source="init" target="s_assigned" parent="1" />
+        
+        <!-- ASSIGNED -> IN_PROGRESS -->
+        <mxCell id="t2" value="mission.startMission()&lt;br/&gt;/ assign agents, mark busy,&lt;br/&gt;consume resources, timeElapsed=0" style="endArrow=block;html=1;strokeWidth=2;strokeColor=#334155;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" edge="1" source="s_assigned" target="s_inprogress" parent="1" />
+
+        <!-- IN_PROGRESS self-transition -->
+        <mxCell id="t_loop" value="colony.advanceTime(t)&lt;br/&gt;[timeElapsed + t &amp;lt; duration &amp;amp;&amp;amp; no disruption]&lt;br/&gt;/ timeElapsed += t, battery -= x, fatigue += y" style="endArrow=block;html=1;strokeWidth=2;strokeColor=#334155;exitX=0.3;exitY=0;entryX=0.7;entryY=0;" edge="1" source="s_inprogress" target="s_inprogress" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="864" y="90" />
+              <mxPoint x="976" y="90" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+
+        <!-- IN_PROGRESS -> COMPLETED -->
+        <mxCell id="t3" value="colony.advanceTime(t)&lt;br/&gt;[timeElapsed &amp;gt;= requiredDuration]&lt;br/&gt;/ mission.endMission(COMPLETED)" style="endArrow=block;html=1;strokeWidth=2;strokeColor=#16a34a;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" edge="1" source="s_inprogress" target="s_completed" parent="1" />
+
+        <!-- COMPLETED -> final -->
+        <mxCell id="t_comp_final" style="endArrow=block;html=1;strokeWidth=2;strokeColor=#334155;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" source="s_completed" target="final_comp" parent="1" />
+
+        <!-- Failure Transitions -->
+        <!-- 1. Immediate Rejection: init -> FAILED -->
+        <mxCell id="t_rej" value="[REJECTION] colony.submitMission(m)&lt;br/&gt;[Guard: Another mission active || Agent lacks capability ||&lt;br/&gt;Insufficient resources || Dust storm on exploration]&lt;br/&gt;/ status = FAILED, record reason; NEVER BECOMES ACTIVE" style="endArrow=block;html=1;strokeWidth=2;strokeColor=#dc2626;exitX=0.5;exitY=1;entryX=0;entryY=0.5;" edge="1" source="init" target="s_failed" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="95" y="580" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+
+        <!-- 2. Dynamic Runtime Failure: IN_PROGRESS -> FAILED -->
+        <mxCell id="t_fail_dyn" value="[RUNTIME FAILURE] colony.advanceTime(t)&lt;br/&gt;[Guard: Dust storm strikes rover || Comm disruption during drone ||&lt;br/&gt;Equipment damaged || Battery depleted]&lt;br/&gt;/ mission.fail(reason), unassign agents, release equipment" style="endArrow=block;html=1;strokeWidth=2;strokeColor=#dc2626;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" source="s_inprogress" target="s_failed" parent="1" />
+
+        <!-- FAILED -> final -->
+        <mxCell id="t_fail_final" style="endArrow=block;html=1;strokeWidth=2;strokeColor=#334155;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" source="s_failed" target="final_fail" parent="1" />
+
+        <!-- Notes Box -->
+        <mxCell id="box_notes" value="&lt;b&gt;Lab 5 State Machine Specification Compliance Rules:&lt;/b&gt;&lt;br/&gt;1. Lifecycle States: ASSIGNED, IN_PROGRESS, COMPLETED, FAILED are strictly represented.&lt;br/&gt;2. Immediate Rejection Rule: An invalid or rejected mission transitions immediately to FAILED and NEVER enters ASSIGNED or IN_PROGRESS.&lt;br/&gt;3. Terminal State Rule: Failed and Completed missions cannot be retried; a new mission instance must be created for another attempt." style="rounded=1;whiteSpace=wrap;html=1;verticalAlign=top;align=left;spacingLeft=8;spacingTop=6;fillColor=#ffffff;strokeColor=#64748b;strokeWidth=1.5;" vertex="1" parent="1">
+          <mxGeometry x="40" y="800" width="1500" height="90" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

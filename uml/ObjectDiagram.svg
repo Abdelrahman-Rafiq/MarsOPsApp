@@ -1,0 +1,178 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1100" width="1600" height="1100" style="background:#f8f9fa; font-family:'Segoe UI', Arial, sans-serif;">
+  <defs>
+    <style>
+      .obj-box { fill: #ffffff; stroke: #1e3a8a; stroke-width: 2; rx: 4; }
+      .header-bg { fill: #dbeafe; stroke: #1e3a8a; stroke-width: 2; }
+      .obj-title { font-size: 13px; font-weight: bold; text-decoration: underline; fill: #0f172a; text-anchor: middle; font-family: 'Consolas', monospace; }
+      .content { font-size: 11px; fill: #1e293b; font-family: 'Consolas', 'Courier New', monospace; }
+      .link-line { stroke: #334155; stroke-width: 1.8; fill: none; }
+      .link-label { font-size: 11px; font-style: italic; fill: #475569; }
+    </style>
+  </defs>
+
+  <!-- Title Banner -->
+  <rect x="20" y="20" width="1560" height="50" fill="#1e293b" rx="6"/>
+  <text x="800" y="52" font-size="20" font-weight="bold" fill="#ffffff" text-anchor="middle">MARS-OPS SYSTEM — SYSTEM STATE OBJECT DIAGRAM (SNAPSHOT AT TIME = 2)</text>
+
+  <!-- marsColony : Colony -->
+  <g id="marsColony">
+    <rect x="630" y="100" width="340" height="150" class="obj-box"/>
+    <path d="M 630,100 L 970,100 L 970,135 L 630,135 Z" class="header-bg"/>
+    <text x="800" y="122" class="obj-title">marsColony : Colony</text>
+    <line x1="630" y1="135" x2="970" y2="135" stroke="#1e3a8a" stroke-width="1.5"/>
+    <text x="640" y="152" class="content">currentTime = 2</text>
+    <text x="640" y="170" class="content">activeMission = expMission1</text>
+    <text x="640" y="188" class="content">totalOperationalOxygen = 450</text>
+    <text x="640" y="206" class="content">totalOperationalBattery = 510</text>
+    <text x="640" y="224" class="content">totalOperationalSpareParts = 80</text>
+  </g>
+
+  <!-- marsEnv : Environment -->
+  <g id="marsEnv">
+    <rect x="1150" y="100" width="280" height="90" class="obj-box"/>
+    <path d="M 1150,100 L 1430,100 L 1430,135 L 1150,135 Z" class="header-bg"/>
+    <text x="1290" y="122" class="obj-title">marsEnv : Environment</text>
+    <line x1="1150" y1="135" x2="1430" y2="135" stroke="#1e3a8a" stroke-width="1.5"/>
+    <text x="1160" y="155" class="content">environmentCondition = NORMAL</text>
+    <text x="1160" y="175" class="content">dustStormProbability = 7%</text>
+  </g>
+
+  <!-- expMission1 : ExplorationMission -->
+  <g id="expMission1">
+    <rect x="600" y="340" width="400" height="190" class="obj-box"/>
+    <path d="M 600,340 L 1000,340 L 1000,375 L 600,375 Z" class="header-bg"/>
+    <text x="800" y="362" class="obj-title">expMission1 : ExplorationMission</text>
+    <line x1="600" y1="375" x2="1000" y2="375" stroke="#1e3a8a" stroke-width="1.5"/>
+    <text x="610" y="395" class="content">missionId = "Mission-1"</text>
+    <text x="610" y="413" class="content">description = "Explore Gale Crater for water ice"</text>
+    <text x="610" y="431" class="content">location = "Gale Crater"</text>
+    <text x="610" y="449" class="content">status = IN_PROGRESS</text>
+    <text x="610" y="467" class="content">requiredDuration = 7</text>
+    <text x="610" y="485" class="content">timeElapsed = 2</text>
+    <text x="610" y="503" class="content">requiredBatteryLevel = 25.0</text>
+    <text x="610" y="521" class="content">failureReason = ""</text>
+  </g>
+
+  <!-- watney : Scientist -->
+  <g id="watney">
+    <rect x="80" y="620" width="320" height="200" class="obj-box"/>
+    <path d="M 80,620 L 400,620 L 400,655 L 80,655 Z" class="header-bg"/>
+    <text x="240" y="642" class="obj-title">watney : Scientist</text>
+    <line x1="80" y1="655" x2="400" y2="655" stroke="#1e3a8a" stroke-width="1.5"/>
+    <text x="90" y="675" class="content">id = "Scientist1"</text>
+    <text x="90" y="693" class="content">name = "Dr. Mark Watney"</text>
+    <text x="90" y="711" class="content">location = "Gale Crater"</text>
+    <text x="90" y="729" class="content">healthStatus = 100</text>
+    <text x="90" y="747" class="content">fatigueLevel = 10</text>
+    <text x="90" y="765" class="content">onMission = true</text>
+    <text x="90" y="783" class="content">availability = false</text>
+    <text x="90" y="801" class="content">capabilities = [SCIENTIFIC_RESEARCH, ...]</text>
+  </g>
+
+  <!-- curiosity : ExplorationRover -->
+  <g id="curiosity">
+    <rect x="470" y="620" width="340" height="200" class="obj-box"/>
+    <path d="M 470,620 L 810,620 L 810,655 L 470,655 Z" class="header-bg"/>
+    <text x="640" y="642" class="obj-title">curiosity : ExplorationRover</text>
+    <line x1="470" y1="655" x2="810" y2="655" stroke="#1e3a8a" stroke-width="1.5"/>
+    <text x="480" y="675" class="content">id = "ExplorationRover1"</text>
+    <text x="480" y="693" class="content">name = "Curiosity-2"</text>
+    <text x="480" y="711" class="content">location = "Gale Crater"</text>
+    <text x="480" y="729" class="content">healthStatus = 100</text>
+    <text x="480" y="747" class="content">batteryLevel = 90</text>
+    <text x="480" y="765" class="content">onMission = true</text>
+    <text x="480" y="783" class="content">availability = false</text>
+    <text x="480" y="801" class="content">capabilities = [SURFACE_EXPLORATION, ...]</text>
+  </g>
+
+  <!-- spectrometer : Equipment -->
+  <g id="spectrometer">
+    <rect x="480" y="880" width="320" height="150" class="obj-box"/>
+    <path d="M 480,880 L 800,880 L 800,915 L 480,915 Z" class="header-bg"/>
+    <text x="640" y="902" class="obj-title">spectrometer : Equipment</text>
+    <line x1="480" y1="915" x2="800" y2="915" stroke="#1e3a8a" stroke-width="1.5"/>
+    <text x="490" y="935" class="content">name = "Mass Spectrometer"</text>
+    <text x="490" y="953" class="content">providedCapability = SCIENTIFIC_RESEARCH</text>
+    <text x="490" y="971" class="content">damaged = false</text>
+    <text x="490" y="989" class="content">available = false</text>
+    <text x="490" y="1007" class="content">usageNumber = 1</text>
+  </g>
+
+  <!-- habitat1 : Habitat -->
+  <g id="habitat1">
+    <rect x="910" y="620" width="310" height="190" class="obj-box"/>
+    <path d="M 910,620 L 1220,620 L 1220,655 L 910,655 Z" class="header-bg"/>
+    <text x="1065" y="642" class="obj-title">habitat1 : Habitat</text>
+    <line x1="910" y1="655" x2="1220" y2="655" stroke="#1e3a8a" stroke-width="1.5"/>
+    <text x="920" y="675" class="content">location = "Habitat1"</text>
+    <text x="920" y="693" class="content">capacity = 4</text>
+    <text x="920" y="711" class="content">currentOccupancy = 0</text>
+    <text x="920" y="729" class="content">isOperational = true</text>
+    <text x="920" y="747" class="content">maxResources = 300</text>
+    <text x="920" y="765" class="content">resources[OXYGEN] = 150</text>
+    <text x="920" y="783" class="content">resources[BATTERY_POWER] = 80</text>
+    <text x="920" y="801" class="content">resources[WATER] = 50</text>
+  </g>
+
+  <!-- lss1 : LifeSupportSystem -->
+  <g id="lss1">
+    <rect x="910" y="880" width="310" height="110" class="obj-box"/>
+    <path d="M 910,880 L 1220,880 L 1220,915 L 910,915 Z" class="header-bg"/>
+    <text x="1065" y="902" class="obj-title">lss1 : LifeSupportSystem</text>
+    <line x1="910" y1="915" x2="1220" y2="915" stroke="#1e3a8a" stroke-width="1.5"/>
+    <text x="920" y="935" class="content">filtrationRate = 90</text>
+    <text x="920" y="955" class="content">isFunctional = true</text>
+    <text x="920" y="975" class="content">ownedBy = habitat1</text>
+  </g>
+
+  <!-- storage1 : StorageFacilities -->
+  <g id="storage1">
+    <rect x="1270" y="620" width="290" height="170" class="obj-box"/>
+    <path d="M 1270,620 L 1560,620 L 1560,655 L 1270,655 Z" class="header-bg"/>
+    <text x="1415" y="642" class="obj-title">storage1 : StorageFacilities</text>
+    <line x1="1270" y1="655" x2="1560" y2="655" stroke="#1e3a8a" stroke-width="1.5"/>
+    <text x="1280" y="675" class="content">location = "Storage Facility1"</text>
+    <text x="1280" y="693" class="content">isOperational = true</text>
+    <text x="1280" y="711" class="content">resources[OXYGEN] = 200</text>
+    <text x="1280" y="729" class="content">resources[SPARE_PARTS] = 80</text>
+    <text x="1280" y="747" class="content">resources[WATER] = 150</text>
+    <text x="1280" y="765" class="content">resources[BATTERY_POWER] = 200</text>
+  </g>
+
+  <!-- LINKS -->
+  <!-- marsColony - - marsEnv -->
+  <line x1="970" y1="145" x2="1150" y2="145" class="link-line"/>
+  <text x="1030" y="138" class="link-label">environment</text>
+
+  <!-- marsColony - - expMission1 -->
+  <line x1="800" y1="250" x2="800" y2="340" class="link-line"/>
+  <text x="810" y="300" class="link-label">activeMission</text>
+
+  <!-- expMission1 - - watney -->
+  <line x1="650" y1="530" x2="240" y2="620" class="link-line"/>
+  <text x="370" y="560" class="link-label">assigned crewMember</text>
+
+  <!-- expMission1 - - curiosity -->
+  <line x1="750" y1="530" x2="640" y2="620" class="link-line"/>
+  <text x="710" y="580" class="link-label">assigned vehicle</text>
+
+  <!-- curiosity - - spectrometer -->
+  <line x1="640" y1="820" x2="640" y2="880" class="link-line"/>
+  <text x="650" y="855" class="link-label">carriedEquipment</text>
+
+  <!-- habitat1 - - lss1 (composition) -->
+  <line x1="1065" y1="810" x2="1065" y2="880" class="link-line"/>
+  <text x="1075" y="850" class="link-label">lifeSupport</text>
+
+  <!-- marsColony - - habitat1 -->
+  <line x1="880" y1="250" x2="1040" y2="620" class="link-line"/>
+  <text x="960" y="420" class="link-label">facilities[0]</text>
+
+  <!-- marsColony - - storage1 -->
+  <line x1="940" y1="250" x2="1350" y2="620" class="link-line"/>
+  <text x="1220" y="400" class="link-label">facilities[4]</text>
+
+  <!-- marsColony - - watney -->
+  <line x1="630" y1="210" x2="220" y2="620" class="link-line"/>
+  <text x="360" y="330" class="link-label">agents[0]</text>
+</svg>

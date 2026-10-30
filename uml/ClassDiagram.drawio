@@ -1,0 +1,337 @@
+<mxfile host="app.diagrams.net" version="24.0.0">
+  <diagram id="ClassDiagram" name="ClassDiagram">
+    <mxGraphModel dx="1600" dy="1000" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="2400" pageHeight="1800" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <!-- Title Banner -->
+        <mxCell id="title" value="&lt;b&gt;&lt;font style=&quot;font-size: 18px;&quot;&gt;MARS-OPS SYSTEM — COMPLETE STATIC STRUCTURE UML CLASS DIAGRAM (ALL 35 CLASSES/ENUMS)&lt;/font&gt;&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#0f172a;fontColor=#ffffff;strokeColor=#0f172a;" vertex="1" parent="1">
+          <mxGeometry x="40" y="20" width="2200" height="45" as="geometry" />
+        </mxCell>
+
+        <!-- ==================== 1. CORE CONTROLLER & INFRASTRUCTURE ==================== -->
+        
+        <!-- Colony -->
+        <mxCell id="Colony" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;Colony&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;- agents: List&amp;lt;Agent&amp;gt;&lt;br/&gt;- facilities: List&amp;lt;Facility&amp;gt;&lt;br/&gt;- activeMission: Mission&lt;br/&gt;- environment: Environment&lt;br/&gt;- currentTime: int&lt;br/&gt;- emergencyHistory: List&amp;lt;Emergency&amp;gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ Colony()&lt;br/&gt;+ Colony(agents: List&amp;lt;Agent&amp;gt;, facilities: List&amp;lt;Facility&amp;gt;)&lt;br/&gt;+ setupColony(nAgents: int, nFacilities: int): Colony [static]&lt;br/&gt;+ addAgent(agent: Agent): void&lt;br/&gt;+ removeAgent(agent: Agent): boolean&lt;br/&gt;+ addFacility(facility: Facility): void&lt;br/&gt;+ getTotalResource(type: ResourceType): int&lt;br/&gt;+ deductResource(type: ResourceType, amount: int): boolean&lt;br/&gt;+ submitMission(mission: Mission): boolean&lt;br/&gt;+ startActiveMission(): boolean&lt;br/&gt;+ advanceTime(timeUnits: int): void&lt;br/&gt;+ triggerEmergency(emergency: Emergency): boolean&lt;br/&gt;+ generateStatusReport(): String&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=11;fontFamily=Helvetica;html=1;rounded=0;strokeWidth=2;fillColor=#ffffff;strokeColor=#1e293b;" vertex="1" parent="1">
+          <mxGeometry x="920" y="85" width="410" height="270" as="geometry" />
+        </mxCell>
+
+        <!-- Environment -->
+        <mxCell id="Environment" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;Environment&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;- environmentCondition: EnvironmentCondition [static]&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ Environment()&lt;br/&gt;+ setCondition(c: EnvironmentCondition): void&lt;br/&gt;+ changeState(): void&lt;br/&gt;+ getState(): EnvironmentCondition [static]&lt;br/&gt;+ setState(c: EnvironmentCondition): void [static]&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=11;fontFamily=Helvetica;html=1;rounded=0;strokeWidth=2;fillColor=#ffffff;strokeColor=#1e293b;" vertex="1" parent="1">
+          <mxGeometry x="1400" y="85" width="280" height="150" as="geometry" />
+        </mxCell>
+
+        <!-- Equipment -->
+        <mxCell id="Equipment" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;Equipment&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;- name: String&lt;br/&gt;- providedCapability: Capability&lt;br/&gt;- damaged: boolean&lt;br/&gt;- usageNumber: int&lt;br/&gt;- available: boolean&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ Equipment(name: String, cap: Capability)&lt;br/&gt;+ createSpectrometer(): Equipment [static]&lt;br/&gt;+ createRepairToolkit(): Equipment [static]&lt;br/&gt;+ use(): boolean&lt;br/&gt;+ repair(): void&lt;br/&gt;+ isAvailable(): boolean&lt;br/&gt;+ setAvailability(a: boolean): void&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=11;fontFamily=Helvetica;html=1;rounded=0;strokeWidth=2;fillColor=#ffffff;strokeColor=#1e293b;" vertex="1" parent="1">
+          <mxGeometry x="1750" y="85" width="300" height="220" as="geometry" />
+        </mxCell>
+
+        <!-- ==================== 2. AGENT HIERARCHY ==================== -->
+        
+        <!-- Agent (Abstract) -->
+        <mxCell id="Agent" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&amp;laquo;abstract&amp;raquo;&lt;br/&gt;&lt;b&gt;Agent&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;- name: String&lt;br/&gt;- id: String&lt;br/&gt;# healthStatus: int&lt;br/&gt;# availability: boolean&lt;br/&gt;- onMission: boolean&lt;br/&gt;- location: String&lt;br/&gt;# capabilities: Set&amp;lt;Capability&amp;gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ canPerform(mission: Mission): boolean&lt;br/&gt;+ canHandle(cap: Capability): boolean&lt;br/&gt;+ isAvailable(): boolean&lt;br/&gt;+ setOnMission(onMission: boolean): void&lt;br/&gt;+ takeDamage(amt: int): boolean&lt;br/&gt;+ restoreHealth(amt: int): boolean&lt;br/&gt;+ isHuman(): boolean {abstract}&lt;br/&gt;+ isRobot(): boolean {abstract}&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=11;fontFamily=Helvetica;html=1;rounded=0;strokeWidth=2;fillColor=#eff6ff;strokeColor=#1d4ed8;" vertex="1" parent="1">
+          <mxGeometry x="140" y="420" width="310" height="230" as="geometry" />
+        </mxCell>
+
+        <!-- CrewMember (Abstract) -->
+        <mxCell id="CrewMember" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&amp;laquo;abstract&amp;raquo;&lt;br/&gt;&lt;b&gt;CrewMember&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;- fatigueLevel: int&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ increaseFatigue(amt: int): boolean&lt;br/&gt;+ rest(amt: int): boolean&lt;br/&gt;+ eat(h: Habitat, amt: int): boolean&lt;br/&gt;+ drink(h: Habitat, amt: int): boolean&lt;br/&gt;+ isHuman(): boolean {return true}&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=11;fontFamily=Helvetica;html=1;rounded=0;strokeWidth=2;fillColor=#eff6ff;strokeColor=#1d4ed8;" vertex="1" parent="1">
+          <mxGeometry x="40" y="700" width="220" height="150" as="geometry" />
+        </mxCell>
+
+        <!-- RoboticUnit (Abstract) -->
+        <mxCell id="RoboticUnit" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&amp;laquo;abstract&amp;raquo;&lt;br/&gt;&lt;b&gt;RoboticUnit&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;- batteryLevel: int&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ discharge(amt: int): boolean&lt;br/&gt;+ charge(ps: PowerStation, amt): bool&lt;br/&gt;+ setBatteryLevel(lvl: int): boolean&lt;br/&gt;+ isRobot(): boolean {return true}&lt;br/&gt;+ isHuman(): boolean {return false}&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=11;fontFamily=Helvetica;html=1;rounded=0;strokeWidth=2;fillColor=#eff6ff;strokeColor=#1d4ed8;" vertex="1" parent="1">
+          <mxGeometry x="290" y="700" width="230" height="150" as="geometry" />
+        </mxCell>
+
+        <!-- Scientist -->
+        <mxCell id="Scientist" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;Scientist&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ Scientist(name: String, id: String)&lt;br/&gt;+ canPerform(m: Mission): boolean&lt;br/&gt;+ conductResearch(lab: Laboratory): bool&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=11;fontFamily=Helvetica;html=1;rounded=0;strokeWidth=1.5;fillColor=#ffffff;strokeColor=#1e293b;" vertex="1" parent="1">
+          <mxGeometry x="30" y="900" width="230" height="80" as="geometry" />
+        </mxCell>
+
+        <!-- Engineer -->
+        <mxCell id="Engineer" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;Engineer&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ Engineer(name: String, id: String)&lt;br/&gt;+ canPerform(m: Mission): boolean&lt;br/&gt;+ repair(target: Object): boolean&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=11;fontFamily=Helvetica;html=1;rounded=0;strokeWidth=1.5;fillColor=#ffffff;strokeColor=#1e293b;" vertex="1" parent="1">
+          <mxGeometry x="30" y="1000" width="230" height="80" as="geometry" />
+        </mxCell>
+
+        <!-- MedicalOfficer -->
+        <mxCell id="MedicalOfficer" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;MedicalOfficer&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ MedicalOfficer(name: String, id: String)&lt;br/&gt;+ canPerform(m: Mission): boolean&lt;br/&gt;+ heal(target: CrewMember): boolean&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=11;fontFamily=Helvetica;html=1;rounded=0;strokeWidth=1.5;fillColor=#ffffff;strokeColor=#1e293b;" vertex="1" parent="1">
+          <mxGeometry x="30" y="1100" width="230" height="80" as="geometry" />
+        </mxCell>
+
+        <!-- RepairRobot -->
+        <mxCell id="RepairRobot" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;RepairRobot&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ RepairRobot(name: String, id: String)&lt;br/&gt;+ canPerform(m: Mission): boolean&lt;br/&gt;+ repair(target: Object): boolean&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=11;fontFamily=Helvetica;html=1;rounded=0;strokeWidth=1.5;fillColor=#ffffff;strokeColor=#1e293b;" vertex="1" parent="1">
+          <mxGeometry x="280" y="900" width="220" height="80" as="geometry" />
+        </mxCell>
+
+        <!-- Vehicle (Abstract) -->
+        <mxCell id="Vehicle" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&amp;laquo;abstract&amp;raquo;&lt;br/&gt;&lt;b&gt;Vehicle&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;- carriedEquipment: Equipment&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ mountEquipment(eq: Equipment): void&lt;br/&gt;+ getCarriedEquipment(): Equipment&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=11;fontFamily=Helvetica;html=1;rounded=0;strokeWidth=2;fillColor=#eff6ff;strokeColor=#1d4ed8;" vertex="1" parent="1">
+          <mxGeometry x="520" y="900" width="220" height="100" as="geometry" />
+        </mxCell>
+
+        <!-- ExplorationRover -->
+        <mxCell id="ExplorationRover" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;ExplorationRover&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ ExplorationRover(name, id)&lt;br/&gt;+ canPerform(m: Mission): boolean&lt;br/&gt;+ traverseSurface(dist: int): boolean&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=11;fontFamily=Helvetica;html=1;rounded=0;strokeWidth=1.5;fillColor=#ffffff;strokeColor=#1e293b;" vertex="1" parent="1">
+          <mxGeometry x="400" y="1040" width="220" height="80" as="geometry" />
+        </mxCell>
+
+        <!-- Drone -->
+        <mxCell id="Drone" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;Drone&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ Drone(name: String, id: String)&lt;br/&gt;+ canPerform(m: Mission): boolean&lt;br/&gt;+ aerialRecon(): boolean&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=11;fontFamily=Helvetica;html=1;rounded=0;strokeWidth=1.5;fillColor=#ffffff;strokeColor=#1e293b;" vertex="1" parent="1">
+          <mxGeometry x="640" y="1040" width="210" height="80" as="geometry" />
+        </mxCell>
+
+        <!-- ==================== 3. FACILITY HIERARCHY ==================== -->
+
+        <!-- Facility (Abstract) -->
+        <mxCell id="Facility" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&amp;laquo;abstract&amp;raquo;&lt;br/&gt;&lt;b&gt;Facility&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;- location: String&lt;br/&gt;- currentOccupancy: int&lt;br/&gt;- capacity: int&lt;br/&gt;- isOperational: boolean&lt;br/&gt;- equipments: List&amp;lt;Equipment&amp;gt;&lt;br/&gt;# resources: Map&amp;lt;ResourceType, Integer&amp;gt;&lt;br/&gt;# maxResources: int&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ useResources(): boolean {abstract}&lt;br/&gt;+ addResource(type, amt): boolean&lt;br/&gt;+ deductResource(type, amt): int&lt;br/&gt;+ transferResourceTo(target, type, amt): bool&lt;br/&gt;+ isOperational(): boolean&lt;br/&gt;+ setOperationalStatus(status): void&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=11;fontFamily=Helvetica;html=1;rounded=0;strokeWidth=2;fillColor=#eff6ff;strokeColor=#1d4ed8;" vertex="1" parent="1">
+          <mxGeometry x="580" y="420" width="310" height="230" as="geometry" />
+        </mxCell>
+
+        <!-- Habitat -->
+        <mxCell id="Habitat" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;Habitat&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;- lifeSupport: LifeSupportSystem&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ Habitat()&lt;br/&gt;+ useResources(): boolean&lt;br/&gt;+ getLifeSupport(): LifeSupportSystem&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=11;fontFamily=Helvetica;html=1;rounded=0;strokeWidth=1.5;fillColor=#ffffff;strokeColor=#1e293b;" vertex="1" parent="1">
+          <mxGeometry x="780" y="700" width="200" height="95" as="geometry" />
+        </mxCell>
+
+        <!-- LifeSupportSystem (Component) -->
+        <mxCell id="LifeSupportSystem" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;LifeSupportSystem&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;- filtrationRate: int&lt;br/&gt;- isFunctional: boolean&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ getFiltrationRate(): int&lt;br/&gt;+ isFunctional(): boolean&lt;br/&gt;+ setFunctional(status): void&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=11;fontFamily=Helvetica;html=1;rounded=0;strokeWidth=1.5;fillColor=#ffffff;strokeColor=#1e293b;" vertex="1" parent="1">
+          <mxGeometry x="780" y="830" width="200" height="90" as="geometry" />
+        </mxCell>
+
+        <!-- Laboratory -->
+        <mxCell id="Laboratory" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;Laboratory&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;- hasFire: boolean&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ Laboratory()&lt;br/&gt;+ useResources(): boolean&lt;br/&gt;+ setFire(fire: boolean): void&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=11;fontFamily=Helvetica;html=1;rounded=0;strokeWidth=1.5;fillColor=#ffffff;strokeColor=#1e293b;" vertex="1" parent="1">
+          <mxGeometry x="1000" y="700" width="190" height="95" as="geometry" />
+        </mxCell>
+
+        <!-- PowerStation -->
+        <mxCell id="PowerStation" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;PowerStation&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ PowerStation()&lt;br/&gt;+ useResources(): boolean&lt;br/&gt;+ recharge(unit: RoboticUnit, amt: int)&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=11;fontFamily=Helvetica;html=1;rounded=0;strokeWidth=1.5;fillColor=#ffffff;strokeColor=#1e293b;" vertex="1" parent="1">
+          <mxGeometry x="1000" y="830" width="190" height="90" as="geometry" />
+        </mxCell>
+
+        <!-- StorageFacilities -->
+        <mxCell id="StorageFacilities" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;StorageFacilities&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ StorageFacilities()&lt;br/&gt;+ useResources(): boolean&lt;br/&gt;+ storeResource(type, amt): boolean&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=11;fontFamily=Helvetica;html=1;rounded=0;strokeWidth=1.5;fillColor=#ffffff;strokeColor=#1e293b;" vertex="1" parent="1">
+          <mxGeometry x="780" y="950" width="200" height="90" as="geometry" />
+        </mxCell>
+
+        <!-- CommunicationStation -->
+        <mxCell id="CommunicationStation" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;CommunicationStation&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ CommunicationStation()&lt;br/&gt;+ useResources(): boolean&lt;br/&gt;+ transmitSignal(): boolean&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=11;fontFamily=Helvetica;html=1;rounded=0;strokeWidth=1.5;fillColor=#ffffff;strokeColor=#1e293b;" vertex="1" parent="1">
+          <mxGeometry x="1000" y="950" width="190" height="90" as="geometry" />
+        </mxCell>
+
+        <!-- ==================== 4. MISSION HIERARCHY ==================== -->
+
+        <!-- Mission (Abstract) -->
+        <mxCell id="Mission" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&amp;laquo;abstract&amp;raquo;&lt;br/&gt;&lt;b&gt;Mission&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;# colony: Colony&lt;br/&gt;# missionId: String&lt;br/&gt;- description: String&lt;br/&gt;- status: MissionState&lt;br/&gt;- location: String&lt;br/&gt;# resources: ResourceType[]&lt;br/&gt;# requiredDuration: int&lt;br/&gt;# timeElapsed: int&lt;br/&gt;# failureReason: String&lt;br/&gt;# equipment: Equipment&lt;br/&gt;# assignedAgents: List&amp;lt;Agent&amp;gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ submitMission(): boolean {abstract}&lt;br/&gt;+ startMission(): boolean&lt;br/&gt;+ endMission(state: MissionState): void&lt;br/&gt;+ progress(timeUnits: int): void&lt;br/&gt;+ isCompleted(): boolean&lt;br/&gt;+ fail(reason: String): void&lt;br/&gt;+ complete(): void&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=11;fontFamily=Helvetica;html=1;rounded=0;strokeWidth=2;fillColor=#eff6ff;strokeColor=#1d4ed8;" vertex="1" parent="1">
+          <mxGeometry x="1220" y="420" width="310" height="250" as="geometry" />
+        </mxCell>
+
+        <!-- ExplorationMission -->
+        <mxCell id="ExplorationMission" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;ExplorationMission&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;- requiredBatteryLevel: double&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ ExplorationMission(c, id, dur, eq)&lt;br/&gt;+ submitMission(): boolean&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=11;fontFamily=Helvetica;html=1;rounded=0;strokeWidth=1.5;fillColor=#ffffff;strokeColor=#1e293b;" vertex="1" parent="1">
+          <mxGeometry x="1220" y="700" width="220" height="100" as="geometry" />
+        </mxCell>
+
+        <!-- RepairMission -->
+        <mxCell id="RepairMission" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;RepairMission&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;- targetFacility: Facility&lt;br/&gt;- targetEquipment: Equipment&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ RepairMission(c, id, fac, eq)&lt;br/&gt;+ submitMission(): boolean&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=11;fontFamily=Helvetica;html=1;rounded=0;strokeWidth=1.5;fillColor=#ffffff;strokeColor=#1e293b;" vertex="1" parent="1">
+          <mxGeometry x="1460" y="700" width="210" height="100" as="geometry" />
+        </mxCell>
+
+        <!-- ResearchMission -->
+        <mxCell id="ResearchMission" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;ResearchMission&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;- targetLab: Laboratory&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ ResearchMission(c, id, lab, eq)&lt;br/&gt;+ submitMission(): boolean&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=11;fontFamily=Helvetica;html=1;rounded=0;strokeWidth=1.5;fillColor=#ffffff;strokeColor=#1e293b;" vertex="1" parent="1">
+          <mxGeometry x="1220" y="830" width="220" height="100" as="geometry" />
+        </mxCell>
+
+        <!-- RescueMission -->
+        <mxCell id="RescueMission" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;RescueMission&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;- strandedEntity: Agent&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ RescueMission(c, id, stranded)&lt;br/&gt;+ submitMission(): boolean&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=11;fontFamily=Helvetica;html=1;rounded=0;strokeWidth=1.5;fillColor=#ffffff;strokeColor=#1e293b;" vertex="1" parent="1">
+          <mxGeometry x="1460" y="830" width="210" height="100" as="geometry" />
+        </mxCell>
+
+        <!-- ==================== 5. EMERGENCY HIERARCHY ==================== -->
+
+        <!-- Emergency (Abstract) -->
+        <mxCell id="Emergency" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&amp;laquo;abstract&amp;raquo;&lt;br/&gt;&lt;b&gt;Emergency&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;# emergencyId: String&lt;br/&gt;# location: String&lt;br/&gt;# description: String&lt;br/&gt;# requiredCapabilities: Capability[]&lt;br/&gt;# emergencyState: EmergencyState&lt;br/&gt;# failureReason: String&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ handle(colony: Colony): boolean {abstract}&lt;br/&gt;+ displayEmergency(): String&lt;br/&gt;+ getEmergencyState(): EmergencyState&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=11;fontFamily=Helvetica;html=1;rounded=0;strokeWidth=2;fillColor=#eff6ff;strokeColor=#1d4ed8;" vertex="1" parent="1">
+          <mxGeometry x="1690" y="420" width="290" height="230" as="geometry" />
+        </mxCell>
+
+        <!-- OxygenLeak -->
+        <mxCell id="OxygenLeak" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;OxygenLeak&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;- targetHabitat: Habitat&lt;br/&gt;- oxygenLossRate: int&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ OxygenLeak(hab: Habitat, loss: int)&lt;br/&gt;+ handle(colony: Colony): boolean&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=11;fontFamily=Helvetica;html=1;rounded=0;strokeWidth=1.5;fillColor=#ffffff;strokeColor=#1e293b;" vertex="1" parent="1">
+          <mxGeometry x="1700" y="700" width="230" height="100" as="geometry" />
+        </mxCell>
+
+        <!-- Fire -->
+        <mxCell id="Fire" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;Fire&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;- lab: Laboratory&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ Fire(lab: Laboratory)&lt;br/&gt;+ handle(colony: Colony): boolean&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=11;fontFamily=Helvetica;html=1;rounded=0;strokeWidth=1.5;fillColor=#ffffff;strokeColor=#1e293b;" vertex="1" parent="1">
+          <mxGeometry x="1950" y="700" width="210" height="100" as="geometry" />
+        </mxCell>
+
+        <!-- RoverBreakdown -->
+        <mxCell id="RoverBreakdown" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;RoverBreakdown&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;- damagedRover: ExplorationRover&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ RoverBreakdown(r: ExplorationRover)&lt;br/&gt;+ handle(colony: Colony): boolean&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=11;fontFamily=Helvetica;html=1;rounded=0;strokeWidth=1.5;fillColor=#ffffff;strokeColor=#1e293b;" vertex="1" parent="1">
+          <mxGeometry x="1700" y="830" width="230" height="100" as="geometry" />
+        </mxCell>
+
+        <!-- MedicalEmergency -->
+        <mxCell id="MedicalEmergency" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;MedicalEmergency&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;- patient: CrewMember&lt;br/&gt;- medicalHabitat: Habitat&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ MedicalEmergency(p, hab)&lt;br/&gt;+ handle(colony: Colony): boolean&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=11;fontFamily=Helvetica;html=1;rounded=0;strokeWidth=1.5;fillColor=#ffffff;strokeColor=#1e293b;" vertex="1" parent="1">
+          <mxGeometry x="1950" y="830" width="210" height="100" as="geometry" />
+        </mxCell>
+
+        <!-- ==================== 6. ENUMS ==================== -->
+
+        <!-- Capability -->
+        <mxCell id="Capability" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&amp;laquo;enumeration&amp;raquo;&lt;br/&gt;&lt;b&gt;Capability&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;SCIENTIFIC_RESEARCH&lt;br/&gt;EQUIPMENT_REPAIR&lt;br/&gt;MEDICAL_CARE&lt;br/&gt;SURFACE_EXPLORATION&lt;br/&gt;AERIAL_RECON&lt;br/&gt;COMMUNICATION&lt;br/&gt;FIRE_RESPONSE&lt;br/&gt;RESCUE&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=10.5;fontFamily=Helvetica;html=1;rounded=0;strokeWidth=1.5;fillColor=#fef9c3;strokeColor=#ca8a04;" vertex="1" parent="1">
+          <mxGeometry x="40" y="1300" width="180" height="180" as="geometry" />
+        </mxCell>
+
+        <!-- ResourceType -->
+        <mxCell id="ResourceType" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&amp;laquo;enumeration&amp;raquo;&lt;br/&gt;&lt;b&gt;ResourceType&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;OXYGEN&lt;br/&gt;WATER&lt;br/&gt;FOOD&lt;br/&gt;FUEL&lt;br/&gt;BATTERY_POWER&lt;br/&gt;MEDICAL_SUPPLIES&lt;br/&gt;SPARE_PARTS&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=10.5;fontFamily=Helvetica;html=1;rounded=0;strokeWidth=1.5;fillColor=#fef9c3;strokeColor=#ca8a04;" vertex="1" parent="1">
+          <mxGeometry x="240" y="1300" width="160" height="170" as="geometry" />
+        </mxCell>
+
+        <!-- MissionState -->
+        <mxCell id="MissionState" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&amp;laquo;enumeration&amp;raquo;&lt;br/&gt;&lt;b&gt;MissionState&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;ASSIGNED&lt;br/&gt;IN_PROGRESS&lt;br/&gt;COMPLETED&lt;br/&gt;FAILED&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=10.5;fontFamily=Helvetica;html=1;rounded=0;strokeWidth=1.5;fillColor=#fef9c3;strokeColor=#ca8a04;" vertex="1" parent="1">
+          <mxGeometry x="420" y="1300" width="140" height="120" as="geometry" />
+        </mxCell>
+
+        <!-- EmergencyState -->
+        <mxCell id="EmergencyState" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&amp;laquo;enumeration&amp;raquo;&lt;br/&gt;&lt;b&gt;EmergencyState&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;TRIGGERED&lt;br/&gt;RESOLVED&lt;br/&gt;UNRESOLVED&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=10.5;fontFamily=Helvetica;html=1;rounded=0;strokeWidth=1.5;fillColor=#fef9c3;strokeColor=#ca8a04;" vertex="1" parent="1">
+          <mxGeometry x="580" y="1300" width="140" height="110" as="geometry" />
+        </mxCell>
+
+        <!-- EnvironmentCondition -->
+        <mxCell id="EnvironmentCondition" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&amp;laquo;enumeration&amp;raquo;&lt;br/&gt;&lt;b&gt;EnvironmentCondition&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;NORMAL&lt;br/&gt;DUST_STORM&lt;br/&gt;COMMUNICATION_DISRUPTION&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=10.5;fontFamily=Helvetica;html=1;rounded=0;strokeWidth=1.5;fillColor=#fef9c3;strokeColor=#ca8a04;" vertex="1" parent="1">
+          <mxGeometry x="740" y="1300" width="220" height="110" as="geometry" />
+        </mxCell>
+
+        <!-- ==================== 7. UML RELATIONSHIP LEGEND ==================== -->
+        <mxCell id="Legend" value="&lt;b&gt;&lt;font style=&quot;font-size: 13px;&quot;&gt;UML Relationship Legend &amp;amp; Object-Oriented Design Justification (Lab 5 Sections 11.1 &amp;amp; 11.2)&lt;/font&gt;&lt;/b&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:4px;&quot;&gt;&lt;b&gt;1. Association (Solid line / open arrow):&lt;/b&gt; Objects interact or collaborate without lifecycle dependence (e.g., Mission references assignedAgents; Colony references activeMission; Vehicle mounts Equipment).&lt;br/&gt;&lt;b&gt;2. Aggregation (Hollow diamond):&lt;/b&gt; Whole-part relationship where parts survive whole&apos;s lifecycle (e.g., Colony aggregates Agents &amp;amp; Facilities; if Colony shuts down, members exist).&lt;br/&gt;&lt;b&gt;3. Composition (Solid diamond):&lt;/b&gt; Strong ownership; part&apos;s lifecycle is strictly tied to the whole (e.g., Habitat owns LifeSupportSystem; destroying Habitat destroys its LSS).&lt;br/&gt;&lt;b&gt;4. Generalization / Inheritance (Hollow triangle):&lt;/b&gt; &apos;is-a&apos; polymorphic hierarchies (Agent -&amp;gt; CrewMember -&amp;gt; Scientist; Facility -&amp;gt; Habitat; Mission -&amp;gt; Exploration; Emergency -&amp;gt; OxygenLeak).&lt;/p&gt;" style="rounded=1;whiteSpace=wrap;html=1;verticalAlign=top;align=left;spacingLeft=8;spacingTop=6;fillColor=#ffffff;strokeColor=#64748b;strokeWidth=1.5;" vertex="1" parent="1">
+          <mxGeometry x="1000" y="1290" width="1240" height="190" as="geometry" />
+        </mxCell>
+
+        <!-- ==================== 8. CONNECTORS ==================== -->
+
+        <!-- Aggregation: Colony to Agent (0..*) -->
+        <mxCell id="rel_colony_agent" value="aggregates&lt;br/&gt;0..*" style="endArrow=diamond;html=1;endFill=0;strokeWidth=2;strokeColor=#334155;exitX=0;exitY=0.7;entryX=0.5;entryY=0;" edge="1" source="Colony" target="Agent" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- Aggregation: Colony to Facility (0..*) -->
+        <mxCell id="rel_colony_facility" value="aggregates&lt;br/&gt;0..*" style="endArrow=diamond;html=1;endFill=0;strokeWidth=2;strokeColor=#334155;exitX=0.2;exitY=1;entryX=0.5;entryY=0;" edge="1" source="Colony" target="Facility" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- Association: Colony to Mission (0..1 active) -->
+        <mxCell id="rel_colony_mission" value="0..1 activeMission" style="endArrow=open;html=1;endFill=0;strokeWidth=2;strokeColor=#334155;exitX=0.7;exitY=1;entryX=0.5;entryY=0;" edge="1" source="Colony" target="Mission" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- Aggregation: Colony to Emergency (0..* history) -->
+        <mxCell id="rel_colony_emergency" value="0..* history" style="endArrow=diamond;html=1;endFill=0;strokeWidth=2;strokeColor=#334155;exitX=1;exitY=0.7;entryX=0.5;entryY=0;" edge="1" source="Colony" target="Emergency" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- Association: Colony to Environment -->
+        <mxCell id="rel_colony_env" value="environment" style="endArrow=open;html=1;endFill=0;strokeWidth=2;strokeColor=#334155;exitX=1;exitY=0.2;entryX=0;entryY=0.2;" edge="1" source="Colony" target="Environment" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- Composition: Habitat owns LifeSupportSystem -->
+        <mxCell id="rel_hab_lss" value="1 owns 1" style="endArrow=diamond;html=1;endFill=1;strokeWidth=2;strokeColor=#0f172a;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" source="Habitat" target="LifeSupportSystem" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- Association: Mission to Agent (assignedAgents 1..*) -->
+        <mxCell id="rel_miss_agent" value="assignedAgents 1..*" style="endArrow=open;html=1;endFill=0;strokeWidth=2;strokeColor=#334155;exitX=0;exitY=0.5;entryX=1;entryY=0.5;" edge="1" source="Mission" target="Agent" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- Association: Mission to Equipment -->
+        <mxCell id="rel_miss_equip" value="equipment" style="endArrow=open;html=1;endFill=0;strokeWidth=2;strokeColor=#334155;exitX=0.8;exitY=0;entryX=0.2;entryY=1;" edge="1" source="Mission" target="Equipment" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- Association: Vehicle to Equipment (carriedEquipment) -->
+        <mxCell id="rel_veh_equip" value="carriedEquipment" style="endArrow=open;html=1;endFill=0;strokeWidth=2;strokeColor=#334155;exitX=1;exitY=0.5;entryX=0;entryY=1;" edge="1" source="Vehicle" target="Equipment" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- Inheritance: CrewMember -> Agent -->
+        <mxCell id="inh_crew_agent" style="endArrow=block;html=1;endFill=0;strokeWidth=2;strokeColor=#1e3a8a;exitX=0.5;exitY=0;entryX=0.3;entryY=1;" edge="1" source="CrewMember" target="Agent" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- Inheritance: RoboticUnit -> Agent -->
+        <mxCell id="inh_robot_agent" style="endArrow=block;html=1;endFill=0;strokeWidth=2;strokeColor=#1e3a8a;exitX=0.5;exitY=0;entryX=0.7;entryY=1;" edge="1" source="RoboticUnit" target="Agent" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- Inheritance: Scientist, Engineer, MedicalOfficer -> CrewMember -->
+        <mxCell id="inh_sci_crew" style="endArrow=block;html=1;endFill=0;strokeWidth=2;strokeColor=#1e3a8a;exitX=0.5;exitY=0;entryX=0.3;entryY=1;" edge="1" source="Scientist" target="CrewMember" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="inh_eng_crew" style="endArrow=block;html=1;endFill=0;strokeWidth=2;strokeColor=#1e3a8a;exitX=0.5;exitY=0;entryX=0.5;entryY=1;" edge="1" source="Engineer" target="CrewMember" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="inh_med_crew" style="endArrow=block;html=1;endFill=0;strokeWidth=2;strokeColor=#1e3a8a;exitX=0.5;exitY=0;entryX=0.7;entryY=1;" edge="1" source="MedicalOfficer" target="CrewMember" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- Inheritance: RepairRobot, Vehicle -> RoboticUnit -->
+        <mxCell id="inh_repbot_robot" style="endArrow=block;html=1;endFill=0;strokeWidth=2;strokeColor=#1e3a8a;exitX=0.5;exitY=0;entryX=0.3;entryY=1;" edge="1" source="RepairRobot" target="RoboticUnit" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="inh_veh_robot" style="endArrow=block;html=1;endFill=0;strokeWidth=2;strokeColor=#1e3a8a;exitX=0.5;exitY=0;entryX=0.7;entryY=1;" edge="1" source="Vehicle" target="RoboticUnit" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- Inheritance: ExplorationRover, Drone -> Vehicle -->
+        <mxCell id="inh_rover_veh" style="endArrow=block;html=1;endFill=0;strokeWidth=2;strokeColor=#1e3a8a;exitX=0.5;exitY=0;entryX=0.3;entryY=1;" edge="1" source="ExplorationRover" target="Vehicle" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="inh_drone_veh" style="endArrow=block;html=1;endFill=0;strokeWidth=2;strokeColor=#1e3a8a;exitX=0.5;exitY=0;entryX=0.7;entryY=1;" edge="1" source="Drone" target="Vehicle" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- Inheritance: Habitat, Laboratory, PowerStation, StorageFacilities, CommunicationStation -> Facility -->
+        <mxCell id="inh_hab_fac" style="endArrow=block;html=1;endFill=0;strokeWidth=2;strokeColor=#1e3a8a;exitX=0.5;exitY=0;entryX=0.3;entryY=1;" edge="1" source="Habitat" target="Facility" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="inh_lab_fac" style="endArrow=block;html=1;endFill=0;strokeWidth=2;strokeColor=#1e3a8a;exitX=0.5;exitY=0;entryX=0.7;entryY=1;" edge="1" source="Laboratory" target="Facility" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="inh_power_fac" style="endArrow=block;html=1;endFill=0;strokeWidth=2;strokeColor=#1e3a8a;exitX=0.5;exitY=0;entryX=0.7;entryY=1;" edge="1" source="PowerStation" target="Facility" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="inh_storage_fac" style="endArrow=block;html=1;endFill=0;strokeWidth=2;strokeColor=#1e3a8a;exitX=0.5;exitY=0;entryX=0.3;entryY=1;" edge="1" source="StorageFacilities" target="Facility" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="inh_comm_fac" style="endArrow=block;html=1;endFill=0;strokeWidth=2;strokeColor=#1e3a8a;exitX=0.5;exitY=0;entryX=0.7;entryY=1;" edge="1" source="CommunicationStation" target="Facility" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- Inheritance: ExplorationMission, RepairMission, ResearchMission, RescueMission -> Mission -->
+        <mxCell id="inh_exp_miss" style="endArrow=block;html=1;endFill=0;strokeWidth=2;strokeColor=#1e3a8a;exitX=0.5;exitY=0;entryX=0.3;entryY=1;" edge="1" source="ExplorationMission" target="Mission" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="inh_rep_miss" style="endArrow=block;html=1;endFill=0;strokeWidth=2;strokeColor=#1e3a8a;exitX=0.5;exitY=0;entryX=0.7;entryY=1;" edge="1" source="RepairMission" target="Mission" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="inh_res_miss" style="endArrow=block;html=1;endFill=0;strokeWidth=2;strokeColor=#1e3a8a;exitX=0.5;exitY=0;entryX=0.3;entryY=1;" edge="1" source="ResearchMission" target="Mission" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="inh_resc_miss" style="endArrow=block;html=1;endFill=0;strokeWidth=2;strokeColor=#1e3a8a;exitX=0.5;exitY=0;entryX=0.7;entryY=1;" edge="1" source="RescueMission" target="Mission" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- Inheritance: OxygenLeak, Fire, RoverBreakdown, MedicalEmergency -> Emergency -->
+        <mxCell id="inh_leak_emg" style="endArrow=block;html=1;endFill=0;strokeWidth=2;strokeColor=#1e3a8a;exitX=0.5;exitY=0;entryX=0.3;entryY=1;" edge="1" source="OxygenLeak" target="Emergency" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="inh_fire_emg" style="endArrow=block;html=1;endFill=0;strokeWidth=2;strokeColor=#1e3a8a;exitX=0.5;exitY=0;entryX=0.7;entryY=1;" edge="1" source="Fire" target="Emergency" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="inh_rb_emg" style="endArrow=block;html=1;endFill=0;strokeWidth=2;strokeColor=#1e3a8a;exitX=0.5;exitY=0;entryX=0.3;entryY=1;" edge="1" source="RoverBreakdown" target="Emergency" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="inh_med_emg" style="endArrow=block;html=1;endFill=0;strokeWidth=2;strokeColor=#1e3a8a;exitX=0.5;exitY=0;entryX=0.7;entryY=1;" edge="1" source="MedicalEmergency" target="Emergency" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

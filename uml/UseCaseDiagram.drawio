@@ -1,0 +1,107 @@
+<mxfile host="app.diagrams.net" version="24.0.0">
+  <diagram id="UseCaseDiagram" name="UseCaseDiagram">
+    <mxGraphModel dx="1422" dy="800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1800" pageHeight="1400" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <mxCell id="title" value="&lt;b&gt;&lt;font style=&quot;font-size: 18px;&quot;&gt;MARS-OPS SYSTEM — USE CASE DIAGRAM&lt;/font&gt;&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e293b;fontColor=#ffffff;strokeColor=#0f172a;" vertex="1" parent="1">
+          <mxGeometry x="40" y="20" width="1600" height="40" as="geometry" />
+        </mxCell>
+
+        <!-- System Boundary -->
+        <mxCell id="boundary" value="MARS-OPS Autonomous Mars Colony Management System Boundary" style="swimlane;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#334155;strokeWidth=2.5;startSize=30;fontSize=13;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="250" y="80" width="1120" height="960" as="geometry" />
+        </mxCell>
+
+        <!-- Use cases -->
+        <mxCell id="uc_crew" value="Manage Crew Members&lt;br/&gt;&amp;amp; Robotic Units" style="ellipse;whiteSpace=wrap;html=1;fillColor=#f0fdf4;strokeColor=#15803d;strokeWidth=2;fontSize=11;fontStyle=1;fontColor=#14532d;" vertex="1" parent="boundary">
+          <mxGeometry x="50" y="50" width="190" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="uc_fac" value="Manage Facilities&lt;br/&gt;&amp;amp; Equipment" style="ellipse;whiteSpace=wrap;html=1;fillColor=#f0fdf4;strokeColor=#15803d;strokeWidth=2;fontSize=11;fontStyle=1;fontColor=#14532d;" vertex="1" parent="boundary">
+          <mxGeometry x="50" y="130" width="190" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="uc_res" value="Monitor Colony-Wide&lt;br/&gt;Resources" style="ellipse;whiteSpace=wrap;html=1;fillColor=#f0fdf4;strokeColor=#15803d;strokeWidth=2;fontSize=11;fontStyle=1;fontColor=#14532d;" vertex="1" parent="boundary">
+          <mxGeometry x="50" y="210" width="190" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="uc_report" value="Generate Colony&lt;br/&gt;Status Reports" style="ellipse;whiteSpace=wrap;html=1;fillColor=#f0fdf4;strokeColor=#15803d;strokeWidth=2;fontSize=11;fontStyle=1;fontColor=#14532d;" vertex="1" parent="boundary">
+          <mxGeometry x="50" y="290" width="190" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="uc_mission" value="Submit, Assign, Execute&lt;br/&gt;&amp;amp; Monitor Missions" style="ellipse;whiteSpace=wrap;html=1;fillColor=#f0fdf4;strokeColor=#15803d;strokeWidth=2;fontSize=11;fontStyle=1;fontColor=#14532d;" vertex="1" parent="boundary">
+          <mxGeometry x="50" y="380" width="200" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="uc_time" value="Advance Simulation&lt;br/&gt;Time" style="ellipse;whiteSpace=wrap;html=1;fillColor=#f0fdf4;strokeColor=#15803d;strokeWidth=2;fontSize=11;fontStyle=1;fontColor=#14532d;" vertex="1" parent="boundary">
+          <mxGeometry x="50" y="500" width="190" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="uc_env" value="Monitor Environmental&lt;br/&gt;Conditions" style="ellipse;whiteSpace=wrap;html=1;fillColor=#f0fdf4;strokeColor=#15803d;strokeWidth=2;fontSize=11;fontStyle=1;fontColor=#14532d;" vertex="1" parent="boundary">
+          <mxGeometry x="780" y="380" width="200" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="uc_emg" value="Trigger &amp;amp; Handle&lt;br/&gt;Emergencies" style="ellipse;whiteSpace=wrap;html=1;fillColor=#f0fdf4;strokeColor=#15803d;strokeWidth=2;fontSize=11;fontStyle=1;fontColor=#14532d;" vertex="1" parent="boundary">
+          <mxGeometry x="50" y="660" width="190" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="uc_outcome" value="Inspect Mission &amp;amp;&lt;br/&gt;Emergency Outcomes" style="ellipse;whiteSpace=wrap;html=1;fillColor=#f0fdf4;strokeColor=#15803d;strokeWidth=2;fontSize=11;fontStyle=1;fontColor=#14532d;" vertex="1" parent="boundary">
+          <mxGeometry x="50" y="780" width="190" height="60" as="geometry" />
+        </mxCell>
+
+        <!-- Subcases: Includes & Extends -->
+        <mxCell id="uc_cap" value="Verify Agent Capabilities&lt;br/&gt;&amp;amp; Availability" style="ellipse;whiteSpace=wrap;html=1;fillColor=#eff6ff;strokeColor=#1d4ed8;strokeWidth=1.8;dashed=1;fontSize=10.5;fontColor=#1e3a8a;" vertex="1" parent="boundary">
+          <mxGeometry x="420" y="340" width="190" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="uc_checkres" value="Check Colony-Wide&lt;br/&gt;Resource Availability" style="ellipse;whiteSpace=wrap;html=1;fillColor=#eff6ff;strokeColor=#1d4ed8;strokeWidth=1.8;dashed=1;fontSize=10.5;fontColor=#1e3a8a;" vertex="1" parent="boundary">
+          <mxGeometry x="420" y="420" width="190" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="uc_ext_rej" value="Handle Immediate Mission&lt;br/&gt;Rejection &amp;amp; Failure" style="ellipse;whiteSpace=wrap;html=1;fillColor=#fef2f2;strokeColor=#b91c1c;strokeWidth=1.8;dashed=1;fontSize=10.5;fontColor=#991b1b;" vertex="1" parent="boundary">
+          <mxGeometry x="420" y="500" width="190" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="uc_ext_prog" value="Progress Active Mission&lt;br/&gt;Duration &amp;amp; Discharges" style="ellipse;whiteSpace=wrap;html=1;fillColor=#eff6ff;strokeColor=#1d4ed8;strokeWidth=1.8;dashed=1;fontSize=10.5;fontColor=#1e3a8a;" vertex="1" parent="boundary">
+          <mxGeometry x="420" y="580" width="190" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="uc_inc_resp" value="Dispatch Responders&lt;br/&gt;&amp;amp; Consume Resources" style="ellipse;whiteSpace=wrap;html=1;fillColor=#eff6ff;strokeColor=#1d4ed8;strokeWidth=1.8;dashed=1;fontSize=10.5;fontColor=#1e3a8a;" vertex="1" parent="boundary">
+          <mxGeometry x="420" y="680" width="190" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="uc_ext_pen" value="Apply Double Oxygen Loss&lt;br/&gt;Penalty (Unresolved)" style="ellipse;whiteSpace=wrap;html=1;fillColor=#fef2f2;strokeColor=#b91c1c;strokeWidth=1.8;dashed=1;fontSize=10.5;fontColor=#991b1b;" vertex="1" parent="boundary">
+          <mxGeometry x="420" y="760" width="190" height="60" as="geometry" />
+        </mxCell>
+
+        <!-- Include & Extend Edges -->
+        <mxCell id="inc1" value="&amp;laquo;include&amp;raquo;" style="endArrow=open;dashed=1;html=1;strokeWidth=1.5;strokeColor=#1d4ed8;exitX=1;exitY=0.3;entryX=0;entryY=0.5;" edge="1" source="uc_mission" target="uc_cap" parent="boundary" />
+        <mxCell id="inc2" value="&amp;laquo;include&amp;raquo;" style="endArrow=open;dashed=1;html=1;strokeWidth=1.5;strokeColor=#1d4ed8;exitX=1;exitY=0.7;entryX=0;entryY=0.5;" edge="1" source="uc_mission" target="uc_checkres" parent="boundary" />
+        <mxCell id="ext1" value="&amp;laquo;extend&amp;raquo;" style="endArrow=open;dashed=1;html=1;strokeWidth=1.5;strokeColor=#b91c1c;exitX=0;exitY=0.5;entryX=1;entryY=0.8;" edge="1" source="uc_ext_rej" target="uc_mission" parent="boundary" />
+        <mxCell id="ext2" value="&amp;laquo;extend&amp;raquo;" style="endArrow=open;dashed=1;html=1;strokeWidth=1.5;strokeColor=#b91c1c;exitX=0;exitY=0.5;entryX=1;entryY=0.5;" edge="1" source="uc_ext_prog" target="uc_time" parent="boundary" />
+        <mxCell id="inc3" value="&amp;laquo;include&amp;raquo;" style="endArrow=open;dashed=1;html=1;strokeWidth=1.5;strokeColor=#1d4ed8;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" edge="1" source="uc_emg" target="uc_inc_resp" parent="boundary" />
+        <mxCell id="ext3" value="&amp;laquo;extend&amp;raquo;" style="endArrow=open;dashed=1;html=1;strokeWidth=1.5;strokeColor=#b91c1c;exitX=0;exitY=0.5;entryX=1;entryY=0.8;" edge="1" source="uc_ext_pen" target="uc_emg" parent="boundary" />
+
+        <!-- Actors outside boundary -->
+        <mxCell id="act_op" value="Colony Operator" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;strokeColor=#3730a3;strokeWidth=2;fillColor=#e0e7ff;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="80" y="280" width="45" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="act_emg" value="Emergency Operator" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;strokeColor=#c2410c;strokeWidth=2;fillColor=#ffedd5;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="80" y="680" width="45" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="act_env" value="&amp;laquo;environment&amp;raquo;&lt;br/&gt;Mars Environment" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;strokeColor=#b45309;strokeWidth=2;fillColor=#fef3c7;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="1460" y="440" width="45" height="90" as="geometry" />
+        </mxCell>
+
+        <!-- Association lines -->
+        <!-- Colony Operator -->
+        <mxCell id="a_op1" style="endArrow=none;html=1;strokeWidth=1.8;strokeColor=#334155;exitX=1;exitY=0.33;entryX=0;entryY=0.5;" edge="1" source="act_op" target="uc_crew" parent="1" />
+        <mxCell id="a_op2" style="endArrow=none;html=1;strokeWidth=1.8;strokeColor=#334155;exitX=1;exitY=0.33;entryX=0;entryY=0.5;" edge="1" source="act_op" target="uc_fac" parent="1" />
+        <mxCell id="a_op3" style="endArrow=none;html=1;strokeWidth=1.8;strokeColor=#334155;exitX=1;exitY=0.33;entryX=0;entryY=0.5;" edge="1" source="act_op" target="uc_res" parent="1" />
+        <mxCell id="a_op4" style="endArrow=none;html=1;strokeWidth=1.8;strokeColor=#334155;exitX=1;exitY=0.33;entryX=0;entryY=0.5;" edge="1" source="act_op" target="uc_report" parent="1" />
+        <mxCell id="a_op5" style="endArrow=none;html=1;strokeWidth=1.8;strokeColor=#334155;exitX=1;exitY=0.33;entryX=0;entryY=0.5;" edge="1" source="act_op" target="uc_mission" parent="1" />
+        <mxCell id="a_op6" style="endArrow=none;html=1;strokeWidth=1.8;strokeColor=#334155;exitX=1;exitY=0.33;entryX=0;entryY=0.5;" edge="1" source="act_op" target="uc_time" parent="1" />
+        <mxCell id="a_op7" style="endArrow=none;html=1;strokeWidth=1.8;strokeColor=#334155;exitX=1;exitY=0.33;entryX=0;entryY=0.5;" edge="1" source="act_op" target="uc_outcome" parent="1" />
+
+        <!-- Emergency Operator -->
+        <mxCell id="a_emg1" style="endArrow=none;html=1;strokeWidth=1.8;strokeColor=#334155;exitX=1;exitY=0.33;entryX=0;entryY=0.5;" edge="1" source="act_emg" target="uc_emg" parent="1" />
+        <mxCell id="a_emg2" style="endArrow=none;html=1;strokeWidth=1.8;strokeColor=#334155;exitX=1;exitY=0.33;entryX=0;entryY=0.5;" edge="1" source="act_emg" target="uc_outcome" parent="1" />
+        <mxCell id="a_emg3" style="endArrow=none;html=1;strokeWidth=1.8;strokeColor=#334155;exitX=1;exitY=0.33;entryX=0;entryY=0.5;" edge="1" source="act_emg" target="uc_report" parent="1" />
+
+        <!-- Mars Environment -->
+        <mxCell id="a_env1" style="endArrow=none;html=1;strokeWidth=1.8;strokeColor=#334155;exitX=0;exitY=0.33;entryX=1;entryY=0.5;" edge="1" source="act_env" target="uc_env" parent="1" />
+        <mxCell id="a_env2" style="endArrow=none;html=1;strokeWidth=1.8;strokeColor=#334155;exitX=0;exitY=0.33;entryX=1;entryY=0.5;" edge="1" source="act_env" target="uc_mission" parent="1" />
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

@@ -77,11 +77,11 @@ public class Main {
         Engineer engineerAsScientist = new Engineer("Eng. Bob Martinez", "Habitat1");
         ExplorationRover rover2 = new ExplorationRover("Opportunity-2", "Martian Surface");
         Equipment repairKit = Equipment.createRepairToolkit();
+        rover2.loadEquipment(repairKit);
 
         colony2.addAgent(engineerAsScientist);
         colony2.addAgent(rover2);
 
-        // An exploration mission requires scientific capability, but an Engineer has EQUIPMENT_REPAIR & FIRE_RESPONSE
         ExplorationMission invalidMission = new ExplorationMission(
                 colony2,
                 "Analyze soil samples at Jezero Crater",
@@ -122,6 +122,7 @@ public class Main {
         Scientist scientist3 = new Scientist("Dr. Sarah Brown", "Laboratory1");
         ExplorationRover rover3 = new ExplorationRover("Perseverance-2", "Martian Surface");
         Equipment spec3 = Equipment.createSpectrometer();
+        rover3.loadEquipment(spec3); // FIX: Load equipment onto rover so check passes to Resource check!
 
         colony3.addAgent(scientist3);
         colony3.addAgent(rover3);
@@ -169,6 +170,10 @@ public class Main {
         System.out.println("################################################################################\n");
 
         Colony colony4 = Colony.setupColony();
+        // FIX: Add repair responders so Scenario 4 part A resolves properly!
+        colony4.addAgent(new Engineer("Eng. Bob Martinez", "Storage Facility1"));
+        colony4.addAgent(new RepairRobot("Fixer-1", "Storage Facility1"));
+
         Habitat habitatToLeak = null;
         for (Facility f : colony4.getFacilities()) {
             if (f instanceof Habitat) {
@@ -191,16 +196,15 @@ public class Main {
         System.out.println("4. Response Outcome: " + (emergencyHandled ? "SUCCESSFULLY RESOLVED" : "UNRESOLVED"));
         System.out.println("   Emergency State: " + leakEmergency.getEmergencyState());
         System.out.println("   Reason/Info: " + (leakEmergency.getFailureReason().isEmpty() ? "Leak repaired by dispatched Engineer and Repair Robot." : leakEmergency.getFailureReason()));
-        System.out.println("   Oxygen level in " + habitatToLeak.getLocation() + " after repair: " + habitatToLeak.getResourceAmount(ResourceType.OXYGEN) + " units (deducted 40)");
+        System.out.println("   Oxygen level in " + habitatToLeak.getLocation() + " after repair: " + habitatToLeak.getResourceAmount(ResourceType.OXYGEN) + " units (deducted 50)");
         System.out.println("   Colony-wide Oxygen after repair: " + colony4.getTotalResource(ResourceType.OXYGEN) + " units");
-        System.out.println("   Colony-wide Spare Parts after repair: " + colony4.getTotalResource(ResourceType.SPARE_PARTS) + " units (consumed 2)");
+        System.out.println("   Colony-wide Spare Parts after repair: " + colony4.getTotalResource(ResourceType.SPARE_PARTS) + " units");
         System.out.println("   Facility Operational Status: " + (habitatToLeak.isOperational() ? "ONLINE" : "OFFLINE"));
 
         // Demonstration of Unresolved Leak (Double Oxygen Penalty Rule)
         System.out.println("\n--- Testing Emergency Failure Flow (Responders Unavailable) ---");
-        Colony colony4B =  Colony.setupColony(); // Empty colony with no responders
+        Colony colony4B = Colony.setupColony(); // Empty colony with no responders
         Habitat unstaffedHabitat = new Habitat();
-        unstaffedHabitat.addResource(ResourceType.OXYGEN, 100);
         colony4B.addFacility(unstaffedHabitat);
 
         System.out.println("Habitat Oxygen before unresolved leak: " + unstaffedHabitat.getResourceAmount(ResourceType.OXYGEN));
@@ -208,7 +212,7 @@ public class Main {
         colony4B.triggerEmergency(unresolvedLeak);
         System.out.println("Outcome: " + unresolvedLeak.getEmergencyState());
         System.out.println("Failure Reason: " + unresolvedLeak.getFailureReason());
-        System.out.println("Habitat Oxygen after unresolved leak: " + unstaffedHabitat.getResourceAmount(ResourceType.OXYGEN) + " units (deducted 2x = 60 units lost!)");
+        System.out.println("Habitat Oxygen after unresolved leak: " + unstaffedHabitat.getResourceAmount(ResourceType.OXYGEN) + " units (deducted 2x = 100 units lost!)");
 
 
         // =========================================================================
@@ -224,6 +228,7 @@ public class Main {
         Scientist scientist5 = new Scientist("Dr. Alex Walker", "Laboratory1");
         ExplorationRover rover5 = new ExplorationRover("Discovery-1", "Martian Surface");
         Equipment spec5 = Equipment.createSpectrometer();
+        rover5.loadEquipment(spec5);
 
         colony5.addAgent(scientist5);
         colony5.addAgent(rover5);

@@ -1,0 +1,229 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1150" width="1600" height="1150" style="background:#f8f9fa; font-family:'Segoe UI', Arial, sans-serif;">
+  <defs>
+    <style>
+      .boundary-box { fill: #ffffff; stroke: #334155; stroke-width: 2.5; rx: 8; }
+      .usecase-ellipse { fill: #f0fdf4; stroke: #15803d; stroke-width: 2; rx: 90; ry: 32; }
+      .sub-usecase-ellipse { fill: #eff6ff; stroke: #1d4ed8; stroke-width: 1.8; stroke-dasharray: 4,3; rx: 85; ry: 28; }
+      .extend-usecase-ellipse { fill: #fef2f2; stroke: #b91c1c; stroke-width: 1.8; stroke-dasharray: 4,3; rx: 85; ry: 28; }
+      .title { font-size: 20px; font-weight: bold; fill: #ffffff; text-anchor: middle; }
+      .boundary-title { font-size: 16px; font-weight: bold; fill: #1e293b; letter-spacing: 1px; }
+      .actor-title { font-size: 13px; font-weight: bold; fill: #0f172a; text-anchor: middle; }
+      .uc-text { font-size: 12px; font-weight: bold; fill: #14532d; text-anchor: middle; }
+      .sub-uc-text { font-size: 11px; fill: #1e3a8a; text-anchor: middle; }
+      .ext-uc-text { font-size: 11px; fill: #991b1b; text-anchor: middle; }
+      .assoc-line { stroke: #334155; stroke-width: 1.8; fill: none; }
+      .include-line { stroke: #1d4ed8; stroke-width: 1.6; stroke-dasharray: 5,4; fill: none; }
+      .extend-line { stroke: #b91c1c; stroke-width: 1.6; stroke-dasharray: 5,4; fill: none; }
+      .rel-label { font-size: 11px; font-style: italic; font-weight: bold; text-anchor: middle; }
+    </style>
+    <marker id="include-arrow" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto">
+      <polygon points="1,1 9,5 1,9" fill="#1d4ed8"/>
+    </marker>
+    <marker id="extend-arrow" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto">
+      <polygon points="1,1 9,5 1,9" fill="#b91c1c"/>
+    </marker>
+  </defs>
+
+  <!-- Banner -->
+  <rect x="20" y="20" width="1560" height="50" fill="#1e293b" rx="6"/>
+  <text x="800" y="52" class="title">MARS-OPS SYSTEM — USE CASE DIAGRAM</text>
+
+  <!-- SYSTEM BOUNDARY -->
+  <rect x="280" y="90" width="1040" height="1020" class="boundary-box"/>
+  <text x="310" y="125" class="boundary-title">System Boundary: MARS-OPS Autonomous Colony Simulation</text>
+
+  <!-- ACTORS (Left: Colony Operator, Emergency Operator; Right: Mars Environment) -->
+  
+  <!-- Actor 1: Colony Operator -->
+  <g id="ColonyOperator">
+    <circle cx="120" cy="300" r="18" fill="#e0e7ff" stroke="#3730a3" stroke-width="2"/>
+    <line x1="120" y1="318" x2="120" y2="370" stroke="#3730a3" stroke-width="2.5"/>
+    <line x1="90" y1="335" x2="150" y2="335" stroke="#3730a3" stroke-width="2.5"/>
+    <line x1="120" y1="370" x2="95" y2="420" stroke="#3730a3" stroke-width="2.5"/>
+    <line x1="120" y1="370" x2="145" y2="420" stroke="#3730a3" stroke-width="2.5"/>
+    <text x="120" y="445" class="actor-title">Colony Operator</text>
+  </g>
+
+  <!-- Actor 2: Emergency Operator -->
+  <g id="EmergencyOperator">
+    <circle cx="120" cy="750" r="18" fill="#ffedd5" stroke="#c2410c" stroke-width="2"/>
+    <line x1="120" y1="768" x2="120" y2="820" stroke="#c2410c" stroke-width="2.5"/>
+    <line x1="90" y1="785" x2="150" y2="785" stroke="#c2410c" stroke-width="2.5"/>
+    <line x1="120" y1="820" x2="95" y2="870" stroke="#c2410c" stroke-width="2.5"/>
+    <line x1="120" y1="820" x2="145" y2="870" stroke="#c2410c" stroke-width="2.5"/>
+    <text x="120" y="895" class="actor-title">Emergency Operator</text>
+  </g>
+
+  <!-- Actor 3: Mars Environment (External Environmental Actor) -->
+  <g id="MarsEnvironment">
+    <circle cx="1470" cy="500" r="18" fill="#fef3c7" stroke="#b45309" stroke-width="2"/>
+    <line x1="1470" y1="518" x2="1470" y2="570" stroke="#b45309" stroke-width="2.5"/>
+    <line x1="1440" y1="535" x2="1500" y2="535" stroke="#b45309" stroke-width="2.5"/>
+    <line x1="1470" y1="570" x2="1445" y2="620" stroke="#b45309" stroke-width="2.5"/>
+    <line x1="1470" y1="570" x2="1495" y2="620" stroke="#b45309" stroke-width="2.5"/>
+    <text x="1470" y="645" class="actor-title">&lt;&lt;environment&gt;&gt;</text>
+    <text x="1470" y="662" class="actor-title">Mars Environment</text>
+  </g>
+
+  <!-- ==================== USE CASES ==================== -->
+
+  <!-- UC1: Manage Crew Members and Robotic Units -->
+  <g id="UC1">
+    <ellipse cx="500" cy="180" class="usecase-ellipse"/>
+    <text x="500" y="176" class="uc-text">Manage Crew Members</text>
+    <text x="500" y="192" class="uc-text">&amp; Robotic Units</text>
+  </g>
+
+  <!-- UC2: Manage Facilities and Equipment -->
+  <g id="UC2">
+    <ellipse cx="500" cy="270" class="usecase-ellipse"/>
+    <text x="500" y="266" class="uc-text">Manage Facilities</text>
+    <text x="500" y="282" class="uc-text">&amp; Equipment</text>
+  </g>
+
+  <!-- UC3: Monitor Resources -->
+  <g id="UC3">
+    <ellipse cx="500" cy="360" class="usecase-ellipse"/>
+    <text x="500" y="356" class="uc-text">Monitor Colony-Wide</text>
+    <text x="500" y="372" class="uc-text">Resources</text>
+  </g>
+
+  <!-- UC4: Generate Colony Status Reports -->
+  <g id="UC4">
+    <ellipse cx="500" cy="450" class="usecase-ellipse"/>
+    <text x="500" y="446" class="uc-text">Generate Colony</text>
+    <text x="500" y="462" class="uc-text">Status Reports</text>
+  </g>
+
+  <!-- UC5: Submit, Assign, Execute, and Monitor Missions -->
+  <g id="UC5">
+    <ellipse cx="500" cy="560" class="usecase-ellipse"/>
+    <text x="500" y="556" class="uc-text">Submit, Assign, Execute</text>
+    <text x="500" y="572" class="uc-text">&amp; Monitor Missions</text>
+  </g>
+
+  <!-- UC5 Subcases: <<include>> Check Capabilities & Check Resources -->
+  <g id="UC5_Inc1">
+    <ellipse cx="900" cy="510" class="sub-usecase-ellipse"/>
+    <text x="900" y="506" class="sub-uc-text">Check Agent Capabilities</text>
+    <text x="900" y="522" class="sub-uc-text">&amp; Availability</text>
+  </g>
+
+  <g id="UC5_Inc2">
+    <ellipse cx="900" cy="590" class="sub-usecase-ellipse"/>
+    <text x="900" y="586" class="sub-uc-text">Check Colony-Wide</text>
+    <text x="900" y="602" class="sub-uc-text">Resource Availability</text>
+  </g>
+
+  <!-- UC5 Extension: <<extend>> Reject Mission (Unsuitable/Shortage) -->
+  <g id="UC5_Ext1">
+    <ellipse cx="900" cy="670" class="extend-usecase-ellipse"/>
+    <text x="900" y="666" class="ext-uc-text">Handle Immediate Mission</text>
+    <text x="900" y="682" class="ext-uc-text">Rejection &amp; Failure</text>
+  </g>
+
+  <!-- UC6: Advance Simulation Time -->
+  <g id="UC6">
+    <ellipse cx="500" cy="700" class="usecase-ellipse"/>
+    <text x="500" y="696" class="uc-text">Advance Simulation</text>
+    <text x="500" y="712" class="uc-text">Time</text>
+  </g>
+
+  <!-- UC6 Extensions: Progress Active Mission & Trigger Facilities Upkeep -->
+  <g id="UC6_Ext1">
+    <ellipse cx="900" cy="760" class="sub-usecase-ellipse"/>
+    <text x="900" y="756" class="sub-uc-text">Progress Active Mission</text>
+    <text x="900" y="772" class="sub-uc-text">Duration &amp; Battery/Fatigue</text>
+  </g>
+
+  <g id="UC6_Ext2">
+    <ellipse cx="900" cy="840" class="sub-usecase-ellipse"/>
+    <text x="900" y="836" class="sub-uc-text">Consume Facility Upkeep</text>
+    <text x="900" y="852" class="sub-uc-text">&amp; Life Support Cycle</text>
+  </g>
+
+  <!-- UC7: Monitor Environmental Conditions -->
+  <g id="UC7">
+    <ellipse cx="1150" cy="450" class="usecase-ellipse"/>
+    <text x="1150" y="446" class="uc-text">Monitor Environmental</text>
+    <text x="1150" y="462" class="uc-text">Conditions</text>
+  </g>
+
+  <!-- UC8: Trigger and Handle Emergencies -->
+  <g id="UC8">
+    <ellipse cx="500" cy="840" class="usecase-ellipse"/>
+    <text x="500" y="836" class="uc-text">Trigger &amp; Handle</text>
+    <text x="500" y="852" class="uc-text">Emergencies</text>
+  </g>
+
+  <!-- UC8 Subcase: <<include>> Dispatch Responders -->
+  <g id="UC8_Inc1">
+    <ellipse cx="900" cy="920" class="sub-usecase-ellipse"/>
+    <text x="900" y="916" class="sub-uc-text">Dispatch Responders</text>
+    <text x="900" y="932" class="sub-uc-text">&amp; Consume Resources</text>
+  </g>
+
+  <!-- UC8 Extension: <<extend>> Apply Unresolved Emergency Penalties -->
+  <g id="UC8_Ext1">
+    <ellipse cx="900" cy="1000" class="extend-usecase-ellipse"/>
+    <text x="900" y="996" class="ext-uc-text">Apply Double Oxygen Loss</text>
+    <text x="900" y="1012" class="ext-uc-text">Penalty (Unresolved)</text>
+  </g>
+
+  <!-- UC9: Inspect Mission and Emergency Outcomes -->
+  <g id="UC9">
+    <ellipse cx="500" cy="970" class="usecase-ellipse"/>
+    <text x="500" y="966" class="uc-text">Inspect Mission &amp;</text>
+    <text x="500" y="982" class="uc-text">Emergency Outcomes</text>
+  </g>
+
+  <!-- ==================== ASSOCIATIONS (ACTOR -> USE CASES) ==================== -->
+  <!-- Colony Operator Associations -->
+  <line x1="160" y1="330" x2="410" y2="180" class="assoc-line"/>
+  <line x1="160" y1="340" x2="410" y2="270" class="assoc-line"/>
+  <line x1="160" y1="350" x2="410" y2="360" class="assoc-line"/>
+  <line x1="160" y1="360" x2="410" y2="450" class="assoc-line"/>
+  <line x1="160" y1="370" x2="410" y2="560" class="assoc-line"/>
+  <line x1="160" y1="380" x2="410" y2="700" class="assoc-line"/>
+  <line x1="160" y1="390" x2="410" y2="970" class="assoc-line"/>
+
+  <!-- Emergency Operator Associations -->
+  <line x1="160" y1="800" x2="410" y2="840" class="assoc-line"/>
+  <line x1="160" y1="810" x2="410" y2="970" class="assoc-line"/>
+  <line x1="160" y1="790" x2="410" y2="450" class="assoc-line"/>
+
+  <!-- Mars Environment Associations -->
+  <line x1="1440" y1="540" x2="1240" y2="460" class="assoc-line"/>
+  <line x1="1440" y1="560" x2="590" y2="560" class="assoc-line"/>
+
+  <!-- ==================== <<include>> & <<extend>> LINES ==================== -->
+  
+  <!-- UC5 -> UC5_Inc1 (include) -->
+  <line x1="590" y1="550" x2="815" y2="520" class="include-line" marker-end="url(#include-arrow)"/>
+  <text x="700" y="525" class="rel-label" fill="#1d4ed8">&lt;&lt;include&gt;&gt;</text>
+
+  <!-- UC5 -> UC5_Inc2 (include) -->
+  <line x1="590" y1="565" x2="815" y2="585" class="include-line" marker-end="url(#include-arrow)"/>
+  <text x="700" y="585" class="rel-label" fill="#1d4ed8">&lt;&lt;include&gt;&gt;</text>
+
+  <!-- UC5_Ext1 -> UC5 (extend) -->
+  <line x1="815" y1="655" x2="590" y2="580" class="extend-line" marker-end="url(#extend-arrow)"/>
+  <text x="700" y="630" class="rel-label" fill="#b91c1c">&lt;&lt;extend&gt;&gt;</text>
+
+  <!-- UC6_Ext1 -> UC6 (extend) -->
+  <line x1="815" y1="750" x2="590" y2="715" class="extend-line" marker-end="url(#extend-arrow)"/>
+  <text x="700" y="725" class="rel-label" fill="#b91c1c">&lt;&lt;extend&gt;&gt;</text>
+
+  <!-- UC6_Ext2 -> UC6 (extend) -->
+  <line x1="815" y1="830" x2="590" y2="725" class="extend-line" marker-end="url(#extend-arrow)"/>
+  <text x="700" y="795" class="rel-label" fill="#b91c1c">&lt;&lt;extend&gt;&gt;</text>
+
+  <!-- UC8 -> UC8_Inc1 (include) -->
+  <line x1="590" y1="855" x2="815" y2="905" class="include-line" marker-end="url(#include-arrow)"/>
+  <text x="700" y="870" class="rel-label" fill="#1d4ed8">&lt;&lt;include&gt;&gt;</text>
+
+  <!-- UC8_Ext1 -> UC8 (extend) -->
+  <line x1="815" y1="985" x2="590" y2="865" class="extend-line" marker-end="url(#extend-arrow)"/>
+  <text x="700" y="940" class="rel-label" fill="#b91c1c">&lt;&lt;extend&gt;&gt;</text>
+
+</svg>

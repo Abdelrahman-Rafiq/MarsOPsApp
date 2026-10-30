@@ -1,0 +1,135 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 950" width="1400" height="950" style="background:#f8f9fa; font-family:'Segoe UI', Arial, sans-serif;">
+  <defs>
+    <style>
+      .state-box { fill: #ffffff; stroke: #2563eb; stroke-width: 2.2; rx: 12; }
+      .final-state-box { fill: #f8fafc; stroke: #0f172a; stroke-width: 2; rx: 12; }
+      .failed-state-box { fill: #fef2f2; stroke: #dc2626; stroke-width: 2.2; rx: 12; }
+      .completed-state-box { fill: #f0fdf4; stroke: #16a34a; stroke-width: 2.2; rx: 12; }
+      .title { font-size: 15px; font-weight: bold; fill: #0f172a; text-anchor: middle; }
+      .state-title { font-size: 14px; font-weight: bold; text-anchor: middle; }
+      .content { font-size: 12px; fill: #334155; }
+      .transition-line { stroke: #334155; stroke-width: 1.8; fill: none; }
+      .transition-label { font-size: 11px; fill: #1e293b; font-family: 'Consolas', monospace; }
+      .guard { font-weight: bold; fill: #0369a1; }
+      .action { font-style: italic; fill: #b45309; }
+      .fail-label { fill: #b91c1c; }
+    </style>
+    <marker id="trans-arrow" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto">
+      <polygon points="1,1 9,5 1,9" fill="#334155"/>
+    </marker>
+    <marker id="fail-arrow" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto">
+      <polygon points="1,1 9,5 1,9" fill="#dc2626"/>
+    </marker>
+    <marker id="success-arrow" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto">
+      <polygon points="1,1 9,5 1,9" fill="#16a34a"/>
+    </marker>
+  </defs>
+
+  <!-- Title Banner -->
+  <rect x="20" y="20" width="1360" height="50" fill="#1e293b" rx="6"/>
+  <text x="700" y="52" font-size="20" font-weight="bold" fill="#ffffff" text-anchor="middle">MARS-OPS SYSTEM — MISSION LIFECYCLE STATE MACHINE DIAGRAM</text>
+
+  <!-- Initial Pseudostate [*] -->
+  <circle cx="100" cy="220" r="16" fill="#0f172a"/>
+  <text x="100" y="260" font-size="12" font-weight="bold" fill="#334155" text-anchor="middle">Mission Created</text>
+
+  <!-- Transition: submitMission() -->
+  <line x1="116" y1="220" x2="330" y2="220" class="transition-line" marker-end="url(#trans-arrow)"/>
+  <text x="130" y="195" class="transition-label">colony.submitMission(m)</text>
+  <text x="130" y="212" class="transition-label guard">[All requirements met: no active mission &amp;&amp;</text>
+  <text x="130" y="226" class="transition-label guard"> agents capable &amp;&amp; resources sufficient &amp;&amp; env OK]</text>
+
+  <!-- ASSIGNED State -->
+  <g id="ASSIGNED">
+    <rect x="330" y="170" width="220" height="100" class="state-box"/>
+    <text x="440" y="200" class="state-title" fill="#1d4ed8">ASSIGNED</text>
+    <line x1="330" y1="210" x2="550" y2="210" stroke="#93c5fd" stroke-width="1.5"/>
+    <text x="340" y="230" class="content">entry / colony.setActive(this)</text>
+    <text x="340" y="250" class="content">do / wait for execution trigger</text>
+  </g>
+
+  <!-- Transition: startMission() -->
+  <line x1="550" y1="220" x2="720" y2="220" class="transition-line" marker-end="url(#trans-arrow)"/>
+  <text x="560" y="195" class="transition-label">mission.startMission()</text>
+  <text x="560" y="212" class="transition-label action">/ assign agents, equipment.busy,</text>
+  <text x="560" y="226" class="transition-label action">  consume resources, timeElapsed=0</text>
+
+  <!-- IN_PROGRESS State -->
+  <g id="IN_PROGRESS">
+    <rect x="720" y="160" width="260" height="130" class="state-box"/>
+    <text x="850" y="190" class="state-title" fill="#1d4ed8">IN_PROGRESS</text>
+    <line x1="720" y1="200" x2="980" y2="200" stroke="#93c5fd" stroke-width="1.5"/>
+    <text x="730" y="220" class="content">entry / status = IN_PROGRESS</text>
+    <text x="730" y="240" class="content">do / simulation advances duration</text>
+    <text x="730" y="260" class="content">exit / unassign agents, release equip</text>
+  </g>
+
+  <!-- Self-transition on IN_PROGRESS (advanceTime) -->
+  <path d="M 810,160 C 810,80 900,80 900,160" fill="none" stroke="#334155" stroke-width="1.8" marker-end="url(#trans-arrow)"/>
+  <text x="855" y="90" class="transition-label" text-anchor="middle">colony.advanceTime(t)</text>
+  <text x="855" y="105" class="transition-label guard" text-anchor="middle">[timeElapsed + t &lt; requiredDuration &amp;&amp; no disruption]</text>
+  <text x="855" y="120" class="transition-label action" text-anchor="middle">/ timeElapsed += t, battery -= x, fatigue += y</text>
+
+  <!-- Transition to COMPLETED -->
+  <line x1="980" y1="220" x2="1140" y2="220" class="transition-line" stroke="#16a34a" marker-end="url(#success-arrow)"/>
+  <text x="1000" y="185" class="transition-label">colony.advanceTime(t)</text>
+  <text x="1000" y="200" class="transition-label guard" fill="#15803d">[timeElapsed &gt;= requiredDuration]</text>
+  <text x="1000" y="215" class="transition-label action">/ mission.endMission(COMPLETED)</text>
+
+  <!-- COMPLETED State -->
+  <g id="COMPLETED">
+    <rect x="1140" y="170" width="220" height="100" class="completed-state-box"/>
+    <text x="1250" y="200" class="state-title" fill="#15803d">COMPLETED</text>
+    <line x1="1140" y1="210" x2="1360" y2="210" stroke="#86efac" stroke-width="1.5"/>
+    <text x="1150" y="230" class="content">entry / unassign agents</text>
+    <text x="1150" y="250" class="content">entry / release target/equipment</text>
+  </g>
+
+  <!-- Final State for COMPLETED -->
+  <circle cx="1250" cy="350" r="16" fill="none" stroke="#0f172a" stroke-width="2"/>
+  <circle cx="1250" cy="350" r="10" fill="#0f172a"/>
+  <line x1="1250" y1="270" x2="1250" y2="334" class="transition-line" marker-end="url(#trans-arrow)"/>
+
+  <!-- ==================== FAILED TRANSITIONS ==================== -->
+
+  <!-- 1. Immediate Rejection: [*] -> FAILED -->
+  <path d="M 100,236 L 100,680 L 710,680" fill="none" stroke="#dc2626" stroke-width="2" marker-end="url(#fail-arrow)"/>
+  <text x="120" y="640" class="transition-label fail-label"><b>[REJECTION]</b> colony.submitMission(m)</text>
+  <text x="120" y="658" class="transition-label fail-label"><b>[Guard:</b> Another mission active || Agent lacks capability ||</text>
+  <text x="120" y="674" class="transition-label fail-label"> Insufficient resources || Dust storm on exploration]</text>
+  <text x="120" y="700" class="transition-label action">/ set status = FAILED, record failureReason</text>
+  <text x="120" y="716" class="transition-label action">  <b>NEVER BECOMES ACTIVE; CANNOT BE RETRIED</b></text>
+
+  <!-- 2. Dynamic In-Progress Failure: IN_PROGRESS -> FAILED -->
+  <path d="M 850,290 L 850,600" fill="none" stroke="#dc2626" stroke-width="2" marker-end="url(#fail-arrow)"/>
+  <text x="860" y="440" class="transition-label fail-label"><b>[RUNTIME FAILURE]</b> colony.advanceTime(t)</text>
+  <text x="860" y="458" class="transition-label fail-label"><b>[Guard:</b> Dust storm during surface rover mission ||</text>
+  <text x="860" y="474" class="transition-label fail-label"> Comm disruption during drone mission ||</text>
+  <text x="860" y="490" class="transition-label fail-label"> Equipment failure || Battery depletion]</text>
+  <text x="860" y="510" class="transition-label action">/ mission.fail(reason),</text>
+  <text x="860" y="526" class="transition-label action">  unassign agents, release equipment</text>
+
+  <!-- FAILED State -->
+  <g id="FAILED">
+    <rect x="710" y="600" width="280" height="120" class="failed-state-box"/>
+    <text x="850" y="630" class="state-title" fill="#b91c1c">FAILED</text>
+    <line x1="710" y1="640" x2="990" y2="640" stroke="#fca5a5" stroke-width="1.5"/>
+    <text x="720" y="660" class="content">entry / status = FAILED</text>
+    <text x="720" y="678" class="content">entry / colony.removeActiveMission()</text>
+    <text x="720" y="696" class="content">note: non-retriable, immutable</text>
+  </g>
+
+  <!-- Final State for FAILED -->
+  <circle cx="850" cy="800" r="16" fill="none" stroke="#0f172a" stroke-width="2"/>
+  <circle cx="850" cy="800" r="10" fill="#0f172a"/>
+  <line x1="850" y1="720" x2="850" y2="784" class="transition-line" marker-end="url(#trans-arrow)"/>
+
+  <!-- Legend & Specification Notes -->
+  <g id="StateNotes">
+    <rect x="50" y="840" width="1300" height="90" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5" rx="6"/>
+    <text x="70" y="865" font-size="12" font-weight="bold" fill="#0f172a">Lab 5 State Machine Specification Compliance:</text>
+    <text x="70" y="885" font-size="11" fill="#334155">1. <b>Lifecycle States:</b> ASSIGNED, IN_PROGRESS, COMPLETED, FAILED are strictly represented as in Section 7 &amp; Section 11.4.</text>
+    <text x="70" y="902" font-size="11" fill="#334155">2. <b>Immediate Rejection Rule:</b> An invalid or rejected mission transitions immediately to FAILED and NEVER enters the ASSIGNED or IN_PROGRESS states.</text>
+    <text x="70" y="919" font-size="11" fill="#334155">3. <b>Terminal State Rule:</b> Failed and Completed missions are final states; agents are freed, resources verified, and failed missions cannot be retried.</text>
+  </g>
+</svg>

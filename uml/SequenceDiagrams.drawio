@@ -1,0 +1,487 @@
+<mxfile host="app.diagrams.net" version="24.0.0">
+  <diagram id="SeqMission" name="4A. Mission Submission &amp; Execution">
+    <mxGraphModel dx="1422" dy="800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1800" pageHeight="1400" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <mxCell id="title" value="&lt;b&gt;&lt;font style=&quot;font-size: 18px;&quot;&gt;SEQUENCE DIAGRAM 4A: MISSION SUBMISSION AND EXECUTION&lt;/font&gt;&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e293b;fontColor=#ffffff;strokeColor=#0f172a;" vertex="1" parent="1">
+          <mxGeometry x="40" y="20" width="1500" height="40" as="geometry" />
+        </mxCell>
+
+        <!-- Lifelines -->
+        <mxCell id="ll_op" value=":ColonyOperator" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=1;collapsible=0;recursiveResize=0;outlineConnect=0;fillColor=#dbeafe;strokeColor=#1e40af;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="60" y="80" width="130" height="850" as="geometry" />
+        </mxCell>
+        <mxCell id="ll_colony" value="colony:Colony" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=1;collapsible=0;recursiveResize=0;outlineConnect=0;fillColor=#f1f5f9;strokeColor=#334155;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="320" y="80" width="130" height="850" as="geometry" />
+        </mxCell>
+        <mxCell id="ll_mission" value="m:ExplorationMission" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=1;collapsible=0;recursiveResize=0;outlineConnect=0;fillColor=#f1f5f9;strokeColor=#334155;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="620" y="80" width="160" height="850" as="geometry" />
+        </mxCell>
+        <mxCell id="ll_sci" value="s:Scientist" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=1;collapsible=0;recursiveResize=0;outlineConnect=0;fillColor=#f1f5f9;strokeColor=#334155;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="920" y="80" width="130" height="850" as="geometry" />
+        </mxCell>
+        <mxCell id="ll_rover" value="r:ExplorationRover" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=1;collapsible=0;recursiveResize=0;outlineConnect=0;fillColor=#f1f5f9;strokeColor=#334155;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="1180" y="80" width="150" height="850" as="geometry" />
+        </mxCell>
+
+        <!-- Messages -->
+        <!-- 1: submitMission -->
+        <mxCell id="m1" value="1: submitMission(m)" style="endArrow=block;html=1;strokeWidth=2;strokeColor=#1e293b;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="125" y="160" as="sourcePoint" />
+            <mxPoint x="385" y="160" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <!-- 2: check activeMission == null -->
+        <mxCell id="m2" value="2: check activeMission == null" style="endArrow=block;html=1;strokeWidth=1.5;strokeColor=#1e293b;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="385" y="180" as="sourcePoint" />
+            <mxPoint x="395" y="200" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="430" y="180" />
+              <mxPoint x="430" y="200" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+
+        <!-- 3: m.submitMission() -->
+        <mxCell id="m3" value="3: submitMission()" style="endArrow=block;html=1;strokeWidth=2;strokeColor=#1e293b;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="385" y="220" as="sourcePoint" />
+            <mxPoint x="700" y="220" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <!-- 4: canPerform(m) on scientist -->
+        <mxCell id="m4" value="4: canPerform(m)" style="endArrow=block;html=1;strokeWidth=1.8;strokeColor=#1e293b;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="700" y="245" as="sourcePoint" />
+            <mxPoint x="985" y="245" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m5" value="5: return true (SCIENTIFIC_RESEARCH present)" style="endArrow=open;dashed=1;html=1;strokeWidth=1.5;strokeColor=#1e293b;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="985" y="270" as="sourcePoint" />
+            <mxPoint x="700" y="270" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <!-- 6: canPerform(m) & battery on rover -->
+        <mxCell id="m6" value="6: canPerform(m) &amp;amp; getBatteryLevel()" style="endArrow=block;html=1;strokeWidth=1.8;strokeColor=#1e293b;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="700" y="295" as="sourcePoint" />
+            <mxPoint x="1255" y="295" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m7" value="7: return true &amp;amp; 100% (&amp;gt;= 25%)" style="endArrow=open;dashed=1;html=1;strokeWidth=1.5;strokeColor=#1e293b;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="1255" y="320" as="sourcePoint" />
+            <mxPoint x="700" y="320" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <!-- Alt Frame for Success vs Rejection -->
+        <mxCell id="alt_frame" value="alt" style="shape=umlFrame;whiteSpace=wrap;html=1;width=60;height=25;fillColor=#ffffff;strokeColor=#64748b;strokeWidth=1.5;" vertex="1" parent="1">
+          <mxGeometry x="80" y="350" width="1380" height="530" as="geometry" />
+        </mxCell>
+        <mxCell id="guard_success" value="[Validation Succeeded: Agents available &amp;amp; capable, Resources sufficient, Env OK]" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;fontStyle=1;fontColor=#0369a1;" vertex="1" parent="alt_frame">
+          <mxGeometry x="70" y="5" width="600" height="20" as="geometry" />
+        </mxCell>
+
+        <!-- Success Flow -->
+        <mxCell id="m8" value="8: return true" style="endArrow=open;dashed=1;html=1;strokeWidth=1.5;strokeColor=#1e293b;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="700" y="390" as="sourcePoint" />
+            <mxPoint x="385" y="390" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m9" value="9: setStatus(ASSIGNED), activeMission = m" style="endArrow=block;html=1;strokeWidth=1.8;strokeColor=#1e293b;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="385" y="415" as="sourcePoint" />
+            <mxPoint x="700" y="415" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m10" value="10: return true (Mission Accepted)" style="endArrow=open;dashed=1;html=1;strokeWidth=1.5;strokeColor=#1e293b;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="385" y="440" as="sourcePoint" />
+            <mxPoint x="125" y="440" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <!-- Execution -->
+        <mxCell id="m11" value="11: startActiveMission() -&amp;gt; m.startMission()" style="endArrow=block;html=1;strokeWidth=2;strokeColor=#1e293b;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="125" y="475" as="sourcePoint" />
+            <mxPoint x="385" y="475" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m12" value="12: setOnMission(true)" style="endArrow=block;html=1;strokeWidth=1.8;strokeColor=#1e293b;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="700" y="500" as="sourcePoint" />
+            <mxPoint x="985" y="500" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m13" value="13: setOnMission(true)" style="endArrow=block;html=1;strokeWidth=1.8;strokeColor=#1e293b;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="700" y="525" as="sourcePoint" />
+            <mxPoint x="1255" y="525" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <!-- Advance Time -->
+        <mxCell id="m14" value="14: advanceTime(7)" style="endArrow=block;html=1;strokeWidth=2;strokeColor=#1e293b;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="125" y="565" as="sourcePoint" />
+            <mxPoint x="385" y="565" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m15" value="15: progress(7)" style="endArrow=block;html=1;strokeWidth=2;strokeColor=#1e293b;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="385" y="590" as="sourcePoint" />
+            <mxPoint x="700" y="590" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m16" value="16: discharge(35)" style="endArrow=block;html=1;strokeWidth=1.5;strokeColor=#1e293b;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="700" y="615" as="sourcePoint" />
+            <mxPoint x="1255" y="615" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m17" value="17: complete() -&amp;gt; unassign agents &amp;amp; release equip" style="endArrow=block;html=1;strokeWidth=2;strokeColor=#16a34a;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="700" y="645" as="sourcePoint" />
+            <mxPoint x="700" y="665" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="740" y="645" />
+              <mxPoint x="740" y="665" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m18" value="18: activeMission = null" style="endArrow=block;html=1;strokeWidth=1.5;strokeColor=#16a34a;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="700" y="685" as="sourcePoint" />
+            <mxPoint x="385" y="685" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <!-- Divider for Alt -->
+        <mxCell id="alt_div" value="" style="line;strokeWidth=1.5;dashed=1;strokeColor=#94a3b8;" edge="1" parent="alt_frame">
+          <mxGeometry width="1380" relative="1" as="geometry">
+            <mxPoint y="370" as="sourcePoint" />
+            <mxPoint x="1380" y="370" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="guard_fail" value="[else: Unsuitable Agent / Resource Shortage / Another Active Mission / Dust Storm]" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;fontStyle=1;fontColor=#b91c1c;" vertex="1" parent="alt_frame">
+          <mxGeometry x="70" y="375" width="600" height="20" as="geometry" />
+        </mxCell>
+
+        <!-- Rejection Flow -->
+        <mxCell id="m_fail1" value="19: fail(&quot;Agent does not possess the required capability&quot;)" style="endArrow=block;html=1;strokeWidth=2;strokeColor=#dc2626;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="700" y="760" as="sourcePoint" />
+            <mxPoint x="700" y="780" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="740" y="760" />
+              <mxPoint x="740" y="780" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m_fail2" value="20: return false (status = FAILED, NEVER ACTIVE)" style="endArrow=open;dashed=1;html=1;strokeWidth=2;strokeColor=#dc2626;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="700" y="805" as="sourcePoint" />
+            <mxPoint x="385" y="805" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m_fail3" value="21: return false (&quot;Mission cannot be assigned. Reason: ...&quot;)" style="endArrow=open;dashed=1;html=1;strokeWidth=2;strokeColor=#dc2626;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="385" y="835" as="sourcePoint" />
+            <mxPoint x="125" y="835" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="SeqOxygen" name="4B. Oxygen Leak Emergency">
+    <mxGraphModel dx="1422" dy="800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1800" pageHeight="1400" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <mxCell id="title" value="&lt;b&gt;&lt;font style=&quot;font-size: 18px;&quot;&gt;SEQUENCE DIAGRAM 4B: OXYGEN LEAK EMERGENCY HANDLING&lt;/font&gt;&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e293b;fontColor=#ffffff;strokeColor=#0f172a;" vertex="1" parent="1">
+          <mxGeometry x="40" y="20" width="1500" height="40" as="geometry" />
+        </mxCell>
+
+        <!-- Lifelines -->
+        <mxCell id="ll_emg_op" value=":EmergencyOperator" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=1;collapsible=0;recursiveResize=0;outlineConnect=0;fillColor=#ffedd5;strokeColor=#c2410c;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="50" y="80" width="140" height="850" as="geometry" />
+        </mxCell>
+        <mxCell id="ll_colony" value="colony:Colony" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=1;collapsible=0;recursiveResize=0;outlineConnect=0;fillColor=#f1f5f9;strokeColor=#334155;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="290" y="80" width="130" height="850" as="geometry" />
+        </mxCell>
+        <mxCell id="ll_leak" value="leak:OxygenLeak" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=1;collapsible=0;recursiveResize=0;outlineConnect=0;fillColor=#f1f5f9;strokeColor=#334155;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="540" y="80" width="140" height="850" as="geometry" />
+        </mxCell>
+        <mxCell id="ll_hab" value="hab:Habitat" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=1;collapsible=0;recursiveResize=0;outlineConnect=0;fillColor=#f1f5f9;strokeColor=#334155;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="780" y="80" width="130" height="850" as="geometry" />
+        </mxCell>
+        <mxCell id="ll_eng" value="eng:Engineer" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=1;collapsible=0;recursiveResize=0;outlineConnect=0;fillColor=#f1f5f9;strokeColor=#334155;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="1010" y="80" width="130" height="850" as="geometry" />
+        </mxCell>
+        <mxCell id="ll_bot" value="bot:RepairRobot" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=1;collapsible=0;recursiveResize=0;outlineConnect=0;fillColor=#f1f5f9;strokeColor=#334155;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="1240" y="80" width="130" height="850" as="geometry" />
+        </mxCell>
+
+        <!-- Messages -->
+        <!-- 1: triggerEmergency -->
+        <mxCell id="m1" value="1: triggerEmergency(leak)" style="endArrow=block;html=1;strokeWidth=2;strokeColor=#1e293b;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="120" y="160" as="sourcePoint" />
+            <mxPoint x="355" y="160" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <!-- 2: handle(colony) -->
+        <mxCell id="m2" value="2: handle(colony)" style="endArrow=block;html=1;strokeWidth=2;strokeColor=#1e293b;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="355" y="185" as="sourcePoint" />
+            <mxPoint x="610" y="185" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <!-- 3: deduct initial oxygen loss (40 units) -->
+        <mxCell id="m3" value="3: deductResource(OXYGEN, 40) [initial loss]" style="endArrow=block;html=1;strokeWidth=2;strokeColor=#dc2626;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="610" y="210" as="sourcePoint" />
+            <mxPoint x="845" y="210" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <!-- 4: getAgents() -->
+        <mxCell id="m4" value="4: getAgents()" style="endArrow=block;html=1;strokeWidth=1.5;strokeColor=#1e293b;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="610" y="235" as="sourcePoint" />
+            <mxPoint x="355" y="235" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <!-- 5: check engineer capability & availability -->
+        <mxCell id="m5" value="5: canHandle(EQUIPMENT_REPAIR) &amp;amp;&amp;amp; isAvailable()" style="endArrow=block;html=1;strokeWidth=1.8;strokeColor=#1e293b;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="610" y="260" as="sourcePoint" />
+            <mxPoint x="1075" y="260" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m6" value="6: return true" style="endArrow=open;dashed=1;html=1;strokeWidth=1.5;strokeColor=#1e293b;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="1075" y="280" as="sourcePoint" />
+            <mxPoint x="610" y="280" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <!-- 7: check repair robot capability & availability -->
+        <mxCell id="m7" value="7: canHandle(EQUIPMENT_REPAIR) &amp;amp;&amp;amp; isAvailable()" style="endArrow=block;html=1;strokeWidth=1.8;strokeColor=#1e293b;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="610" y="305" as="sourcePoint" />
+            <mxPoint x="1305" y="305" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m8" value="8: return true" style="endArrow=open;dashed=1;html=1;strokeWidth=1.5;strokeColor=#1e293b;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="1305" y="325" as="sourcePoint" />
+            <mxPoint x="610" y="325" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <!-- Alt Frame for Resolved vs Unresolved -->
+        <mxCell id="alt_leak" value="alt" style="shape=umlFrame;whiteSpace=wrap;html=1;width=60;height=25;fillColor=#ffffff;strokeColor=#64748b;strokeWidth=1.5;" vertex="1" parent="1">
+          <mxGeometry x="70" y="350" width="1400" height="530" as="geometry" />
+        </mxCell>
+        <mxCell id="guard_leak_ok" value="[Responders Available &amp;amp;&amp;amp; Colony has SPARE_PARTS &amp;gt;= 2 &amp;amp;&amp;amp; BATTERY &amp;gt;= 5]" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;fontStyle=1;fontColor=#0369a1;" vertex="1" parent="alt_leak">
+          <mxGeometry x="70" y="5" width="600" height="20" as="geometry" />
+        </mxCell>
+
+        <!-- Success Flow -->
+        <mxCell id="m9" value="9: setLocation(&quot;Habitat1&quot;) [dispatch engineer]" style="endArrow=block;html=1;strokeWidth=1.8;strokeColor=#1e293b;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="610" y="400" as="sourcePoint" />
+            <mxPoint x="1075" y="400" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m10" value="10: setLocation(&quot;Habitat1&quot;) [dispatch robot]" style="endArrow=block;html=1;strokeWidth=1.8;strokeColor=#1e293b;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="610" y="425" as="sourcePoint" />
+            <mxPoint x="1305" y="425" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m11" value="11: deductResource(SPARE_PARTS, 2) &amp;amp;&amp;amp; deductResource(BATTERY, 5)" style="endArrow=block;html=1;strokeWidth=2;strokeColor=#1e293b;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="610" y="455" as="sourcePoint" />
+            <mxPoint x="355" y="455" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m12" value="12: setOperationalStatus(true), state = RESOLVED" style="endArrow=block;html=1;strokeWidth=2;strokeColor=#16a34a;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="610" y="485" as="sourcePoint" />
+            <mxPoint x="845" y="485" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m13" value="13: return true (Leak Repaired: Total O2 lost = 40 units)" style="endArrow=open;dashed=1;html=1;strokeWidth=2;strokeColor=#16a34a;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="610" y="520" as="sourcePoint" />
+            <mxPoint x="355" y="520" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m14" value="14: return true (Emergency Resolved)" style="endArrow=open;dashed=1;html=1;strokeWidth=2;strokeColor=#16a34a;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="355" y="545" as="sourcePoint" />
+            <mxPoint x="120" y="545" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <!-- Divider for Alt -->
+        <mxCell id="alt_leak_div" value="" style="line;strokeWidth=1.5;dashed=1;strokeColor=#94a3b8;" edge="1" parent="alt_leak">
+          <mxGeometry width="1400" relative="1" as="geometry">
+            <mxPoint y="230" as="sourcePoint" />
+            <mxPoint x="1400" y="230" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="guard_leak_fail" value="[else: Responders Unavailable || Insufficient Spare Parts / Battery]" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;fontStyle=1;fontColor=#b91c1c;" vertex="1" parent="alt_leak">
+          <mxGeometry x="70" y="235" width="600" height="20" as="geometry" />
+        </mxCell>
+
+        <!-- Failure Flow (Double Loss) -->
+        <mxCell id="m15" value="15: state = UNRESOLVED, 0 response resources consumed" style="endArrow=block;html=1;strokeWidth=2;strokeColor=#dc2626;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="610" y="630" as="sourcePoint" />
+            <mxPoint x="610" y="650" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="650" y="630" />
+              <mxPoint x="650" y="650" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m16" value="16: deductResource(OXYGEN, 40) [DOUBLE LOSS PENALTY: Total Lost = 80 units!]" style="endArrow=block;html=1;strokeWidth=2;strokeColor=#dc2626;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="610" y="680" as="sourcePoint" />
+            <mxPoint x="845" y="680" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m17" value="17: return false (Emergency UNRESOLVED; Double Loss Applied)" style="endArrow=open;dashed=1;html=1;strokeWidth=2;strokeColor=#dc2626;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="610" y="730" as="sourcePoint" />
+            <mxPoint x="355" y="730" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m18" value="18: return false (&quot;Emergency UNRESOLVED: Required responders unavailable&quot;)" style="endArrow=open;dashed=1;html=1;strokeWidth=2;strokeColor=#dc2626;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="355" y="760" as="sourcePoint" />
+            <mxPoint x="120" y="760" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="SeqEnv" name="4C. Dust Storm Restriction">
+    <mxGraphModel dx="1422" dy="800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1800" pageHeight="1400" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <mxCell id="title" value="&lt;b&gt;&lt;font style=&quot;font-size: 18px;&quot;&gt;SEQUENCE DIAGRAM 4C: ENVIRONMENTAL RESTRICTION (DUST STORM)&lt;/font&gt;&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e293b;fontColor=#ffffff;strokeColor=#0f172a;" vertex="1" parent="1">
+          <mxGeometry x="40" y="20" width="1300" height="40" as="geometry" />
+        </mxCell>
+
+        <!-- Lifelines -->
+        <mxCell id="ll_op" value=":ColonyOperator" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=1;collapsible=0;recursiveResize=0;outlineConnect=0;fillColor=#fef08a;strokeColor=#ca8a04;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="60" y="80" width="130" height="600" as="geometry" />
+        </mxCell>
+        <mxCell id="ll_env" value="env:Environment" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=1;collapsible=0;recursiveResize=0;outlineConnect=0;fillColor=#f1f5f9;strokeColor=#334155;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="340" y="80" width="130" height="600" as="geometry" />
+        </mxCell>
+        <mxCell id="ll_colony" value="colony:Colony" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=1;collapsible=0;recursiveResize=0;outlineConnect=0;fillColor=#f1f5f9;strokeColor=#334155;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="620" y="80" width="130" height="600" as="geometry" />
+        </mxCell>
+        <mxCell id="ll_m" value="m:ExplorationMission" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=1;collapsible=0;recursiveResize=0;outlineConnect=0;fillColor=#f1f5f9;strokeColor=#334155;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="900" y="80" width="170" height="600" as="geometry" />
+        </mxCell>
+
+        <!-- Messages -->
+        <mxCell id="m1" value="1: setCondition(DUST_STORM)" style="endArrow=block;html=1;strokeWidth=2;strokeColor=#1e293b;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="125" y="160" as="sourcePoint" />
+            <mxPoint x="405" y="160" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="m2" value="2: submitMission(m)" style="endArrow=block;html=1;strokeWidth=2;strokeColor=#1e293b;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="125" y="200" as="sourcePoint" />
+            <mxPoint x="685" y="200" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="m3" value="3: submitMission()" style="endArrow=block;html=1;strokeWidth=2;strokeColor=#1e293b;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="685" y="230" as="sourcePoint" />
+            <mxPoint x="985" y="230" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="m4" value="4: Environment.getState()" style="endArrow=block;html=1;strokeWidth=1.8;strokeColor=#1e293b;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="985" y="260" as="sourcePoint" />
+            <mxPoint x="405" y="260" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m5" value="5: return DUST_STORM" style="endArrow=open;dashed=1;html=1;strokeWidth=1.5;strokeColor=#1e293b;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="405" y="285" as="sourcePoint" />
+            <mxPoint x="985" y="285" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="m6" value="6: failureReason = &quot;Surface operations are not allowed during a dust storm.&quot;&lt;br/&gt;setStatus(FAILED)" style="endArrow=block;html=1;strokeWidth=2;strokeColor=#dc2626;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="985" y="325" as="sourcePoint" />
+            <mxPoint x="995" y="355" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="1030" y="325" />
+              <mxPoint x="1030" y="355" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="m7" value="7: return false" style="endArrow=open;dashed=1;html=1;strokeWidth=2;strokeColor=#dc2626;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="985" y="390" as="sourcePoint" />
+            <mxPoint x="685" y="390" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="m8" value="8: activeMission remains null (NEVER ACTIVE)" style="endArrow=block;html=1;strokeWidth=1.5;strokeColor=#1e293b;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="685" y="420" as="sourcePoint" />
+            <mxPoint x="695" y="440" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="730" y="420" />
+              <mxPoint x="730" y="440" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="m9" value="9: return false (&quot;Exploration Mission cannot start. Reason: Surface operations are not allowed...&quot;)" style="endArrow=open;dashed=1;html=1;strokeWidth=2;strokeColor=#dc2626;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="685" y="475" as="sourcePoint" />
+            <mxPoint x="125" y="475" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

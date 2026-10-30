@@ -1,0 +1,163 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1300 1150" width="1300" height="1150" style="background:#f8f9fa; font-family:'Segoe UI', Arial, sans-serif;">
+  <defs>
+    <style>
+      .actor-box { fill: #dbeafe; stroke: #1e40af; stroke-width: 1.8; rx: 4; }
+      .obj-box { fill: #f1f5f9; stroke: #334155; stroke-width: 1.8; rx: 4; }
+      .title { font-size: 13px; font-weight: bold; fill: #0f172a; text-anchor: middle; font-family: 'Consolas', monospace; }
+      .lifeline { stroke: #64748b; stroke-width: 1.5; stroke-dasharray: 4,4; }
+      .active-bar { fill: #bfdbfe; stroke: #1d4ed8; stroke-width: 1.2; }
+      .msg-line { stroke: #1e293b; stroke-width: 1.5; fill: none; }
+      .reply-line { stroke: #1e293b; stroke-width: 1.5; stroke-dasharray: 4,4; fill: none; }
+      .msg-text { font-size: 11px; fill: #0f172a; font-family: 'Consolas', monospace; }
+      .alt-box { fill: #ffffff; stroke: #64748b; stroke-width: 1.5; rx: 2; }
+      .alt-divider { stroke: #94a3b8; stroke-width: 1.5; stroke-dasharray: 6,4; }
+      .alt-header { fill: #e2e8f0; stroke: #64748b; stroke-width: 1; }
+      .alt-title { font-size: 11px; font-weight: bold; fill: #0f172a; }
+      .guard { font-size: 11px; font-weight: bold; fill: #0369a1; font-family: 'Consolas', monospace; }
+    </style>
+    <marker id="solid-arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
+      <polygon points="1,1 7,4 1,7" fill="#1e293b"/>
+    </marker>
+    <marker id="open-arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
+      <polyline points="1,1 7,4 1,7" stroke="#1e293b" stroke-width="1.5" fill="none"/>
+    </marker>
+  </defs>
+
+  <!-- Banner -->
+  <rect x="20" y="20" width="1260" height="45" fill="#1e293b" rx="6"/>
+  <text x="650" y="48" font-size="18" font-weight="bold" fill="#ffffff" text-anchor="middle">SEQUENCE DIAGRAM 4A: MISSION SUBMISSION AND EXECUTION</text>
+
+  <!-- Lifeline Headers -->
+  <!-- :Operator -->
+  <rect x="50" y="85" width="120" height="40" class="actor-box"/>
+  <text x="110" y="110" class="title">:ColonyOperator</text>
+  <line x1="110" y1="125" x2="110" y2="1080" class="lifeline"/>
+
+  <!-- colony:Colony -->
+  <rect x="250" y="85" width="130" height="40" class="obj-box"/>
+  <text x="315" y="110" class="title">colony:Colony</text>
+  <line x1="315" y1="125" x2="315" y2="1080" class="lifeline"/>
+
+  <!-- mission:ExplorationMission -->
+  <rect x="500" y="85" width="180" height="40" class="obj-box"/>
+  <text x="590" y="110" class="title">m:ExplorationMission</text>
+  <line x1="590" y1="125" x2="590" y2="1080" class="lifeline"/>
+
+  <!-- scientist:Scientist -->
+  <rect x="780" y="85" width="140" height="40" class="obj-box"/>
+  <text x="850" y="110" class="title">s:Scientist</text>
+  <line x1="850" y1="125" x2="850" y2="1080" class="lifeline"/>
+
+  <!-- rover:ExplorationRover -->
+  <rect x="1000" y="85" width="160" height="40" class="obj-box"/>
+  <text x="1080" y="110" class="title">r:ExplorationRover</text>
+  <line x1="1080" y1="125" x2="1080" y2="1080" class="lifeline"/>
+
+  <!-- Messages -->
+  <!-- 1. submitMission -->
+  <line x1="110" y1="160" x2="315" y2="160" class="msg-line" marker-end="url(#solid-arrow)"/>
+  <text x="120" y="152" class="msg-text">1: submitMission(m)</text>
+  <rect x="310" y="160" width="10" height="180" class="active-bar"/>
+
+  <!-- 2. check activeMission -->
+  <line x1="320" y1="185" x2="360" y2="185" class="msg-line"/>
+  <line x1="360" y1="185" x2="360" y2="205" class="msg-line"/>
+  <line x1="360" y1="205" x2="320" y2="205" class="msg-line" marker-end="url(#solid-arrow)"/>
+  <text x="370" y="200" class="msg-text">2: check activeMission == null</text>
+
+  <!-- 3. validate m.submitMission() -->
+  <line x1="320" y1="230" x2="590" y2="230" class="msg-line" marker-end="url(#solid-arrow)"/>
+  <text x="330" y="222" class="msg-text">3: submitMission()</text>
+  <rect x="585" y="230" width="10" height="110" class="active-bar"/>
+
+  <!-- 4. canPerform on scientist -->
+  <line x1="595" y1="255" x2="850" y2="255" class="msg-line" marker-end="url(#solid-arrow)"/>
+  <text x="610" y="247" class="msg-text">4: canPerform(m)</text>
+  <line x1="850" y1="275" x2="595" y2="275" class="reply-line" marker-end="url(#open-arrow)"/>
+  <text x="610" y="270" class="msg-text">5: return true (has SCIENTIFIC_RESEARCH)</text>
+
+  <!-- 6. canPerform & battery on rover -->
+  <line x1="595" y1="300" x2="1080" y2="300" class="msg-line" marker-end="url(#solid-arrow)"/>
+  <text x="610" y="292" class="msg-text">6: canPerform(m) &amp; getBatteryLevel()</text>
+  <line x1="1080" y1="320" x2="595" y2="320" class="reply-line" marker-end="url(#open-arrow)"/>
+  <text x="610" y="315" class="msg-text">7: return true &amp; 100% (&gt;= 25%)</text>
+
+  <!-- ALT FRAME FOR VALIDATION -->
+  <rect x="80" y="360" width="1120" height="700" class="alt-box"/>
+  <path d="M 80,360 L 140,360 L 155,375 L 155,385 L 80,385 Z" class="alt-header"/>
+  <text x="90" y="377" class="alt-title">alt</text>
+  <text x="170" y="377" class="guard">[Validation Succeeded: Agents available &amp; capable, Resources sufficient, Env OK]</text>
+
+  <!-- Success Path -->
+  <line x1="590" y1="410" x2="315" y2="410" class="reply-line" marker-end="url(#open-arrow)"/>
+  <text x="350" y="402" class="msg-text">8: return true</text>
+
+  <line x1="315" y1="435" x2="590" y2="435" class="msg-line" marker-end="url(#solid-arrow)"/>
+  <text x="350" y="427" class="msg-text">9: setStatus(ASSIGNED), activeMission = m</text>
+
+  <line x1="315" y1="465" x2="110" y2="465" class="reply-line" marker-end="url(#open-arrow)"/>
+  <text x="130" y="457" class="msg-text">10: return true (Mission Accepted)</text>
+
+  <!-- 11. startMission() -->
+  <line x1="110" y1="510" x2="590" y2="510" class="msg-line" marker-end="url(#solid-arrow)"/>
+  <text x="130" y="502" class="msg-text">11: startMission()</text>
+  <rect x="585" y="510" width="10" height="90" class="active-bar"/>
+
+  <line x1="595" y1="535" x2="850" y2="535" class="msg-line" marker-end="url(#solid-arrow)"/>
+  <text x="610" y="527" class="msg-text">12: setOnMission(true)</text>
+
+  <line x1="595" y1="560" x2="1080" y2="560" class="msg-line" marker-end="url(#solid-arrow)"/>
+  <text x="610" y="552" class="msg-text">13: setOnMission(true)</text>
+
+  <line x1="595" y1="585" x2="595" y2="595" class="msg-line"/>
+  <text x="610" y="585" class="msg-text">14: setStatus(IN_PROGRESS)</text>
+
+  <!-- 15. advanceTime -->
+  <line x1="110" y1="630" x2="315" y2="630" class="msg-line" marker-end="url(#solid-arrow)"/>
+  <text x="130" y="622" class="msg-text">15: advanceTime(7)</text>
+  <rect x="310" y="630" width="10" height="190" class="active-bar"/>
+
+  <!-- Simulation loop inside Colony -->
+  <line x1="320" y1="655" x2="590" y2="655" class="msg-line" marker-end="url(#solid-arrow)"/>
+  <text x="330" y="647" class="msg-text">16: progress(7), timeElapsed reaches 7</text>
+
+  <line x1="320" y1="680" x2="1080" y2="680" class="msg-line" marker-end="url(#solid-arrow)"/>
+  <text x="330" y="672" class="msg-text">17: discharge(35)</text>
+
+  <line x1="320" y1="705" x2="850" y2="705" class="msg-line" marker-end="url(#solid-arrow)"/>
+  <text x="330" y="697" class="msg-text">18: increaseFatigue(35)</text>
+
+  <line x1="320" y1="735" x2="590" y2="735" class="msg-line" marker-end="url(#solid-arrow)"/>
+  <text x="330" y="727" class="msg-text">19: complete() -&gt; setStatus(COMPLETED)</text>
+
+  <line x1="590" y1="760" x2="850" y2="760" class="msg-line" marker-end="url(#solid-arrow)"/>
+  <text x="610" y="752" class="msg-text">20: setOnMission(false) [released]</text>
+
+  <line x1="590" y1="785" x2="1080" y2="785" class="msg-line" marker-end="url(#solid-arrow)"/>
+  <text x="610" y="777" class="msg-text">21: setOnMission(false) [released]</text>
+
+  <line x1="320" y1="810" x2="360" y2="810" class="msg-line"/>
+  <line x1="360" y1="810" x2="360" y2="825" class="msg-line"/>
+  <line x1="360" y1="825" x2="320" y2="825" class="msg-line" marker-end="url(#solid-arrow)"/>
+  <text x="370" y="820" class="msg-text">22: activeMission = null</text>
+
+  <!-- ALT DIVIDER FOR REJECTION -->
+  <line x1="80" y1="850" x2="1200" y2="850" class="alt-divider"/>
+  <text x="170" y="870" class="guard">[else: Agent incapable/unavailable || Insufficient resources || Active mission exists]</text>
+
+  <!-- Rejection Path -->
+  <line x1="590" y1="910" x2="590" y2="930" class="msg-line"/>
+  <text x="610" y="905" class="msg-text">setFailureReason("Agent does not possess the required capability.")</text>
+  <text x="610" y="925" class="msg-text">setStatus(FAILED)</text>
+
+  <line x1="590" y1="950" x2="315" y2="950" class="reply-line" marker-end="url(#open-arrow)"/>
+  <text x="350" y="942" class="msg-text">return false</text>
+
+  <line x1="320" y1="975" x2="360" y2="975" class="msg-line"/>
+  <line x1="360" y1="975" x2="360" y2="990" class="msg-line"/>
+  <line x1="360" y1="990" x2="320" y2="990" class="msg-line" marker-end="url(#solid-arrow)"/>
+  <text x="370" y="985" class="msg-text">activeMission remains null</text>
+
+  <line x1="315" y1="1020" x2="110" y2="1020" class="reply-line" marker-end="url(#open-arrow)"/>
+  <text x="130" y="1012" class="msg-text">return false (Mission Rejected; Never Becomes Active)</text>
+</svg>

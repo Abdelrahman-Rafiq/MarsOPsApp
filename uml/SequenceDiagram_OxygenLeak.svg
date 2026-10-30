@@ -1,0 +1,141 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1300 1100" width="1300" height="1100" style="background:#f8f9fa; font-family:'Segoe UI', Arial, sans-serif;">
+  <defs>
+    <style>
+      .actor-box { fill: #fed7aa; stroke: #c2410c; stroke-width: 1.8; rx: 4; }
+      .obj-box { fill: #f1f5f9; stroke: #334155; stroke-width: 1.8; rx: 4; }
+      .title { font-size: 13px; font-weight: bold; fill: #0f172a; text-anchor: middle; font-family: 'Consolas', monospace; }
+      .lifeline { stroke: #64748b; stroke-width: 1.5; stroke-dasharray: 4,4; }
+      .active-bar { fill: #fed7aa; stroke: #ea580c; stroke-width: 1.2; }
+      .msg-line { stroke: #1e293b; stroke-width: 1.5; fill: none; }
+      .reply-line { stroke: #1e293b; stroke-width: 1.5; stroke-dasharray: 4,4; fill: none; }
+      .msg-text { font-size: 11px; fill: #0f172a; font-family: 'Consolas', monospace; }
+      .alt-box { fill: #ffffff; stroke: #64748b; stroke-width: 1.5; rx: 2; }
+      .alt-divider { stroke: #94a3b8; stroke-width: 1.5; stroke-dasharray: 6,4; }
+      .alt-header { fill: #e2e8f0; stroke: #64748b; stroke-width: 1; }
+      .alt-title { font-size: 11px; font-weight: bold; fill: #0f172a; }
+      .guard { font-size: 11px; font-weight: bold; fill: #0369a1; font-family: 'Consolas', monospace; }
+    </style>
+    <marker id="solid-arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
+      <polygon points="1,1 7,4 1,7" fill="#1e293b"/>
+    </marker>
+    <marker id="open-arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
+      <polyline points="1,1 7,4 1,7" stroke="#1e293b" stroke-width="1.5" fill="none"/>
+    </marker>
+  </defs>
+
+  <!-- Banner -->
+  <rect x="20" y="20" width="1260" height="45" fill="#1e293b" rx="6"/>
+  <text x="650" y="48" font-size="18" font-weight="bold" fill="#ffffff" text-anchor="middle">SEQUENCE DIAGRAM 4B: OXYGEN LEAK EMERGENCY HANDLING</text>
+
+  <!-- Lifelines -->
+  <!-- :EmergencyOperator -->
+  <rect x="40" y="85" width="140" height="40" class="actor-box"/>
+  <text x="110" y="110" class="title">:EmergencyOperator</text>
+  <line x1="110" y1="125" x2="110" y2="1040" class="lifeline"/>
+
+  <!-- colony:Colony -->
+  <rect x="250" y="85" width="130" height="40" class="obj-box"/>
+  <text x="315" y="110" class="title">colony:Colony</text>
+  <line x1="315" y1="125" x2="315" y2="1040" class="lifeline"/>
+
+  <!-- leak:OxygenLeak -->
+  <rect x="470" y="85" width="150" height="40" class="obj-box"/>
+  <text x="545" y="110" class="title">leak:OxygenLeak</text>
+  <line x1="545" y1="125" x2="545" y2="1040" class="lifeline"/>
+
+  <!-- habitat:Habitat -->
+  <rect x="710" y="85" width="130" height="40" class="obj-box"/>
+  <text x="775" y="110" class="title">habitat:Habitat</text>
+  <line x1="775" y1="125" x2="775" y2="1040" class="lifeline"/>
+
+  <!-- eng:Engineer -->
+  <rect x="910" y="85" width="130" height="40" class="obj-box"/>
+  <text x="975" y="110" class="title">eng:Engineer</text>
+  <line x1="975" y1="125" x2="975" y2="1040" class="lifeline"/>
+
+  <!-- bot:RepairRobot -->
+  <rect x="1100" y="85" width="140" height="40" class="obj-box"/>
+  <text x="1170" y="110" class="title">bot:RepairRobot</text>
+  <line x1="1170" y1="125" x2="1170" y2="1040" class="lifeline"/>
+
+  <!-- 1. triggerEmergency -->
+  <line x1="110" y1="160" x2="315" y2="160" class="msg-line" marker-end="url(#solid-arrow)"/>
+  <text x="120" y="152" class="msg-text">1: triggerEmergency(leak)</text>
+  <rect x="310" y="160" width="10" height="150" class="active-bar"/>
+
+  <!-- 2. leak.handle(colony) -->
+  <line x1="320" y1="185" x2="545" y2="185" class="msg-line" marker-end="url(#solid-arrow)"/>
+  <text x="330" y="177" class="msg-text">2: handle(colony)</text>
+  <rect x="540" y="185" width="10" height="130" class="active-bar"/>
+
+  <!-- 3. Initial oxygen loss -->
+  <line x1="550" y1="210" x2="775" y2="210" class="msg-line" marker-end="url(#solid-arrow)"/>
+  <text x="560" y="202" class="msg-text">3: deductResource(OXYGEN, 40) [initial loss]</text>
+
+  <!-- 4. Query colony for responders -->
+  <line x1="550" y1="235" x2="325" y2="235" class="msg-line" marker-end="url(#solid-arrow)"/>
+  <text x="350" y="227" class="msg-text">4: getAgents()</text>
+
+  <!-- 5. Check capabilities -->
+  <line x1="550" y1="260" x2="975" y2="260" class="msg-line" marker-end="url(#solid-arrow)"/>
+  <text x="560" y="252" class="msg-text">5: canHandle(EQUIPMENT_REPAIR) &amp;&amp; isAvailable()</text>
+  <line x1="975" y1="280" x2="550" y2="280" class="reply-line" marker-end="url(#open-arrow)"/>
+  <text x="560" y="275" class="msg-text">6: return true (human responder available)</text>
+
+  <line x1="550" y1="305" x2="1170" y2="305" class="msg-line" marker-end="url(#solid-arrow)"/>
+  <text x="560" y="297" class="msg-text">7: canHandle(EQUIPMENT_REPAIR) &amp;&amp; isAvailable()</text>
+  <line x1="1170" y1="325" x2="550" y2="325" class="reply-line" marker-end="url(#open-arrow)"/>
+  <text x="560" y="320" class="msg-text">8: return true (robot responder available)</text>
+
+  <!-- ALT FRAME FOR EMERGENCY OUTCOME -->
+  <rect x="80" y="360" width="1150" height="650" class="alt-box"/>
+  <path d="M 80,360 L 140,360 L 155,375 L 155,385 L 80,385 Z" class="alt-header"/>
+  <text x="90" y="377" class="alt-title">alt</text>
+  <text x="170" y="377" class="guard">[Responders Available &amp;&amp; Colony has SPARE_PARTS &gt;= 2 &amp;&amp; BATTERY &gt;= 5]</text>
+
+  <!-- Success Flow -->
+  <line x1="550" y1="410" x2="975" y2="410" class="msg-line" marker-end="url(#solid-arrow)"/>
+  <text x="560" y="402" class="msg-text">9: setLocation("Habitat1") [dispatch]</text>
+
+  <line x1="550" y1="435" x2="1170" y2="435" class="msg-line" marker-end="url(#solid-arrow)"/>
+  <text x="560" y="427" class="msg-text">10: setLocation("Habitat1") [dispatch]</text>
+
+  <line x1="550" y1="465" x2="315" y2="465" class="msg-line" marker-end="url(#solid-arrow)"/>
+  <text x="330" y="457" class="msg-text">11: deductResource(SPARE_PARTS, 2)</text>
+
+  <line x1="550" y1="490" x2="315" y2="490" class="msg-line" marker-end="url(#solid-arrow)"/>
+  <text x="330" y="482" class="msg-text">12: deductResource(BATTERY_POWER, 5)</text>
+
+  <line x1="550" y1="520" x2="775" y2="520" class="msg-line" marker-end="url(#solid-arrow)"/>
+  <text x="560" y="512" class="msg-text">13: setOperationalStatus(true) [leak repaired]</text>
+
+  <line x1="550" y1="545" x2="550" y2="560" class="msg-line"/>
+  <text x="560" y="555" class="msg-text">14: setEmergencyState(RESOLVED)</text>
+
+  <line x1="545" y1="585" x2="315" y2="585" class="reply-line" marker-end="url(#open-arrow)"/>
+  <text x="350" y="577" class="msg-text">15: return true</text>
+
+  <line x1="315" y1="610" x2="110" y2="610" class="reply-line" marker-end="url(#open-arrow)"/>
+  <text x="130" y="602" class="msg-text">16: return true (Oxygen Leak Resolved; Total oxygen lost = 40 units)</text>
+
+  <!-- ALT DIVIDER FOR UNRESOLVED (RES OR RESPONDER SHORTAGE) -->
+  <line x1="80" y1="650" x2="1230" y2="650" class="alt-divider"/>
+  <text x="170" y="670" class="guard">[else: Required Responders Unavailable OR Insufficient Spare Parts / Battery]</text>
+
+  <!-- Unresolved Flow -->
+  <line x1="550" y1="710" x2="550" y2="725" class="msg-line"/>
+  <text x="560" y="705" class="msg-text">17: setEmergencyState(UNRESOLVED)</text>
+  <text x="560" y="725" class="msg-text">18: setFailureReason("Responders unavailable or insufficient resources")</text>
+
+  <line x1="550" y1="760" x2="775" y2="760" class="msg-line" marker-end="url(#solid-arrow)"/>
+  <text x="560" y="752" class="msg-text">19: deductResource(OXYGEN, 40) <b>[PENALTY: deduct again! Total loss = 80]</b></text>
+
+  <line x1="550" y1="800" x2="315" y2="800" class="msg-line"/>
+  <text x="330" y="792" class="msg-text">20: <i>(NO response resources: 0 spare parts &amp; 0 battery deducted)</i></text>
+
+  <line x1="545" y1="840" x2="315" y2="840" class="reply-line" marker-end="url(#open-arrow)"/>
+  <text x="350" y="832" class="msg-text">21: return false</text>
+
+  <line x1="315" y1="880" x2="110" y2="880" class="reply-line" marker-end="url(#open-arrow)"/>
+  <text x="130" y="872" class="msg-text">22: return false (Emergency UNRESOLVED; Double oxygen deduction applied)</text>
+</svg>
