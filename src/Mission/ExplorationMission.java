@@ -1,48 +1,63 @@
 package Mission;
-import Agent.Engineer;
-import Helper.*;
 
-import java.util.Arrays;
-import Environment.Environment;
+import Agent.Agent;
+import Agent.CrewMember;
 import Agent.Vehicle;
+import Colony.Colony;
+import Environment.Environment;
+import Helper.*;
+import java.util.Arrays;
 
-public class ExplorationMission extends Mission{
+public class ExplorationMission extends Mission {
 
-    private static final int requiredTimeUnits = 7;
-    private Engineer engineer;
+    private static final int REQUIRED_TIME_UNITS = 7;
+    private Agent crewMember;
     private Vehicle vehicle;
     private double requiredBatteryLevel;
 
-
     public ExplorationMission(Colony colony, String description, String location,
-                              Engineer engineer, Vehicle vehicle,
+                              Agent crewMember, Vehicle vehicle,
                               double requiredBatteryLevel, Equipment equipment,
                               ResourceType[] resources) {
-        super(colony,description, location,resources,equipment);
+        super(colony, description, location, resources, equipment, REQUIRED_TIME_UNITS);
 
-        if(engineer == null || vehicle == null ){
-            throw new IllegalArgumentException("null arguments aren't allowed!");
+        if (crewMember == null || vehicle == null) {
+            throw new IllegalArgumentException("Null agents aren't allowed!");
         }
-        if(requiredBatteryLevel <= 0 ){
-            throw new IllegalArgumentException("non positive battery level isn't allowed!");
+        if (requiredBatteryLevel <= 0) {
+            throw new IllegalArgumentException("Non-positive battery level isn't allowed!");
         }
-        this.engineer =engineer;
+        this.crewMember = crewMember;
         this.vehicle = vehicle;
         this.requiredBatteryLevel = requiredBatteryLevel;
-
     }
 
+    public Agent getCrewMember() {
+        return crewMember;
+    }
+
+    public Vehicle getVehicle() {
+        return vehicle;
+    }
+
+    public double getRequiredBatteryLevel() {
+        return requiredBatteryLevel;
+    }
+
+    @Override
+    public Capability getRequiredCapability() {
+        return Capability.SURFACE_EXPLORATION;
+    }
 
     @Override
     public String toString() {
         return "ExplorationMission{" +
-                "missionId=" + missionId +
-                ", colony=" + colony +
-                ", current status = "+ this.getStatus()+
-                ", description= "+ this.getDescription()+
-                ", location= "+ this.getLocation()+
-                ", engineer=" + engineer +
-                ", vehicle=" + vehicle +
+                "missionId='" + missionId + '\'' +
+                ", currentStatus=" + getStatus() +
+                ", description='" + getDescription() + '\'' +
+                ", location='" + getLocation() + '\'' +
+                ", crewMember=" + crewMember.getName() +
+                ", vehicle=" + vehicle.getName() +
                 ", requiredBatteryLevel=" + requiredBatteryLevel +
                 ", equipment=" + equipment +
                 ", resources=" + Arrays.toString(resources) +
@@ -50,39 +65,38 @@ public class ExplorationMission extends Mission{
     }
 
     @Override
-    protected boolean submitMission(){
-
-        if(this.colony.activeMission != null){
+    public boolean submitMission() {
+        if (this.colony.getActiveMission() != null) {
             failureReason = "Another mission is active in the colony right now.";
             return false;
         }
 
-
-        if(Environment.getState() == EnvironmentCondition.COMMUNICATION_DISRUPTION){
-            failureReason = "Dust Storm prevents the Exploration Mission";
-        }
-
-        if( !this.engineer.canPerform(this)){
-            failureReason = "Agent can't perform this mission.";
+        if (Environment.getState() == EnvironmentCondition.DUST_STORM) {
+            failureReason = "Surface operations are not allowed during a dust storm.";
             return false;
         }
 
-        if( !this.vehicle.canPerform(this)){
-            failureReason = "Agent can't perform this mission.";
+        if (!this.crewMember.isAvailable() || !this.crewMember.canPerform(this)) {
+            failureReason = "Agent does not possess the required capability.";
             return false;
         }
 
-        if(this.vehicle.getBatteryLevel() < this.requiredBatteryLevel){
+        if (!this.vehicle.isAvailable() || !this.vehicle.canPerform(this)) {
+            failureReason = "Agent does not possess the required capability.";
+            return false;
+        }
+
+        if (this.vehicle.getBatteryLevel() < this.requiredBatteryLevel) {
             failureReason = "Vehicle doesn't have sufficient battery level for the exploration.";
             return false;
         }
 
-        if(!this.colony.checkAvailableEquipment(this.equipment)){
+        if (this.equipment != null && !this.colony.checkAvailableEquipment(this.equipment)) {
             failureReason = "Equipment isn't available for this mission right now.";
             return false;
         }
 
-        if(!this.colony.checkAvailableResources(this.resources)){
+        if (!this.colony.checkAvailableResources(this.resources,30)) {
             failureReason = "There aren't available sufficient resources in the colony.";
             return false;
         }
@@ -91,37 +105,27 @@ public class ExplorationMission extends Mission{
     }
 
     @Override
-    public boolean startMission(){
-        if(!super.startMission()){
+    public boolean startMission() {
+        if (!super.startMission()) {
             return false;
         }
-        this.assign(this.engineer);
+        this.assign(this.crewMember);
         this.assign(this.vehicle);
-        this.equipment.setAvailability(false);
+        if (this.equipment != null) {
+            this.equipment.setAvailability(false);
+        }
         this.setStatus(MissionState.IN_PROGRESS);
-        this.timeTaken = 0;
+        this.timeElapsed = 0;
         return true;
     }
 
-    public void advanceTime(int timeUnits){
-        if(Environment.getState() == EnvironmentCondition.DUST_STORM){
-            this.endMission(MissionState.FAILED);
-            failureReason = "Dust Storm prevents the Exploration Mission";
-        }
-        int realTakenTime = super.calculateRealTakenTime(timeUnits,requiredTimeUnits);
-        super.advanceTime(realTakenTime, requiredTimeUnits);
-        this.vehicle.discharge((int)(this.requiredBatteryLevel * ((double)realTakenTime/requiredTimeUnits)));
-    }
-
-
     @Override
-    protected void endMission(MissionState nextState) {
+    public void endMission(MissionState nextState) {
         super.endMission(nextState);
-        this.unassign(this.engineer);
+        this.unassign(this.crewMember);
         this.unassign(this.vehicle);
-        this.equipment.setAvailability(true);
+        if (this.equipment != null) {
+            this.equipment.setAvailability(true);
+        }
     }
-
-
-
 }

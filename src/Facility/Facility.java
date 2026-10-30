@@ -125,5 +125,18 @@ public abstract class Facility
               currentOccupancy,
               capacity);
   }
+  public boolean transferResourceTo(Facility target, ResourceType type, int amount) {
+      if (target == null || target == this || type == null || amount <= 0) {
+            return false;
+      }
+      if (!this.hasEnoughResource(type, amount)) {
+            return false;
+      }
+      if (target.addResource(type, amount)) {
+            this.deductResource(type, amount);
+            return true;
+      }
+      return false;
+  }
 
 }

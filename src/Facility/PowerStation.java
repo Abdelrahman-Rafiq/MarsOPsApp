@@ -7,9 +7,15 @@ public class PowerStation extends Facility {
     private final int chargingRate;
     private static int nextID=1;
     private static final int FUEL_CONSUMPTION=5;
-    public PowerStation(int capacity, int currentOccupancy, int maxResources, int chargingRate) {
-        super("PowerStation"+(nextID++), capacity, currentOccupancy, maxResources,new Equipment[]{Equipment.createRepairToolkit()});
-        this.chargingRate = Math.max(0, chargingRate);
+    private static final int maxCapacity=2;
+    private static final int maxResources=200;
+
+    public PowerStation( ) {
+        super("PowerStation"+(nextID++), maxCapacity, 0, maxResources,new Equipment[]{Equipment.createRepairToolkit()});
+        this.chargingRate = 100;
+        addResource(ResourceType.FUEL, maxResources);
+        addResource(ResourceType.BATTERY_POWER, maxResources);
+        addResource(ResourceType.OXYGEN, maxResources);
     }
     public int getChargingRate() {return chargingRate;}
     public boolean generatePower() {

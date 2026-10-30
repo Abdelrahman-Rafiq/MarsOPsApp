@@ -10,6 +10,10 @@ public class ExplorationRover extends Vehicle {
     private static int nextId = 1;
     private final List<Equipment> carriedEquipment;
 
+    public ExplorationRover() {
+        this("Rover" + nextId, "Surface");
+    }
+
     public ExplorationRover(String name, String location) {
         super(name, "ExplorationRover" + nextId++, location);
         this.carriedEquipment = new ArrayList<>();

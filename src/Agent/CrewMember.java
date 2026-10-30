@@ -1,6 +1,7 @@
 package Agent;
 
 import Facility.Habitat;
+import Helper.Capability;
 import Helper.ResourceType;
 
 public abstract class CrewMember extends Agent {
@@ -15,6 +16,7 @@ public abstract class CrewMember extends Agent {
     public CrewMember(String name, String id, String location) {
         super(name, id, location);
         this.fatigueLevel = 0;
+        addCapability(Capability.FIRE_RESPONSE);
     }
 
     public int getFatigueLevel() {

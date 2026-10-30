@@ -7,9 +7,15 @@ public class Laboratory extends Facility
 {
     private boolean hasFire;
     private static int nextID=1;
-    public Laboratory(int capacity,int currentOccupancy, int maxResources) {
-        super("Laboratory"+(nextID++), capacity,currentOccupancy, maxResources, new Equipment[]{Equipment.createMicroscope(), Equipment.createSpectrometer(),Equipment.createFireExtinguisher()});
+    private static final int maxCapacity=2;
+    private static final int maxResources=200;
+
+    public Laboratory() {
+        super("Laboratory"+(nextID++), maxCapacity,0, maxResources, new Equipment[]{Equipment.createMicroscope(), Equipment.createSpectrometer(),Equipment.createFireExtinguisher()});
         this.hasFire = false;
+        addResource(ResourceType.BATTERY_POWER, maxResources);
+        addResource(ResourceType.OXYGEN, maxResources);
+        addResource(ResourceType.WATER, maxResources);
     }
     @Override
     public boolean useResources() {
@@ -34,6 +40,4 @@ public class Laboratory extends Facility
         this.hasFire = hasFire;
         setOperationalStatus(false);
     }
-    
-    
 }

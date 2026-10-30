@@ -9,11 +9,16 @@ public class Habitat extends Facility
     private String location;
     private final LifeSupportSystem lifeSupport;
     private static int nextID = 1;
+    private static final int maxCapacity=4;
+    private static final int maxResources=300;
 
-
-    public Habitat(int currentOccupancy, int capacity, int maxResources) {
-        super("Habitat"+(nextID++), capacity, currentOccupancy, maxResources, new Equipment[]{Equipment.createRepairToolkit(),Equipment.createAntennaArray(),Equipment.createSurgicalKit(),Equipment.createMedicalScanner()});
+    public Habitat() {
+        super("Habitat"+(nextID++), maxCapacity, 0, maxResources, new Equipment[]{Equipment.createRepairToolkit(),Equipment.createAntennaArray(),Equipment.createSurgicalKit(),Equipment.createMedicalScanner()});
         this.lifeSupport = new LifeSupportSystem(90);
+        addResource(ResourceType.BATTERY_POWER,maxResources);
+        addResource(ResourceType.OXYGEN,maxResources);
+        addResource(ResourceType.FOOD,maxResources);
+        addResource(ResourceType.WATER,maxResources);
     }
 
     @Override

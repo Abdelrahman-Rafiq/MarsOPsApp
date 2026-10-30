@@ -123,6 +123,13 @@ public abstract class Agent {
         return hasCapability(mission.getRequiredCapability());
     }
 
+    public boolean canHandle(Capability capability) {
+        if (capability == null || !isAvailable()) {
+            return false;
+        }
+        return hasCapability(capability);
+    }
+
     @Override
     public String toString() {
         return String.format("[%s] ID: %-18s | Name: %-14s | Loc: %-16s | Health: %3d%% | OnMission: %-5b | Available: %-5b | Capabilities: %s",

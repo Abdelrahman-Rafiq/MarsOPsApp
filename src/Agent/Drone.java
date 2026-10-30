@@ -5,6 +5,10 @@ import Helper.Capability;
 public class Drone extends Vehicle {
     private static int nextId = 1;
 
+    public Drone() {
+        this("Drone" + nextId, "Surface");
+    }
+
     public Drone(String name, String location) {
         super(name, "Drone" + nextId++, location);
         addCapability(Capability.SURFACE_EXPLORATION);
