@@ -20,13 +20,11 @@ public class Laboratory extends Facility
     @Override
     public boolean useResources() {
         if (isOperational()) {
-            if (!hasEnoughResource(ResourceType.BATTERY_POWER , POWER_COST) ||
-                    !hasEnoughResource(ResourceType.OXYGEN, OXYGEN_COST*getCurrentOccupancy())){
+            if (!hasEnoughResource(ResourceType.BATTERY_POWER , POWER_COST)){
                 setOperationalStatus(false);
                 return false;
             }
             deductResource(ResourceType.BATTERY_POWER, POWER_COST);
-            deductResource(ResourceType.OXYGEN, OXYGEN_COST*getCurrentOccupancy());
             return true;
         }
         return false;
@@ -38,6 +36,9 @@ public class Laboratory extends Facility
     }
     public void setHasFire(boolean hasFire) { 
         this.hasFire = hasFire;
-        setOperationalStatus(false);
+        if (hasFire)
+            setOperationalStatus(false);
+        else
+            setOperationalStatus(true);
     }
 }

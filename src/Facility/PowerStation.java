@@ -20,23 +20,23 @@ public class PowerStation extends Facility {
     public int getChargingRate() {return chargingRate;}
     public boolean generatePower() {
         if (isOperational()) {
-            addResource(ResourceType.BATTERY_POWER, chargingRate);
-            return true;
+            if(addResource(ResourceType.BATTERY_POWER, chargingRate)){
+                if(deductResource(ResourceType.FUEL, FUEL_CONSUMPTION)==FUEL_CONSUMPTION)
+                    return true;
+                deductResource(ResourceType.BATTERY_POWER, chargingRate);
+                return false;
+            }
         }
         return false;
     }
     @Override
     public boolean useResources() {
         if (isOperational()) {
-            if (!hasEnoughResource(ResourceType.BATTERY_POWER,POWER_COST)||
-                    !hasEnoughResource(ResourceType.OXYGEN,OXYGEN_COST*getCurrentOccupancy())||
-                    !hasEnoughResource(ResourceType.FUEL,FUEL_CONSUMPTION)) {
+            if (!hasEnoughResource(ResourceType.BATTERY_POWER,POWER_COST)) {
                 setOperationalStatus(false);
                 return false;
             }
             deductResource(ResourceType.BATTERY_POWER, POWER_COST);
-            deductResource(ResourceType.OXYGEN, OXYGEN_COST*getCurrentOccupancy());
-            deductResource(ResourceType.FUEL, FUEL_CONSUMPTION);
             generatePower();
             return true;
         }

@@ -13,8 +13,8 @@ public class Habitat extends Facility
     private static final int maxResources=300;
 
     public Habitat() {
-        super("Habitat"+(nextID++), maxCapacity, 0, maxResources, new Equipment[]{Equipment.createRepairToolkit(),Equipment.createAntennaArray(),Equipment.createSurgicalKit(),Equipment.createMedicalScanner()});
-        this.lifeSupport = new LifeSupportSystem(90);
+        super("Habitat"+(nextID++), maxCapacity, 0, maxResources, new Equipment[]{Equipment.createRepairToolkit(),Equipment.createSurgicalKit(),Equipment.createMedicalScanner()});
+        this.lifeSupport = new LifeSupportSystem(2);
         addResource(ResourceType.BATTERY_POWER,maxResources);
         addResource(ResourceType.OXYGEN,maxResources);
         addResource(ResourceType.FOOD,maxResources);
@@ -25,16 +25,13 @@ public class Habitat extends Facility
     public boolean useResources() {
         if (isOperational()) {
             int requiredPower = POWER_COST;
-            int requiredOxygen = OXYGEN_COST * getCurrentOccupancy();
 
-            if (!hasEnoughResource(ResourceType.BATTERY_POWER, requiredPower) ||
-                    !hasEnoughResource(ResourceType.OXYGEN, requiredOxygen)) {
+            if (!hasEnoughResource(ResourceType.BATTERY_POWER, requiredPower)) {
                 setOperationalStatus(false);
                 return false;
             }
 
             deductResource(ResourceType.BATTERY_POWER, requiredPower);
-            deductResource(ResourceType.OXYGEN, requiredOxygen);
 
             if (lifeSupport.isFunctional()) {
                 addResource(ResourceType.OXYGEN, lifeSupport.getFiltrationRate());

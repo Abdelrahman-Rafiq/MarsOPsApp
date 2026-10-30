@@ -24,13 +24,16 @@ public class Main {
 
         Colony colony1 = Colony.setupColony();
 
-        Scientist scientist1 = new Scientist("Dr. Mark Watney", colony1.getOperationalFacilities().getFirst().getLocation());
+        Scientist scientist1 = new Scientist("Dr. Mark Watney", "mmmmmm");
         ExplorationRover rover1 = new ExplorationRover("Curiosity-2", "Martian Surface");
+        Engineer eng1= new Engineer("Eng Tarek Salah", "mmmmmm");
+
         Equipment spectrometer = Equipment.createSpectrometer();
         rover1.loadEquipment(spectrometer);
 
         colony1.addAgent(scientist1);
         colony1.addAgent(rover1);
+        colony1.addAgent(eng1);
 
         System.out.println("--- System State BEFORE Execution ---");
         colony1.printStatusReport();

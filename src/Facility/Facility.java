@@ -20,7 +20,6 @@ public abstract class Facility
   protected Map<ResourceType,Integer> resources;
   protected final int maxResources;
   protected static final int POWER_COST = 10;
-  protected static final int OXYGEN_COST = 5;
 
 
   public Facility(String name, int capacity, int currentOccupancy, int maxResources, Equipment[] equipment)
@@ -31,7 +30,7 @@ public abstract class Facility
       this.isOperational = true;
       this.maxResources = maxResources;
       this.resources = new HashMap<>();
-      for(ResourceType type : ResourceType.values())
+      for(ResourceType type :  ResourceType.values())
           this.resources.put(type, 0);
       this.equipments = new ArrayList<>();
       if (equipment != null) {
@@ -103,9 +102,9 @@ public abstract class Facility
   public int getResourceAmount(ResourceType type) {
     return resources.getOrDefault(type, 0);
   }
-    protected boolean hasEnoughResource(ResourceType type, int requiredAmount) {
-        return getResourceAmount(type) >= requiredAmount;
-    }
+  protected boolean hasEnoughResource(ResourceType type, int requiredAmount) {
+      return getResourceAmount(type) >= requiredAmount;
+  }
   public abstract boolean useResources();
   @Override
   public String toString() {
@@ -138,5 +137,4 @@ public abstract class Facility
       }
       return false;
   }
-
 }

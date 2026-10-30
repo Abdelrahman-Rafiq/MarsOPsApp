@@ -51,6 +51,12 @@ public class Colony {
         if (agent != null && !agents.contains(agent)) {
             agents.add(agent);
         }
+        for(Facility facility : facilities)
+            if(facility != null&& facility.getCurrentOccupancy()<facility.getCapacity()){
+                facility.addOccupiers();
+                agent.setLocation(facility.getLocation());
+                break;
+            }
     }
 
     public boolean removeAgent(Agent agent) {
@@ -262,6 +268,11 @@ public class Colony {
         for (int t = 0; t < timeUnits; t++) {
             this.currentTime++;
 
+            for(Agent a : agents) {
+                if (a.isHuman()&&!a.isOnMission()) {
+                    ((CrewMember)a).rest(timeUnits);
+                }
+            }
             // 1. Advance Active Mission (if IN_PROGRESS)
             if (activeMission != null && activeMission.getStatus() == MissionState.IN_PROGRESS) {
                 // Dynamic Environmental disruption check
