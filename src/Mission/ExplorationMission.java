@@ -66,7 +66,7 @@ public class ExplorationMission extends Mission {
 
     @Override
     public boolean submitMission() {
-        if (this.colony.getActiveMission() != null) {
+        if (this.colony.getActiveMission() != null && this.colony.getActiveMission() != this) {
             failureReason = "Another mission is active in the colony right now.";
             return false;
         }
@@ -112,6 +112,11 @@ public class ExplorationMission extends Mission {
         this.assign(this.crewMember);
         this.assign(this.vehicle);
         if (this.equipment != null) {
+            this.equipment.setAvailability(false);
+        }
+        this.colony.deductResource(this.resources, 30);
+        if (this.equipment != null) {
+            this.equipment.useIt();
             this.equipment.setAvailability(false);
         }
         this.setStatus(MissionState.IN_PROGRESS);

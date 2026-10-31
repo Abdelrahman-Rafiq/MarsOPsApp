@@ -113,6 +113,7 @@ public abstract class Mission {
     public boolean startMission() {
         if (!this.submitMission()) {
             this.setStatus(MissionState.FAILED);
+            this.colony.addMissionToHistory(this);
             return false;
         }
         this.colony.setActiveMission(this);

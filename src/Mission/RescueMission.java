@@ -64,7 +64,7 @@ public class RescueMission extends Mission {
 
     @Override
     public boolean submitMission() {
-        if (this.colony.getActiveMission() != null) {
+        if (this.colony.getActiveMission() != null && this.colony.getActiveMission() != this) {
             failureReason = "Another mission is active in the colony right now.";
             return false;
         }
@@ -105,6 +105,11 @@ public class RescueMission extends Mission {
         this.assign(this.personnel);
         this.assign(this.vehicle);
         if (this.equipment != null) {
+            this.equipment.setAvailability(false);
+        }
+        this.colony.deductResource(this.resources, 20);
+        if (this.equipment != null) {
+            this.equipment.useIt();
             this.equipment.setAvailability(false);
         }
         this.setStatus(MissionState.IN_PROGRESS);

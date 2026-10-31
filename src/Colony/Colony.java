@@ -48,15 +48,32 @@ public class Colony {
     }
 
     public void addAgent(Agent agent) {
-        if (agent != null && !agents.contains(agent)) {
-            agents.add(agent);
-        }
-        for(Facility facility : facilities)
-            if(facility != null&& facility.getCurrentOccupancy()<facility.getCapacity()){
-                facility.addOccupiers();
-                agent.setLocation(facility.getLocation());
-                break;
+        if (agent == null || agents.contains(agent))
+            return;
+        agents.add(agent);
+        if (agent.isHuman()) {
+            for (Facility facility : facilities) {
+                if (facility != null && facility.getLocation().equals(agent.getLocation())
+                        && facility.getCurrentOccupancy() < facility.getCapacity()) {
+                    facility.addOccupiers();
+                    return;
+                }
             }
+            for (Facility facility : facilities) {
+                if (facility instanceof Habitat && facility.getCurrentOccupancy() < facility.getCapacity()) {
+                    facility.addOccupiers();
+                    agent.setLocation(facility.getLocation());
+                    return;
+                }
+            }
+        }
+        else
+            for (Facility facility : facilities)
+                if (facility instanceof StorageFacilities && facility.getCurrentOccupancy() < facility.getCapacity()) {
+                    facility.addOccupiers();
+                    agent.setLocation(facility.getLocation());
+                    return;
+                }
     }
 
     public boolean removeAgent(Agent agent) {
@@ -270,7 +287,7 @@ public class Colony {
 
             for(Agent a : agents) {
                 if (a.isHuman()&&!a.isOnMission()) {
-                    ((CrewMember)a).rest(timeUnits);
+                    ((CrewMember)a).rest(5);
                 }
             }
             // 1. Advance Active Mission (if IN_PROGRESS)
@@ -336,7 +353,7 @@ public class Colony {
     public String generateStatusReport() {
         StringBuilder sb = new StringBuilder();
         sb.append("========================================================================================\n");
-        sb.append(String.format("                      MARS-OPS COLONY STATUS REPORT (Sol / Time: %d)\n", currentTime));
+        sb.append(String.format("                      MARS-OPS COLONY STATUS REPORT (Time: %d)\n", currentTime));
         sb.append("========================================================================================\n");
         sb.append(String.format("Environment Condition: %s\n", Environment.getState()));
         sb.append(String.format("Active Mission:        %s\n", (activeMission != null ? activeMission.getMissionId() + " [" + activeMission.getStatus() + "]" : "NONE")));

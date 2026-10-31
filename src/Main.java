@@ -8,262 +8,116 @@ import Mission.*;
 
 public class Main {
     public static void main(String[] args) {
-        System.out.println("================================================================================");
-        System.out.println("       MARS-OPS: AUTONOMOUS MARS COLONY MANAGEMENT & EMERGENCY SIMULATOR       ");
-        System.out.println("                         LAB 5 DEMONSTRATION SUITE                              ");
-        System.out.println("================================================================================\n");
+        System.out.println("=== MARS-OPS MINIMAL DEMONSTRATION SUITE ===\n");
 
-        // =========================================================================
+        // ---------------------------------------------------------------------
         // SCENARIO 1: Successful Exploration
-        // =========================================================================
-        System.out.println("################################################################################");
-        System.out.println("SCENARIO 1: Successful Exploration");
-        System.out.println("Description: Create a scientist, an exploration rover, appropriate equipment,");
-        System.out.println("and an exploration mission. The mission should execute successfully.");
-        System.out.println("################################################################################\n");
+        // ---------------------------------------------------------------------
+        System.out.println("--- SCENARIO 1: Successful Exploration ---");
+        Colony colony = Colony.setupColony();
 
-        Colony colony1 = Colony.setupColony();
-
-        Scientist scientist1 = new Scientist("Dr. Mark Watney", "mmmmmm");
-        ExplorationRover rover1 = new ExplorationRover("Curiosity-2", "Martian Surface");
-        Engineer eng1= new Engineer("Eng Tarek Salah", "mmmmmm");
+        Scientist scientist = new Scientist("Dr. Mark Watney", "Habitat1");
+        ExplorationRover rover = new ExplorationRover("Curiosity-2", "Surface");
+        Engineer engineer = new Engineer("Eng. Tarek", "Habitat1");
+        RepairRobot repairBot = new RepairRobot("FixBot-1", "Storage Facility1");
 
         Equipment spectrometer = Equipment.createSpectrometer();
-        rover1.loadEquipment(spectrometer);
+        rover.loadEquipment(spectrometer);
 
-        colony1.addAgent(scientist1);
-        colony1.addAgent(rover1);
-        colony1.addAgent(eng1);
+        colony.addAgent(scientist);
+        colony.addAgent(rover);
+        colony.addAgent(engineer);
+        colony.addAgent(repairBot);
 
-        System.out.println("--- System State BEFORE Execution ---");
-        colony1.printStatusReport();
+        System.out.println("[Before Mission]");
+        colony.printStatusReport();
 
-        ExplorationMission explorationMission = new ExplorationMission(
-                colony1,
-                "Explore Gale Crater for subterranean ice deposits",
-                "Gale Crater",
-                scientist1,
-                rover1,
-                25.0,
-                spectrometer,
+        ExplorationMission expMission = new ExplorationMission(
+                colony, "Explore Gale Crater", "Gale Crater",
+                scientist, rover, 25.0, spectrometer,
                 new ResourceType[]{ResourceType.BATTERY_POWER, ResourceType.OXYGEN}
         );
 
-        System.out.println("Submitting and starting exploration mission: " + explorationMission.getDescription());
-        boolean missionStarted = explorationMission.startMission();
-        System.out.println("Mission submission status: " + (missionStarted ? "ACCEPTED & IN_PROGRESS" : "FAILED"));
-        System.out.println("Active mission in colony: " + colony1.getActiveMission().getMissionId() + " (" + colony1.getActiveMission().getStatus() + ")");
-        System.out.println("Scientist on mission: " + scientist1.isOnMission() + " | Rover on mission: " + rover1.isOnMission());
+        expMission.startMission();
+        System.out.println("Mission Started: " + expMission.getStatus());
+        colony.advanceTime(7);
+        System.out.println("Mission After 7 Sols: " + expMission.getStatus());
 
-        System.out.println("\nAdvancing simulation time by 7 time units in Colony...");
-        colony1.advanceTime(7);
+        System.out.println("\n[After Mission]");
+        colony.printStatusReport();
 
-        System.out.println("\nMission status after 7 time units: " + explorationMission.getStatus());
-        System.out.println("Active mission in colony now: " + (colony1.getActiveMission() == null ? "NONE (Completed & Cleared)" : colony1.getActiveMission().getMissionId()));
-        System.out.println("Scientist available: " + scientist1.isAvailable() + " (OnMission: " + scientist1.isOnMission() + ")");
-        System.out.println("Rover available: " + rover1.isAvailable() + " (Battery: " + rover1.getBatteryLevel() + "%, OnMission: " + rover1.isOnMission() + ")");
-
-        System.out.println("\n--- System State AFTER Execution ---");
-        colony1.printStatusReport();
-
-
-        // =========================================================================
+        // ---------------------------------------------------------------------
         // SCENARIO 2: Mission Rejection (Unsuitable Agent)
-        // =========================================================================
-        System.out.println("\n################################################################################");
-        System.out.println("SCENARIO 2: Mission Rejection (Unsuitable Agent)");
-        System.out.println("Description: Submit a mission with an unsuitable agent. The mission must fail");
-        System.out.println("immediately with a meaningful reason and must never become active.");
-        System.out.println("################################################################################\n");
-
-        Colony colony2 = Colony.setupColony();
-        Engineer engineerAsScientist = new Engineer("Eng. Bob Martinez", "Habitat1");
-        ExplorationRover rover2 = new ExplorationRover("Opportunity-2", "Martian Surface");
-        Equipment repairKit = Equipment.createRepairToolkit();
-        rover2.loadEquipment(repairKit);
-
-        colony2.addAgent(engineerAsScientist);
-        colony2.addAgent(rover2);
-
+        // ---------------------------------------------------------------------
+        System.out.println("\n--- SCENARIO 2: Mission Rejection (Unsuitable Agent) ---");
         ExplorationMission invalidMission = new ExplorationMission(
-                colony2,
-                "Analyze soil samples at Jezero Crater",
-                "Jezero Crater",
-                engineerAsScientist,
-                rover2,
-                20.0,
-                repairKit,
+                colony, "Soil Analysis", "Jezero Crater",
+                engineer, rover, 20.0, spectrometer,
                 new ResourceType[]{ResourceType.BATTERY_POWER}
         );
 
-        System.out.println("Submitting exploration mission with an Engineer instead of a Scientist...");
-        boolean accepted = colony2.submitMission(invalidMission);
-
-        if (!accepted) {
+        if (!colony.submitMission(invalidMission)) {
             System.out.println("Mission cannot be assigned.");
             System.out.println("Reason: " + invalidMission.getFailureReason());
-        } else {
-            System.out.println("ERROR: Mission should not have been accepted!");
+            System.out.println("Status: " + invalidMission.getStatus() + " | Active Mission: " + colony.getActiveMission());
         }
 
-        System.out.println("Mission State: " + invalidMission.getStatus());
-        System.out.println("Colony Active Mission: " + (colony2.getActiveMission() == null ? "NONE" : colony2.getActiveMission().getMissionId()));
-        System.out.println("Agent OnMission: " + engineerAsScientist.isOnMission() + " | Agent Available: " + engineerAsScientist.isAvailable());
-
-
-        // =========================================================================
+        // ---------------------------------------------------------------------
         // SCENARIO 3: Resource Shortage
-        // =========================================================================
-        System.out.println("\n################################################################################");
-        System.out.println("SCENARIO 3: Resource Shortage");
-        System.out.println("Description: Attempt to execute a mission when the required resources are");
-        System.out.println("insufficient. System must reject operation without consuming unavailable");
-        System.out.println("resources or allowing resource quantities to become negative.");
-        System.out.println("################################################################################\n");
+        // ---------------------------------------------------------------------
+        System.out.println("\n--- SCENARIO 3: Resource Shortage ---");
+        Colony starvedColony = Colony.setupColony();
+        starvedColony.addAgent(scientist);
+        starvedColony.addAgent(rover);
 
-        Colony colony3 = Colony.setupColony();
-        Scientist scientist3 = new Scientist("Dr. Sarah Brown", "Laboratory1");
-        ExplorationRover rover3 = new ExplorationRover("Perseverance-2", "Martian Surface");
-        Equipment spec3 = Equipment.createSpectrometer();
-        rover3.loadEquipment(spec3); // FIX: Load equipment onto rover so check passes to Resource check!
-
-        colony3.addAgent(scientist3);
-        colony3.addAgent(rover3);
-
-        // Deplete all battery power across the colony to test shortage
-        for (Facility f : colony3.getFacilities()) {
+        for (Facility f : starvedColony.getFacilities()) {
             f.deductResource(ResourceType.BATTERY_POWER, f.getResourceAmount(ResourceType.BATTERY_POWER));
         }
 
-        System.out.println("Colony Total Battery Power before mission: " + colony3.getTotalResource(ResourceType.BATTERY_POWER));
-        System.out.println("Colony Total Oxygen before mission:       " + colony3.getTotalResource(ResourceType.OXYGEN));
-
-        ExplorationMission starvedMission = new ExplorationMission(
-                colony3,
-                "Deep Valley Exploration",
-                "Valles Marineris",
-                scientist3,
-                rover3,
-                15.0,
-                spec3,
+        ExplorationMission resourceFailMission = new ExplorationMission(
+                starvedColony, "Deep Valley Recon", "Valles Marineris",
+                scientist, rover, 15.0, spectrometer,
                 new ResourceType[]{ResourceType.BATTERY_POWER, ResourceType.OXYGEN}
         );
 
-        System.out.println("\nSubmitting mission requiring battery power when colony has 0 battery...");
-        boolean started = starvedMission.startMission();
-
-        if (!started) {
-            System.out.println("Operation Rejected!");
-            System.out.println("Reason: " + starvedMission.getFailureReason());
+        if (!resourceFailMission.startMission()) {
+            System.out.println("Mission Rejected! Status: " + resourceFailMission.getStatus());
+            System.out.println("Reason: " + resourceFailMission.getFailureReason());
+            System.out.println("Remaining Battery: " + starvedColony.getTotalResource(ResourceType.BATTERY_POWER)
+                    + " | Remaining Oxygen: " + starvedColony.getTotalResource(ResourceType.OXYGEN));
         }
 
-        System.out.println("Mission Status: " + starvedMission.getStatus());
-        System.out.println("Colony Battery Power after failed submission: " + colony3.getTotalResource(ResourceType.BATTERY_POWER));
-        System.out.println("Colony Oxygen after failed submission:       " + colony3.getTotalResource(ResourceType.OXYGEN));
-        System.out.println("Confirmed: No resources consumed and no negative balances created.");
-
-
-        // =========================================================================
+        // ---------------------------------------------------------------------
         // SCENARIO 4: Emergency Handling (Oxygen Leak)
-        // =========================================================================
-        System.out.println("\n################################################################################");
-        System.out.println("SCENARIO 4: Emergency Handling (Oxygen Leak)");
-        System.out.println("Description: Simulate an oxygen leak. Detect, locate, identify suitable");
-        System.out.println("responders, perform response, consume resources, update facility state.");
-        System.out.println("################################################################################\n");
+        // ---------------------------------------------------------------------
+        System.out.println("\n--- SCENARIO 4: Emergency Handling (Oxygen Leak) ---");
+        Habitat targetHabitat = (Habitat) colony.getFacilities().get(0);
+        System.out.println("Oxygen in " + targetHabitat.getLocation() + " before leak: "
+                + targetHabitat.getResourceAmount(ResourceType.OXYGEN));
 
-        Colony colony4 = Colony.setupColony();
-        // FIX: Add repair responders so Scenario 4 part A resolves properly!
-        colony4.addAgent(new Engineer("Eng. Bob Martinez", "Storage Facility1"));
-        colony4.addAgent(new RepairRobot("Fixer-1", "Storage Facility1"));
+        OxygenLeak leak = new OxygenLeak(targetHabitat);
+        boolean resolved = colony.triggerEmergency(leak);
 
-        Habitat habitatToLeak = null;
-        for (Facility f : colony4.getFacilities()) {
-            if (f instanceof Habitat) {
-                habitatToLeak = (Habitat) f;
-                break;
-            }
-        }
+        System.out.println("Emergency State: " + leak.getEmergencyState() + " (Resolved: " + resolved + ")");
+        System.out.println("Oxygen in " + targetHabitat.getLocation() + " after leak: "
+                + targetHabitat.getResourceAmount(ResourceType.OXYGEN));
 
-        System.out.println("1. Emergency Detected: Oxygen Leak!");
-        System.out.println("2. Affected Facility Located: " + habitatToLeak.getLocation());
-        System.out.println("   Oxygen level in " + habitatToLeak.getLocation() + " before leak: " + habitatToLeak.getResourceAmount(ResourceType.OXYGEN) + " units");
-        System.out.println("   Colony-wide Oxygen before leak: " + colony4.getTotalResource(ResourceType.OXYGEN) + " units");
-        System.out.println("   Colony-wide Spare Parts before leak: " + colony4.getTotalResource(ResourceType.SPARE_PARTS) + " units");
-
-        OxygenLeak leakEmergency = new OxygenLeak(habitatToLeak);
-
-        System.out.println("\n3. Triggering emergency response in Colony...");
-        boolean emergencyHandled = colony4.triggerEmergency(leakEmergency);
-
-        System.out.println("4. Response Outcome: " + (emergencyHandled ? "SUCCESSFULLY RESOLVED" : "UNRESOLVED"));
-        System.out.println("   Emergency State: " + leakEmergency.getEmergencyState());
-        System.out.println("   Reason/Info: " + (leakEmergency.getFailureReason().isEmpty() ? "Leak repaired by dispatched Engineer and Repair Robot." : leakEmergency.getFailureReason()));
-        System.out.println("   Oxygen level in " + habitatToLeak.getLocation() + " after repair: " + habitatToLeak.getResourceAmount(ResourceType.OXYGEN) + " units (deducted 50)");
-        System.out.println("   Colony-wide Oxygen after repair: " + colony4.getTotalResource(ResourceType.OXYGEN) + " units");
-        System.out.println("   Colony-wide Spare Parts after repair: " + colony4.getTotalResource(ResourceType.SPARE_PARTS) + " units");
-        System.out.println("   Facility Operational Status: " + (habitatToLeak.isOperational() ? "ONLINE" : "OFFLINE"));
-
-        // Demonstration of Unresolved Leak (Double Oxygen Penalty Rule)
-        System.out.println("\n--- Testing Emergency Failure Flow (Responders Unavailable) ---");
-        Colony colony4B = Colony.setupColony(); // Empty colony with no responders
-        Habitat unstaffedHabitat = new Habitat();
-        colony4B.addFacility(unstaffedHabitat);
-
-        System.out.println("Habitat Oxygen before unresolved leak: " + unstaffedHabitat.getResourceAmount(ResourceType.OXYGEN));
-        OxygenLeak unresolvedLeak = new OxygenLeak(unstaffedHabitat);
-        colony4B.triggerEmergency(unresolvedLeak);
-        System.out.println("Outcome: " + unresolvedLeak.getEmergencyState());
-        System.out.println("Failure Reason: " + unresolvedLeak.getFailureReason());
-        System.out.println("Habitat Oxygen after unresolved leak: " + unstaffedHabitat.getResourceAmount(ResourceType.OXYGEN) + " units (deducted 2x = 100 units lost!)");
-
-
-        // =========================================================================
+        // ---------------------------------------------------------------------
         // SCENARIO 5: Environmental Effect (Dust Storm)
-        // =========================================================================
-        System.out.println("\n################################################################################");
-        System.out.println("SCENARIO 5: Environmental Effect (Dust Storm)");
-        System.out.println("Description: Introduce an environmental condition (Dust Storm), and");
-        System.out.println("demonstrate that surface operations cannot start.");
-        System.out.println("################################################################################\n");
+        // ---------------------------------------------------------------------
+        System.out.println("\n--- SCENARIO 5: Environmental Effect (Dust Storm) ---");
+        colony.getEnvironment().setCondition(EnvironmentCondition.DUST_STORM);
 
-        Colony colony5 = Colony.setupColony();
-        Scientist scientist5 = new Scientist("Dr. Alex Walker", "Laboratory1");
-        ExplorationRover rover5 = new ExplorationRover("Discovery-1", "Martian Surface");
-        Equipment spec5 = Equipment.createSpectrometer();
-        rover5.loadEquipment(spec5);
-
-        colony5.addAgent(scientist5);
-        colony5.addAgent(rover5);
-
-        System.out.println("Simulating Mars weather change: Setting condition to DUST_STORM...");
-        colony5.getEnvironment().setCondition(EnvironmentCondition.DUST_STORM);
-        System.out.println("Current Environment: " + Environment.getState());
-
-        ExplorationMission dustStormMission = new ExplorationMission(
-                colony5,
-                "Surface mineral analysis during high winds",
-                "Elysium Planitia",
-                scientist5,
-                rover5,
-                20.0,
-                spec5,
+        ExplorationMission stormMission = new ExplorationMission(
+                colony, "Surface Mineral Scan", "Elysium Planitia",
+                scientist, rover, 20.0, spectrometer,
                 new ResourceType[]{ResourceType.BATTERY_POWER}
         );
 
-        System.out.println("\nAttempting to start Exploration Mission during a Dust Storm...");
-        boolean dustStormStart = dustStormMission.startMission();
-
-        if (!dustStormStart) {
+        if (!stormMission.startMission()) {
             System.out.println("Exploration Mission cannot start.");
-            System.out.println("Reason: " + dustStormMission.getFailureReason());
+            System.out.println("Reason: " + stormMission.getFailureReason());
+            System.out.println("Status: " + stormMission.getStatus());
         }
-
-        System.out.println("Mission Status: " + dustStormMission.getStatus());
-        System.out.println("Colony Active Mission: " + (colony5.getActiveMission() == null ? "NONE" : colony5.getActiveMission().getMissionId()));
-
-        System.out.println("\n================================================================================");
-        System.out.println("                ALL 5 MARS-OPS DEMONSTRATION SCENARIOS COMPLETED               ");
-        System.out.println("================================================================================");
     }
 }

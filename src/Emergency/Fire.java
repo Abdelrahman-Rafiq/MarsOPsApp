@@ -55,7 +55,14 @@ public class Fire extends Emergency {
             return false;
         }
 
-        if (!affectedLaboratory.getEquipments().get(affectedLaboratory.getEquipmentIndex(Capability.FIRE_RESPONSE)).useIt()) {
+        int extIndex = affectedLaboratory.getEquipmentIndex(Capability.FIRE_RESPONSE);
+        if (extIndex == -1 || !affectedLaboratory.getEquipments().get(extIndex).useIt()) {
+            this.emergencyState = EmergencyState.UNRESOLVED;
+            this.failureReason = "Fire suppression equipment is missing or damaged.";
+            return false;
+        }
+
+        if (colony.getTotalResource(ResourceType.WATER) < REQUIRED_WATER) {
             this.emergencyState = EmergencyState.UNRESOLVED;
             this.failureReason = "Insufficient water in the colony to suppress fire.";
             return false;
