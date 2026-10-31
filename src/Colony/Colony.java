@@ -260,7 +260,6 @@ public class Colony {
             return false;
         }
 
-        // Accepted: becomes ASSIGNED and remains active mission
         this.activeMission = mission;
         mission.setStatus(MissionState.ASSIGNED);
         return true;
@@ -302,7 +301,6 @@ public class Colony {
                 } else {
                     activeMission.progress(1);
 
-                    // Moderate fatigue and battery consumption for assigned agents
                     for (Agent agent : activeMission.getAssignedAgents()) {
                         if (agent instanceof RoboticUnit) {
                             ((RoboticUnit) agent).discharge(5);
@@ -317,7 +315,6 @@ public class Colony {
                 }
             }
 
-            // 2. Facilities upkeep and agent recovery
             for (Facility facility : facilities) {
                 if (facility != null && facility.isOperational())
                     facility.useResources();
@@ -338,7 +335,6 @@ public class Colony {
         }
     }
 
-    // Emergency Management (Section 9)
     public boolean triggerEmergency(Emergency emergency) {
         if (emergency == null) return false;
         emergencyHistory.add(emergency);
@@ -349,7 +345,6 @@ public class Colony {
         return Collections.unmodifiableList(emergencyHistory);
     }
 
-    // Colony Status Report (Section 2, Section 5.1 #5, Section 11.6)
     public String generateStatusReport() {
         StringBuilder sb = new StringBuilder();
         sb.append("========================================================================================\n");

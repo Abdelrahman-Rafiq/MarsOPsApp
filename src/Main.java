@@ -119,5 +119,61 @@ public class Main {
             System.out.println("Reason: " + stormMission.getFailureReason());
             System.out.println("Status: " + stormMission.getStatus());
         }
+
+        // --- SCENARIO 6: Lab Fire, Medical Emergency & Equipment Repair ---
+        System.out.println("\n--- SCENARIO 6: Lab Fire, Medical Emergency & Equipment Repair ---");
+        Colony colony6 = Colony.setupColony();
+
+        Laboratory lab6 = null;
+        Habitat hab6 = null;
+        for (Facility f : colony6.getFacilities()) {
+            if (f instanceof Laboratory && lab6 == null) lab6 = (Laboratory) f;
+            if (f instanceof Habitat && hab6 == null) hab6 = (Habitat) f;
+        }
+
+        Scientist injuredSci = new Scientist("Dr. Ellie Sattler", lab6.getLocation());
+        MedicalOfficer medic = new MedicalOfficer("Dr. Alan Grant", hab6.getLocation());
+        Engineer repairEng = new Engineer("Eng. Ian Malcolm", hab6.getLocation());
+        RepairRobot repairbbot = new RepairRobot("FixBot-2", "Storage Facility1");
+
+        colony6.addAgent(injuredSci);
+        colony6.addAgent(repairbbot);
+        colony6.addAgent(repairEng);
+        colony6.addAgent(medic);
+
+        // 1. Trigger Fire in Laboratory (damages equipment & injures scientist inside)
+        Emergency.Fire labFire = new Emergency.Fire(lab6);
+        colony6.triggerEmergency(labFire);
+        Equipment damagedMicroscope = lab6.getEquipments().get(0);
+        System.out.println("Fire State: " + labFire.getEmergencyState()
+                + " | Scientist Health: " + injuredSci.getHealthStatus() + "%"
+                + " | Microscope Damaged: " + damagedMicroscope.isDamaged());
+        System.out.println();
+        // 2. Trigger Medical Emergency to treat the injured Scientist
+        Emergency.MedicalEmergency medEmerg = new Emergency.MedicalEmergency(injuredSci, hab6);
+        colony6.triggerEmergency(medEmerg);
+        System.out.println("Medical State: " + medEmerg.getEmergencyState()
+                + " | Scientist Health After Treatment: " + injuredSci.getHealthStatus() + "%");
+
+        System.out.println();
+        // 3. Submit & Execute a Repair Mission to fix the fire-damaged Microscope
+        for(Equipment e: lab6.getEquipments())
+            System.out.println(e.getName()+" is damaged before repair:"+e.isDamaged());
+        RepairMission repairMission = new RepairMission(
+                colony6,
+                "Repair fire-damaged Electron Microscope",
+                lab6.getLocation(),
+                damagedMicroscope,
+                repairEng,
+                repairBot,
+                new ResourceType[]{ResourceType.SPARE_PARTS, ResourceType.BATTERY_POWER},
+                Equipment.createRepairToolkit()
+        );
+        repairMission.startMission();
+        colony6.advanceTime(5);
+        for(Equipment e: lab6.getEquipments())
+            System.out.println(e.getName()+" is damaged after repair:"+e.isDamaged());
+        System.out.println("Repair Mission Status: " + repairMission.getStatus()
+                + " | Microscope Damaged After Repair: " + damagedMicroscope.isDamaged());
     }
 }
